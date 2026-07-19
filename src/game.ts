@@ -1,5 +1,6 @@
 import type { AppData, EncounterState, Friend, Language } from './types';
 import { PythonRandom } from './pythonRandom';
+import { sha256 } from './sha256';
 
 export const PERSONALITIES = ['timid','glutton','curious','calm','playful','affectionate','aloof','sleepy'] as const;
 export const ACTIONS = ['approach','wait','play','snack','petTry'] as const;
@@ -45,13 +46,15 @@ export function normalizePlaceSeed(value:string):string {
 
 export function generatePlaceSeed():string {
   const bytes=new Uint8Array(8);
-  crypto.getRandomValues(bytes);
+  let filledSecurely=false;
+  try{if(globalThis.crypto?.getRandomValues){globalThis.crypto.getRandomValues(bytes);filledSecurely=true}}catch{/* Compatibility fallback below. */}
+  if(!filledSecurely)for(let index=0;index<bytes.length;index++)bytes[index]=Math.floor(Math.random()*256);
   const compact=Array.from(bytes,value=>PLACE_SEED_ALPHABET[value&31]).join('');
   return `${compact.slice(0,4)}-${compact.slice(4)}`;
 }
 
-async function placeSeedWords(canonicalSeed:string):Promise<number[]> {
-  const digest=new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(`${PLACE_PREFIX}${canonicalSeed}`)));
+function placeSeedWords(canonicalSeed:string):number[] {
+  const digest=sha256(Uint8Array.from(`${PLACE_PREFIX}${canonicalSeed}`,character=>character.charCodeAt(0)));
   const words:number[]=[];
   for(let offset=digest.length-4;offset>=0;offset-=4){
     words.push(((digest[offset]<<24)|(digest[offset+1]<<16)|(digest[offset+2]<<8)|digest[offset+3])>>>0);
@@ -62,7 +65,7 @@ async function placeSeedWords(canonicalSeed:string):Promise<number[]> {
 
 export async function resolvePlaceSeed(value:string):Promise<{seed:string;roll:number;speciesId:number;personalityIndex:number;personality:typeof PERSONALITIES[number]}> {
   const seed=normalizePlaceSeed(value);
-  const rng=new PythonRandom(await placeSeedWords(seed));
+  const rng=new PythonRandom(placeSeedWords(seed));
   const roll=rng.randRange(PLACE_WEIGHT_TOTAL);
   let cumulative=0,speciesId=PLACE_SPECIES_COUNT;
   for(let index=0;index<PLACE_WEIGHTS.length;index++){
