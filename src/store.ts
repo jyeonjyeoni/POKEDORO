@@ -7,7 +7,7 @@ const BACKUP_KEY = 'pokedoro-auto-backups';
 export const defaultData = (): AppData => ({
   version: 1, todos: [], categories: [], friends: [], dex: {}, tickets: 0, focusBankSeconds: 0, totalFocusSeconds: 0,
   timer: { type: 'pomodoro', mode: 'focus', running: false, elapsedSeconds: 0, durationSeconds: 25 * 60, selectedTodoId: null, autoStart: false, lastTickAt: null },
-  settings: { language: 'ko', cryVolume: 55, muted: false, staticMode: false, spriteStyle: 'pixel', colorTheme: 'meadow', customBackground: '', energyCollapsed: false, focusMinutes: 25, breakMinutes: 5 },
+  settings: { language: 'ko', cryVolume: 55, muted: false, backgroundNotifications: false, staticMode: false, spriteStyle: 'pixel', colorTheme: 'meadow', customBackground: '', energyCollapsed: false, focusMinutes: 25, breakMinutes: 5 },
   encounter: null, panelPositions: {}
 });
 

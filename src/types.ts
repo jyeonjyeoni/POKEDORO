@@ -11,7 +11,7 @@ export interface Friend { id: string; speciesId: number; personality: string; in
 export interface DexEntry { speciesId: number; firstSeenAt: string; befriendedCount: number; shinySeen: boolean; shinyFriend: boolean; }
 export interface EncounterState { seed: string; speciesId: number; personality: string; shiny: boolean; distance: number; turns: number; finished: boolean; befriended: boolean; reaction?: 'jump' | 'shake'; }
 export interface TimerState { type: TimerType; mode: TimerMode; running: boolean; elapsedSeconds: number; durationSeconds: number; selectedTodoId: string | null; autoStart: boolean; lastTickAt: number | null; }
-export interface Settings { language: Language; cryVolume: number; muted: boolean; staticMode: boolean; spriteStyle: SpriteStyle; colorTheme: Theme; customBackground: string; energyCollapsed: boolean; focusMinutes: number; breakMinutes: number; }
+export interface Settings { language: Language; cryVolume: number; muted: boolean; backgroundNotifications: boolean; staticMode: boolean; spriteStyle: SpriteStyle; colorTheme: Theme; customBackground: string; energyCollapsed: boolean; focusMinutes: number; breakMinutes: number; }
 export interface WindowPosition { x: number; y: number; }
 export interface AppData {
   version: number;
