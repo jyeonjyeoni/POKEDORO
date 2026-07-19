@@ -1,0 +1,1 @@
+{"name":"POKEDORO","short_name":"POKEDORO","description":"집중하면 포켓몬 세계를 탐험하는 뽀모도로 웹앱","start_url":"./","scope":"./","display":"standalone","background_color":"#f7f5ec","theme_color":"#315342","icons":[{"src":"./assets/app-icon.png","sizes":"1024x1024","type":"image/png","purpose":"any maskable"}]}
