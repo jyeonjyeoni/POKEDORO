@@ -60,7 +60,6 @@ function FocusTab({data,setData}:{data:AppData;setData:Setter}){
   <label>{t(l,'focusTask')}<select value={timer.selectedTodoId??''} onChange={e=>setData(d=>({...d,timer:{...d.timer,selectedTodoId:e.target.value||null}}))}><option value="">{t(l,'none')}</option>{data.todos.filter(x=>!x.completed).map(x=><option value={x.id} key={x.id}>{x.title}</option>)}</select></label>
   {timer.type==='pomodoro'&&<div className="time-settings"><label>{t(l,'focusTime')}<input type="number" min="1" max="999" value={focus} onChange={e=>setFocus(+e.target.value)}/>{t(l,'minute')}</label><label>{t(l,'breakTime')}<input type="number" min="1" max="999" value={rest} onChange={e=>setRest(+e.target.value)}/>{t(l,'minute')}</label><button onClick={updateSettings}>{t(l,'apply')}</button></div>}
   <div className="button-row"><button className="primary" onClick={toggle}>{timer.running?t(l,'pause'):timer.elapsedSeconds?t(l,'resume'):t(l,'start')}</button><button onClick={()=>setData(d=>({...d,timer:{...d.timer,running:false,elapsedSeconds:0,lastTickAt:null}}))}>{t(l,'stop')}</button>{timer.type==='pomodoro'&&<label className="toggle"><input type="checkbox" checked={timer.autoStart} onChange={e=>setData(d=>({...d,timer:{...d.timer,autoStart:e.target.checked}}))}/>{t(l,'auto')}</label>}</div>
-  <button className="debug" onClick={()=>setData(d=>({...d,totalFocusSeconds:d.totalFocusSeconds+1800,todos:d.todos.map(x=>x.id===d.timer.selectedTodoId?{...x,focusSeconds:x.focusSeconds+1800}:x),tickets:Math.min(3,d.tickets+1)}))}>{t(l,'debug')}</button>
  </div>;
 }
 

@@ -182,7 +182,6 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .time-settings input { width: 78px; }
 .button-row { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; }
 .toggle { display: flex !important; align-items: center !important; gap: 9px !important; }
-.debug { margin-top: 5px; color: #99a09a; font-size: 11px; background: transparent; border-style: dashed; }
 
 /* Todos */
 .todos-tab { display: grid; align-content: start; gap: 12px; }
