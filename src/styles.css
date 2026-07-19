@@ -18,7 +18,11 @@
 
 * { box-sizing: border-box; }
 html { min-width: 320px; min-height: 100%; }
-body { margin: 0; min-width: 320px; min-height: 100vh; background: #f3f5f2; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: #eef3ef; transition: background-color .25s ease; }
+body:has(.theme-blossom) { background: #f7eff1; }
+body:has(.theme-lavender) { background: #f1eff7; }
+body:has(.theme-ocean) { background: #edf4f6; }
+body:has(.theme-sunset) { background: #f7f1ec; }
 button, input, select { font: inherit; }
 button, input, select, label { -webkit-tap-highlight-color: transparent; }
 
@@ -191,7 +195,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .bulk > span { margin-left: auto; color: #9aa19a; font-size: 11px; }
 .bulk > b { display: grid; place-items: center; min-width: 28px; height: 28px; color: #fff; font-size: 11px; background: var(--accent-strong); border-radius: 99px; }
 .todo-list { overflow: hidden; border: 1px solid var(--line); border-radius: 15px; }
-.todo-row { display: grid; grid-template-columns: 28px 88px minmax(150px,1fr) auto auto 42px; align-items: center; gap: 10px; min-height: 62px; padding: 9px 12px; background: #fff; border-bottom: 1px solid #edf0ed; font-size: 12px; }
+.todo-row { display: grid; grid-template-columns: 28px 88px minmax(150px,1fr) auto auto 38px 38px; align-items: center; gap: 8px; min-height: 62px; padding: 9px 12px; background: #fff; border-bottom: 1px solid #edf0ed; font-size: 12px; }
 .todo-row:last-child { border-bottom: 0; }
 .todo-row:hover { background: #fafbfa; }
 .todo-row.complete { opacity: .58; }
@@ -202,14 +206,16 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .cat { overflow: hidden; padding: 5px 8px; color: #667068; font-size: 10px; text-align: center; text-overflow: ellipsis; white-space: nowrap; background: #eef2ee; border-radius: 7px; }
 .todo-row > strong { overflow: hidden; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
 .todo-row > span:not(.cat) { color: var(--muted); white-space: nowrap; }
-.todo-row > button:last-child { width: 38px; min-height: 36px; padding: 0; }
+.todo-edit, .todo-delete { width: 36px; min-height: 36px; padding: 0; }
 
 /* Exploration */
-.explore-landing, .encounter { display: grid; gap: 14px; padding: 28px; }
+.explore-landing, .encounter { display: grid; gap: 10px; padding: 28px; }
 .forest, .encounter-stage { position: relative; height: min(58vh,560px); min-height: 400px; overflow: hidden; background-position: center; background-size: cover; border-radius: 18px; }
 .forest-message { position: absolute; right: 8%; bottom: 18px; left: 8%; display: flex; flex-direction: column; gap: 4px; padding: 13px 16px; text-align: center; background: rgba(255,255,255,.88); border-radius: 12px; backdrop-filter: blur(10px); }
 .forest-message strong { font-size: 17px; }.forest-message span { color: #6f7871; font-size: 12px; }
-.seed-row { display: grid; grid-template-columns: 1fr auto; gap: 9px; }
+.seed-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 10px; }
+.seed-row input { width: 100%; height: 43px; min-height: 43px; }
+.seed-row button { min-height: 43px; white-space: nowrap; }
 .wild { position: absolute; top: 45%; left: 50%; width: min(230px,45vw); height: min(230px,45vw); object-fit: contain; filter: drop-shadow(0 10px 6px rgba(0,0,0,.28)); translate: -50% -50%; }
 .wild.jump { animation: jump .55s ease 2; }.wild.shake { animation: shake .35s ease 2; }
 @keyframes jump { 50%{translate:-50% -68%} } @keyframes shake { 25%{translate:-58% -50%;rotate:-4deg}75%{translate:-42% -50%;rotate:4deg} }
@@ -275,7 +281,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
   .tab-body { min-height: calc(100dvh - 162px); padding: 20px; }
   .room { inset: 90px 2% 86px; }.room-pokemon { width: clamp(105px,22vw,150px); height: clamp(105px,22vw,150px); }
   .todo-form { grid-template-columns: 1fr 1fr auto auto; }.todo-form > button { grid-column: span 2; }
-  .todo-row { grid-template-columns: 28px 72px minmax(120px,1fr) auto 42px; }.todo-row > span:nth-of-type(3) { display: none; }
+  .todo-row { grid-template-columns: 28px 72px minmax(120px,1fr) auto 38px 38px; }.todo-row > span:nth-of-type(3) { display: none; }
   .friend-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .action-grid { grid-template-columns: repeat(3,1fr); }
 }
@@ -296,8 +302,8 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
   .time-settings { width: 100%; }.time-settings label { flex: 1; }.time-settings input { width: 100%; }
   .todo-tools { margin-bottom: 1px; }.todo-form { grid-template-columns: 1fr 1fr; padding: 10px; }.todo-form > input:first-child, .todo-form > select { grid-column: 1/-1; }.todo-form label input { width: 100%; }.todo-form > button { grid-column: span 1; }
   .bulk { overflow-x: auto; }.bulk > span { display: none; }
-  .todo-row { grid-template-columns: 28px 64px minmax(0,1fr) 38px; min-height: 58px; padding: 8px; }.todo-row > span:not(.cat) { display: none; }.todo-row > strong { font-size: 13px; }
-  .forest, .encounter-stage { height: min(54vh,440px); min-height: 330px; }.forest-message { right: 12px; bottom: 12px; left: 12px; }.seed-row { grid-template-columns: 1fr; }.action-grid { grid-template-columns: repeat(2,1fr); }
+  .todo-row { grid-template-columns: 28px 64px minmax(0,1fr) 34px 34px; min-height: 58px; padding: 8px; }.todo-row > span:not(.cat) { display: none; }.todo-row > strong { font-size: 13px; }.todo-edit,.todo-delete{width:34px;min-height:34px}
+  .forest, .encounter-stage { height: min(54vh,440px); min-height: 330px; }.forest-message { right: 12px; bottom: 12px; left: 12px; }.seed-row { grid-template-columns: minmax(0,1fr) auto; }.seed-row button{max-width:46vw;padding-inline:10px;overflow:hidden;text-overflow:ellipsis}.action-grid { grid-template-columns: repeat(2,1fr); }
   .friend-grid { grid-template-columns: 1fr; }.friend-card { grid-template-columns: 86px minmax(0,1fr) auto; }.friend-card > img,.pokemon-fallback { width: 86px; height: 86px; }
   .dex-head { align-items: stretch; flex-direction: column; }.dex-head span { white-space: normal; }.dex-list { height: calc(100dvh - 250px); }.dex-list > div { grid-template-columns: 72px 58px 1fr 24px; padding-inline: 9px; }
   .settings-grid { grid-template-columns: 1fr; gap: 9px; }.settings-grid > label,.settings-grid fieldset { min-height: 64px; padding: 11px 13px; }.settings-grid > label select { min-width: 135px; }.settings-grid > label input[type="range"] { width: min(42vw,180px); }
