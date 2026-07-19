@@ -271,6 +271,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .file-button { display: inline-flex; align-items: center; min-height: 42px; padding: 9px 15px; font-size: 13px; font-weight: 650; background: #fff; border: 1px solid var(--line); border-radius: 11px; cursor: pointer; }
 
 .toast { position: fixed; bottom: 26px; left: 50%; z-index: 120; max-width: calc(100vw - 30px); padding: 12px 18px; color: #fff; font-size: 13px; font-weight: 700; text-align: center; background: #232a25; border-radius: 12px; box-shadow: 0 15px 45px rgba(22,30,24,.28); translate: -50%; }
+.app-version { position: fixed; bottom: max(3px,env(safe-area-inset-bottom)); left: 50%; z-index: 2; color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .08em; opacity: .58; pointer-events: none; translate: -50%; }
 .loading { display: grid; min-height: 100vh; place-items: center; color: var(--accent-strong); font-size: 16px; font-weight: 800; letter-spacing: .16em; }
 
 @media (max-width: 900px) {

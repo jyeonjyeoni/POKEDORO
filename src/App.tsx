@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { toBlob } from 'html-to-image';
+import packageInfo from '../package.json';
 import type { AppData, Category, Friend, Language, PanelName } from './types';
 import { t, type TranslationKey } from './i18n';
 import { cryUrl, evolutionOptions, loadCatalog, spriteUrl, type CatalogEntry } from './catalog';
@@ -138,4 +139,5 @@ export default function App(){const {data,setData,toast,setToast}=usePokedoro();
  {menuOpen&&<button className="menu-scrim" aria-label={t(l,'close')} onClick={()=>setMenuOpen(false)}/>}
  <aside className={`side-menu ${menuOpen?'open':''}`} aria-hidden={!menuOpen}><div className="menu-heading"><strong>POKEDORO</strong><span>{t(l,'menu')}</span></div><nav><button onClick={()=>open('room')} className={tab==='room'?'active':''}><span><MenuIcon name="room"/></span>{t(l,'room')}</button>{panels.map(x=><button key={x} onClick={()=>open(x)} className={tab===x?'active':''}><span><MenuIcon name={x}/></span>{panelLabel(l,x)}</button>)}</nav><small>Timer · Explore · Befriend</small></aside>
  <section className="screen">{tab==='room'?<MainWidget data={data} setData={update} catalog={catalog} open={x=>open(x)} onToast={notify}/>:<section className="workspace"><header><span className="panel-symbol"><MenuIcon name={tab}/></span><div><small>POKEDORO</small><h1>{panelLabel(l,tab)}</h1></div></header>{tab==='focus'&&<FocusTab data={data} setData={update}/>} {tab==='todos'&&<TodosTab data={data} setData={update}/>} {tab==='explore'&&<ExploreTab data={data} setData={update} catalog={catalog} onToast={notify}/>} {tab==='friends'&&<FriendsTab data={data} setData={update} catalog={catalog} onToast={notify}/>} {tab==='dex'&&<DexTab data={data} catalog={catalog}/>} {tab==='settings'&&<SettingsTab data={data} setData={update} onToast={notify}/>}</section>}</section>
+ <footer className="app-version">POKEDORO v{packageInfo.version}</footer>
  {toast&&<div className="toast">{toast==='ticket'?t(l,'ticketEarned'):toast}</div>}</main>}
