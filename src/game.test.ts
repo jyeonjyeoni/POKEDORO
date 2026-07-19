@@ -1,10 +1,26 @@
 import { describe,expect,it } from 'vitest';
-import { advanceData, awardFocus, encounterFromSeed, performAction, petOutcome } from './game';
+import { advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, normalizePlaceSeed, performAction, petOutcome, PLACE_WEIGHT_TOTAL, resolvePlaceSeed } from './game';
 import { defaultData } from './store';
 
 describe('exploration seed',()=>{
- it('reproduces species and personality but not shiny',()=>{const a=encounterFromSeed('launch-eevee',1025,()=>0);const b=encounterFromSeed('launch-eevee',1025,()=>1);expect(a.speciesId).toBe(b.speciesId);expect(a.personality).toBe(b.personality);expect(a.shiny).not.toBe(b.shiny)});
- it('finishes a compatible friendship within five actions',()=>{let e=encounterFromSeed('friendly',1025,()=>1);for(let i=0;i<5&&!e.finished;i++)e=performAction(e,'snack');expect(e.turns).toBeLessThanOrEqual(5)});
+ const vectors=[
+  ['POKE-DORO',12740,100,4,'playful'],['AAAA-AAAA',57458,475,4,'playful'],
+  ['2345-6789',115335,957,7,'sleepy'],['TEST-SEED',36918,304,7,'sleepy'],
+  ['ABCD-EFGH',54834,453,6,'aloof'],['ZZZZ-ZZZZ',52937,437,0,'timid']
+ ] as const;
+ it.each(vectors)('matches desktop PLACE-V1 for %s',async(seed,roll,speciesId,personalityIndex,personality)=>{
+  expect(await resolvePlaceSeed(seed)).toEqual({seed,roll,speciesId,personalityIndex,personality});
+ });
+ it('normalizes direct and shared seeds exactly like desktop',()=>{
+  expect(normalizePlaceSeed(' po ke-do ro ')).toBe('POKE-DORO');
+  expect(normalizePlaceSeed("'POKE-DORO'에서 '피카츄'를 만났어! #포케도로")).toBe('POKE-DORO');
+  expect(normalizePlaceSeed('IO01-IO01')).toBe('IO01-IO01');
+  expect(()=>normalizePlaceSeed('short')).toThrow('INVALID_PLACE_SEED');
+ });
+ it('generates canonical seeds from the desktop alphabet',()=>{for(let i=0;i<20;i++)expect(generatePlaceSeed()).toMatch(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/)});
+ it('keeps shiny independent from place species and personality',async()=>{const a=await encounterFromSeed('POKE-DORO',()=>0);const b=await encounterFromSeed('POKE-DORO',()=>1);expect(a.speciesId).toBe(b.speciesId);expect(a.personality).toBe(b.personality);expect(a.shiny).toBe(true);expect(b.shiny).toBe(false)});
+ it('finishes a compatible friendship within five actions',async()=>{let e=await encounterFromSeed('AAAA-AAAA',()=>1);for(let i=0;i<5&&!e.finished;i++)e=performAction(e,'snack');expect(e.turns).toBeLessThanOrEqual(5)});
+ it('freezes the PLACE-V1 total weight',()=>expect(PLACE_WEIGHT_TOTAL).toBe(123508));
 });
 describe('focus rewards',()=>{
  it('awards at every 30 minutes and caps tickets at three',()=>{expect(awardFocus(0,0,5400)).toEqual({tickets:3,bank:0,earned:3});expect(awardFocus(3,1700,200)).toEqual({tickets:3,bank:100,earned:0})});

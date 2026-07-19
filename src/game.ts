@@ -1,4 +1,5 @@
 import type { AppData, EncounterState, Friend, Language } from './types';
+import { PythonRandom } from './pythonRandom';
 
 export const PERSONALITIES = ['timid','glutton','curious','calm','playful','affectionate','aloof','sleepy'] as const;
 export const ACTIONS = ['approach','wait','play','snack','petTry'] as const;
@@ -22,15 +23,59 @@ export function petOutcome(friend:Pick<Friend,'intimacy'|'lastPetAt'>,now=new Da
   return {allowed:true,gain,intimacy:Math.min(100,friend.intimacy+gain)};
 }
 
-export function hashSeed(text:string):number {
-  let h=2166136261;
-  for (let i=0;i<text.length;i++) { h^=text.charCodeAt(i); h=Math.imul(h,16777619); }
-  return h>>>0;
+export const PLACE_SEED_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+export const PLACE_SPECIES_COUNT = 1025;
+export const PLACE_WEIGHT_TOTAL = 123508;
+const PLACE_PREFIX = 'POKEDORO-PLACE-V1:';
+const SPECIAL_WEIGHTS:Readonly<Record<number,number>> = {
+  1:45,4:45,7:45,10:255,16:255,25:190,35:150,39:170,52:255,54:190,58:190,
+  63:200,74:255,92:190,104:190,113:30,129:255,133:45,143:25,147:45,151:3
+};
+const PLACE_WEIGHTS = Array.from({length:PLACE_SPECIES_COUNT},(_,index)=>SPECIAL_WEIGHTS[index+1]??120);
+if(PLACE_WEIGHTS.reduce((sum,weight)=>sum+weight,0)!==PLACE_WEIGHT_TOTAL)throw new Error('Invalid PLACE-V1 weight table');
+
+export function normalizePlaceSeed(value:string):string {
+  let raw=String(value).trim().toUpperCase();
+  const shared=raw.match(/['\u2018\u2019\"]([A-Z0-9\s-]+)['\u2018\u2019\"]\s*\uC5D0\uC11C/);
+  if(shared)raw=shared[1];
+  const compact=raw.replace(/[\s-]/g,'');
+  if(!/^[A-Z0-9]{8}$/.test(compact))throw new Error('INVALID_PLACE_SEED');
+  return `${compact.slice(0,4)}-${compact.slice(4)}`;
 }
-export function encounterFromSeed(seed:string, speciesCount=1025, random=Math.random):EncounterState {
-  const normalized=seed.trim() || crypto.randomUUID().slice(0,8);
-  const h=hashSeed(normalized);
-  return {seed:normalized,speciesId:(h%speciesCount)+1,personality:PERSONALITIES[Math.floor(h/speciesCount)%PERSONALITIES.length],shiny:random()<1/4096,distance:0,turns:0,finished:false,befriended:false};
+
+export function generatePlaceSeed():string {
+  const bytes=new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  const compact=Array.from(bytes,value=>PLACE_SEED_ALPHABET[value&31]).join('');
+  return `${compact.slice(0,4)}-${compact.slice(4)}`;
+}
+
+async function placeSeedWords(canonicalSeed:string):Promise<number[]> {
+  const digest=new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(`${PLACE_PREFIX}${canonicalSeed}`)));
+  const words:number[]=[];
+  for(let offset=digest.length-4;offset>=0;offset-=4){
+    words.push(((digest[offset]<<24)|(digest[offset+1]<<16)|(digest[offset+2]<<8)|digest[offset+3])>>>0);
+  }
+  while(words.length>1&&words[words.length-1]===0)words.pop();
+  return words;
+}
+
+export async function resolvePlaceSeed(value:string):Promise<{seed:string;roll:number;speciesId:number;personalityIndex:number;personality:typeof PERSONALITIES[number]}> {
+  const seed=normalizePlaceSeed(value);
+  const rng=new PythonRandom(await placeSeedWords(seed));
+  const roll=rng.randRange(PLACE_WEIGHT_TOTAL);
+  let cumulative=0,speciesId=PLACE_SPECIES_COUNT;
+  for(let index=0;index<PLACE_WEIGHTS.length;index++){
+    cumulative+=PLACE_WEIGHTS[index];
+    if(roll<cumulative){speciesId=index+1;break}
+  }
+  const personalityIndex=rng.randRange(PERSONALITIES.length);
+  return {seed,roll,speciesId,personalityIndex,personality:PERSONALITIES[personalityIndex]};
+}
+
+export async function encounterFromSeed(seed:string,random=Math.random):Promise<EncounterState> {
+  const place=await resolvePlaceSeed(seed.trim()?seed:generatePlaceSeed());
+  return {...place,shiny:random()<1/2048,distance:0,turns:0,finished:false,befriended:false};
 }
 export function performAction(encounter:EncounterState, action:Action):EncounterState {
   if (encounter.finished) return encounter;
