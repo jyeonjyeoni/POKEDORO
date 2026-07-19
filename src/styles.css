@@ -193,7 +193,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .todo-form label { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 12px; }
 .todo-form input[type="number"] { width: 70px; }
 .bulk { display: flex; align-items: center; gap: 8px; min-height: 44px; }
-.bulk > span { margin-left: auto; color: #9aa19a; font-size: 11px; }
+.bulk > .reorder-hint { color: #9aa19a; font-size: 10px; font-weight: 500; white-space: nowrap; }
 .bulk > b { display: grid; place-items: center; min-width: 28px; height: 28px; color: #fff; font-size: 11px; background: var(--accent-strong); border-radius: 99px; }
 .todo-list { overflow: hidden; border: 1px solid var(--line); border-radius: 15px; }
 .todo-row { display: grid; grid-template-columns: 28px 88px minmax(150px,1fr) auto auto 38px 38px; align-items: center; gap: 8px; min-height: 62px; padding: 9px 12px; background: #fff; border-bottom: 1px solid #edf0ed; font-size: 12px; }
@@ -302,7 +302,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
   .focus-tab { justify-content: flex-start; padding-top: 28px; }.big-time { font-size: clamp(52px,18vw,72px); }.focus-tab > label { grid-template-columns: 1fr; gap: 6px; width: 100%; }.focus-tab > label select { width: 100%; }
   .time-settings { width: 100%; }.time-settings label { flex: 1; }.time-settings input { width: 100%; }
   .todo-tools { margin-bottom: 1px; }.todo-form { grid-template-columns: 1fr 1fr; padding: 10px; }.todo-form > input:first-child, .todo-form > select { grid-column: 1/-1; }.todo-form label input { width: 100%; }.todo-form > button { grid-column: span 1; }
-  .bulk { overflow-x: auto; }.bulk > span { display: none; }
+  .bulk { overflow-x: auto; }
   .todo-row { grid-template-columns: 28px 64px minmax(0,1fr) 34px 34px; grid-template-rows: auto auto; min-height: 68px; padding: 8px; }
   .todo-row > .completion-check, .todo-row > .select-dot, .todo-row > .cat, .todo-row > .todo-edit, .todo-row > .todo-delete { grid-row: 1 / 3; }
   .todo-row > strong { grid-column: 3; grid-row: 1; align-self: end; font-size: 13px; }
