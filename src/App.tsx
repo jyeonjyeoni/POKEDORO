@@ -8,10 +8,11 @@ import { ACTIONS, encounterFromSeed, formatTime, hintFor, performAction, persona
 import { exportBackup, importBackup } from './store';
 import { disableBackgroundNotifications, enableBackgroundNotifications, supportsBackgroundNotifications } from './pushNotifications';
 import { usePokedoro } from './usePokedoro';
+import { createId } from './id';
 import './styles.css';
 
 type Setter=(update:(data:AppData)=>AppData)=>void;
-const uid=()=>crypto.randomUUID();
+const uid=()=>createId();
 function MenuIcon({name}:{name:PanelName|'room'}){
  if(name==='room')return <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z"/></svg>;
  if(name==='focus')return <svg viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M8 3a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1zM3 14a9 9 0 0 1 14.618-7.032l.675-.675a1 1 0 1 1 1.414 1.414l-.675.675A9 9 0 1 1 3 14zm10-4a1 1 0 1 0-2 0v4a1 1 0 1 0 2 0v-4z" clipRule="evenodd"/></svg>;

@@ -1,4 +1,5 @@
 import type { AppData } from './types';
+import { createId } from './id';
 
 const API_URL = 'https://pokedoro-notify.jyeonjyeoni.workers.dev';
 const DEVICE_KEY = 'pokedoro-push-device-id';
@@ -6,7 +7,7 @@ const DEVICE_KEY = 'pokedoro-push-device-id';
 function deviceId(): string {
   let value = localStorage.getItem(DEVICE_KEY);
   if (!value) {
-    value = crypto.randomUUID();
+    value = createId();
     localStorage.setItem(DEVICE_KEY, value);
   }
   return value;
