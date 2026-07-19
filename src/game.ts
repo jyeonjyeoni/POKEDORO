@@ -5,8 +5,19 @@ import { sha256 } from './sha256';
 export const PERSONALITIES = ['timid','glutton','curious','calm','playful','affectionate','aloof','sleepy'] as const;
 export const ACTIONS = ['approach','wait','play','snack','petTry'] as const;
 export type Action = typeof ACTIONS[number];
-const favorite:Record<string,Action> = {timid:'wait',glutton:'snack',curious:'approach',calm:'wait',playful:'play',affectionate:'petTry',aloof:'approach',sleepy:'snack'};
-const disliked:Record<string,Action> = {timid:'approach',glutton:'wait',curious:'wait',calm:'play',playful:'wait',affectionate:'wait',aloof:'petTry',sleepy:'play'};
+type Personality = typeof PERSONALITIES[number];
+export type EncounterReaction = 'liked'|'neutral'|'disliked';
+export const SCORE_RANGES:Readonly<Record<EncounterReaction,readonly [number,number]>>={liked:[24,38],neutral:[10,22],disliked:[-8,5]};
+const PREFERENCES:Record<Personality,{liked:readonly Action[];disliked:Action}>={
+ timid:{liked:['wait','snack'],disliked:'petTry'},
+ glutton:{liked:['approach','snack'],disliked:'wait'},
+ curious:{liked:['approach','play'],disliked:'wait'},
+ calm:{liked:['wait','petTry'],disliked:'play'},
+ playful:{liked:['approach','play'],disliked:'wait'},
+ affectionate:{liked:['play','petTry'],disliked:'wait'},
+ aloof:{liked:['wait','snack'],disliked:'approach'},
+ sleepy:{liked:['wait','petTry'],disliked:'play'}
+};
 const names:Record<Language,Record<string,string>> = {
  ko:{timid:'겁쟁이',glutton:'먹보',curious:'호기심쟁이',calm:'느긋함',playful:'장난꾸러기',affectionate:'애교쟁이',aloof:'새침함',sleepy:'잠꾸러기'},
  en:{timid:'Timid',glutton:'Glutton',curious:'Curious',calm:'Relaxed',playful:'Playful',affectionate:'Affectionate',aloof:'Aloof',sleepy:'Sleepy'},
@@ -80,12 +91,19 @@ export async function encounterFromSeed(seed:string,random=Math.random):Promise<
   const place=await resolvePlaceSeed(seed.trim()?seed:generatePlaceSeed());
   return {...place,shiny:random()<1/2048,distance:0,turns:0,finished:false,befriended:false};
 }
-export function performAction(encounter:EncounterState, action:Action):EncounterState {
+export function reactionFor(personality:string,action:Action):EncounterReaction {
+  const preference=PREFERENCES[personality as Personality];
+  if(!preference)return 'neutral';
+  if(preference.liked.includes(action))return 'liked';
+  return preference.disliked===action?'disliked':'neutral';
+}
+export function performAction(encounter:EncounterState,action:Action,random=Math.random):EncounterState {
   if (encounter.finished) return encounter;
-  const delta=action===favorite[encounter.personality]?34:action===disliked[encounter.personality]?-5:18;
-  const distance=Math.max(0,Math.min(100,encounter.distance+delta));
+  const judgement=reactionFor(encounter.personality,action),[minimum,maximum]=SCORE_RANGES[judgement];
+  const points=Math.floor(random()*(maximum-minimum+1))+minimum;
+  const distance=Math.max(0,Math.min(100,encounter.distance+points));
   const turns=encounter.turns+1;
-  return {...encounter,distance,turns,finished:distance>=100||turns>=5,befriended:distance>=100,reaction:delta>=30?'jump':delta<0?'shake':undefined};
+  return {...encounter,distance,turns,finished:distance>=100||turns>=5,befriended:distance>=100,reaction:judgement==='liked'?'jump':judgement==='disliked'?'shake':undefined};
 }
 export function hintFor(personality:string,language:Language):string {
   const hints:Record<Language,Record<string,string>>={

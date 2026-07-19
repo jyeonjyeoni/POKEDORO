@@ -1,5 +1,6 @@
 import { describe,expect,it } from 'vitest';
-import { advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, normalizePlaceSeed, performAction, petOutcome, PLACE_WEIGHT_TOTAL, resolvePlaceSeed } from './game';
+import { ACTIONS, advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, normalizePlaceSeed, performAction, petOutcome, PLACE_WEIGHT_TOTAL, reactionFor, resolvePlaceSeed } from './game';
+import type { EncounterState } from './types';
 import { defaultData } from './store';
 
 describe('exploration seed',()=>{
@@ -20,8 +21,24 @@ describe('exploration seed',()=>{
  it('generates canonical seeds from the desktop alphabet',()=>{for(let i=0;i<20;i++)expect(generatePlaceSeed()).toMatch(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/)});
  it('starts a random exploration when the seed field is empty',async()=>{const encounter=await encounterFromSeed('',()=>1);expect(encounter.seed).toMatch(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/);expect(encounter.speciesId).toBeGreaterThanOrEqual(1);expect(encounter.speciesId).toBeLessThanOrEqual(1025)});
  it('keeps shiny independent from place species and personality',async()=>{const a=await encounterFromSeed('POKE-DORO',()=>0);const b=await encounterFromSeed('POKE-DORO',()=>1);expect(a.speciesId).toBe(b.speciesId);expect(a.personality).toBe(b.personality);expect(a.shiny).toBe(true);expect(b.shiny).toBe(false)});
- it('finishes a compatible friendship within five actions',async()=>{let e=await encounterFromSeed('AAAA-AAAA',()=>1);for(let i=0;i<5&&!e.finished;i++)e=performAction(e,'snack');expect(e.turns).toBeLessThanOrEqual(5)});
  it('freezes the PLACE-V1 total weight',()=>expect(PLACE_WEIGHT_TOTAL).toBe(123508));
+});
+describe('encounter friendship difficulty',()=>{
+ const encounter=(personality='timid',distance=0,turns=0):EncounterState=>({seed:'TEST-SEED',speciesId:1,personality,shiny:false,distance,turns,finished:false,befriended:false});
+ const preferences={
+  timid:{liked:['wait','snack'],disliked:'petTry'},glutton:{liked:['approach','snack'],disliked:'wait'},curious:{liked:['approach','play'],disliked:'wait'},calm:{liked:['wait','petTry'],disliked:'play'},
+  playful:{liked:['approach','play'],disliked:'wait'},affectionate:{liked:['play','petTry'],disliked:'wait'},aloof:{liked:['wait','snack'],disliked:'approach'},sleepy:{liked:['wait','petTry'],disliked:'play'}
+ } as const;
+ it('matches every desktop personality preference',()=>{for(const [personality,preference] of Object.entries(preferences)){for(const action of ACTIONS){const expected=(preference.liked as readonly string[]).includes(action)?'liked':preference.disliked===action?'disliked':'neutral';expect(reactionFor(personality,action)).toBe(expected)}}});
+ it('draws inclusive integer scores from the desktop ranges',()=>{
+  expect(performAction(encounter('timid'),'wait',()=>0).distance).toBe(24);expect(performAction(encounter('timid'),'wait',()=>0.999999).distance).toBe(38);
+  expect(performAction(encounter('timid'),'approach',()=>0).distance).toBe(10);expect(performAction(encounter('timid'),'approach',()=>0.999999).distance).toBe(22);
+  expect(performAction(encounter('timid',20),'petTry',()=>0).distance).toBe(12);expect(performAction(encounter('timid',20),'petTry',()=>0.999999).distance).toBe(25);
+ });
+ it('uses preference gestures even when disliked points happen to rise',()=>{expect(performAction(encounter('timid',20),'petTry',()=>0.999999).reaction).toBe('shake');expect(performAction(encounter('timid'),'wait',()=>0).reaction).toBe('jump')});
+ it('guarantees success with five minimum liked actions',()=>{let current=encounter('timid');for(let turn=0;turn<5&&!current.finished;turn++)current=performAction(current,'wait',()=>0);expect(current).toMatchObject({distance:100,turns:5,finished:true,befriended:true})});
+ it('counts reaching 100 on turn five as success',()=>expect(performAction(encounter('timid',76,4),'wait',()=>0)).toMatchObject({distance:100,turns:5,finished:true,befriended:true}));
+ it('fails after turn five when distance remains below 100',()=>expect(performAction(encounter('timid',75,4),'wait',()=>0)).toMatchObject({distance:99,turns:5,finished:true,befriended:false}));
 });
 describe('focus rewards',()=>{
  it('awards at every 30 minutes and caps tickets at three',()=>{expect(awardFocus(0,0,5400)).toEqual({tickets:3,bank:0,earned:3});expect(awardFocus(3,1700,200)).toEqual({tickets:3,bank:100,earned:0})});
