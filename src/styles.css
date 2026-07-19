@@ -209,7 +209,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .todo-edit, .todo-delete { width: 36px; min-height: 36px; padding: 0; }
 
 /* Exploration */
-.explore-landing, .encounter { display: grid; gap: 10px; padding: 28px; }
+.explore-landing, .encounter { display: grid; align-content: start; gap: 10px; padding: 28px; }
 .forest, .encounter-stage { position: relative; height: min(58vh,560px); min-height: 400px; overflow: hidden; background-position: center; background-size: cover; border-radius: 18px; }
 .forest-message { position: absolute; right: 8%; bottom: 18px; left: 8%; display: flex; flex-direction: column; gap: 4px; padding: 13px 16px; text-align: center; background: rgba(255,255,255,.88); border-radius: 12px; backdrop-filter: blur(10px); }
 .forest-message strong { font-size: 17px; }.forest-message span { color: #6f7871; font-size: 12px; }
