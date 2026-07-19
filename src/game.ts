@@ -1,4 +1,4 @@
-import type { AppData, EncounterState, Language } from './types';
+import type { AppData, EncounterState, Friend, Language } from './types';
 
 export const PERSONALITIES = ['timid','glutton','curious','calm','playful','affectionate','aloof','sleepy'] as const;
 export const ACTIONS = ['approach','wait','play','snack','petTry'] as const;
@@ -11,6 +11,16 @@ const names:Record<Language,Record<string,string>> = {
  ja:{timid:'おくびょう',glutton:'くいしんぼう',curious:'こうきしん',calm:'のんびり',playful:'いたずらずき',affectionate:'あまえんぼう',aloof:'きまぐれ',sleepy:'ねぼすけ'}
 };
 export const personalityName = (p:string,l:Language) => names[l][p] ?? p;
+
+export const PET_COOLDOWN_MS = 10 * 60 * 1000;
+export function petOutcome(friend:Pick<Friend,'intimacy'|'lastPetAt'>,now=new Date()):{allowed:boolean;gain:number;intimacy:number} {
+  const parsed=friend.lastPetAt?new Date(friend.lastPetAt):null;
+  const last=parsed&&!Number.isNaN(parsed.getTime())?parsed:null;
+  if(last&&now.getTime()-last.getTime()<PET_COOLDOWN_MS)return {allowed:false,gain:0,intimacy:friend.intimacy};
+  const firstToday=!last||last.toDateString()!==now.toDateString();
+  const gain=firstToday?3:1;
+  return {allowed:true,gain,intimacy:Math.min(100,friend.intimacy+gain)};
+}
 
 export function hashSeed(text:string):number {
   let h=2166136261;
@@ -50,6 +60,11 @@ function creditFocus(data:AppData,seconds:number):AppData {
   return {...data,tickets:reward.tickets,focusBankSeconds:reward.bank,totalFocusSeconds:data.totalFocusSeconds+seconds,todos:data.todos.map(x=>x.id===data.timer.selectedTodoId?{...x,focusSeconds:x.focusSeconds+seconds}:x),friends:data.friends.map(x=>x.inRoom?{...x,togetherSeconds:x.togetherSeconds+seconds}:x)};
 }
 
+function rewardRoomIntimacy(data:AppData,gain:number):AppData {
+  if(gain<=0)return data;
+  return {...data,friends:data.friends.map(friend=>friend.inRoom?{...friend,intimacy:Math.min(99,friend.intimacy+gain),mood:'proud'}:friend)};
+}
+
 export function advanceData(previous:AppData,now:number):{data:AppData;completed:boolean;earned:number} {
   if(!previous.timer.running)return {data:previous,completed:false,earned:0};
   const last=previous.timer.lastTickAt??now;
@@ -59,8 +74,11 @@ export function advanceData(previous:AppData,now:number):{data:AppData;completed
   let data:AppData={...previous,timer:{...previous.timer,lastTickAt:last+seconds*1000}};
   let completed=false;
   if(data.timer.type==='stopwatch'){
+    const previousMilestones=Math.floor(data.timer.elapsedSeconds/1800);
     data=creditFocus(data,seconds);
     data={...data,timer:{...data.timer,elapsedSeconds:data.timer.elapsedSeconds+seconds}};
+    const milestones=Math.floor(data.timer.elapsedSeconds/1800)-previousMilestones;
+    data=rewardRoomIntimacy(data,milestones*2);
     return {data,completed:false,earned:data.tickets-oldTickets};
   }
   let guard=0;
@@ -73,7 +91,7 @@ export function advanceData(previous:AppData,now:number):{data:AppData;completed
     if(data.timer.elapsedSeconds>=data.timer.durationSeconds){
       completed=true;
       const wasFocus=data.timer.mode==='focus';
-      if(wasFocus)data={...data,todos:data.todos.map(x=>x.id===data.timer.selectedTodoId?{...x,pomodoroCount:x.pomodoroCount+1}:x)};
+      if(wasFocus){data={...data,todos:data.todos.map(x=>x.id===data.timer.selectedTodoId?{...x,pomodoroCount:x.pomodoroCount+1}:x)};data=rewardRoomIntimacy(data,2)}
       const mode=wasFocus?'break':'focus';
       const duration=(mode==='focus'?data.settings.focusMinutes:data.settings.breakMinutes)*60;
       data={...data,timer:{...data.timer,mode,elapsedSeconds:0,durationSeconds:duration,running:data.timer.autoStart,lastTickAt:data.timer.autoStart?now-seconds*1000:null}};
