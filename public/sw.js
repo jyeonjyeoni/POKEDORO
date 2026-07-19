@@ -1,4 +1,4 @@
-const CACHE='pokedoro-web-v3';
+const CACHE='pokedoro-web-v4';
 const CORE=['./manifest.webmanifest','./assets/meadow.jpg','./assets/exploration-background.jpg','./assets/timer-finished.mp3','./assets/national-pokedex.json','./assets/pokemon-species-names.csv'];
 
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
@@ -14,7 +14,7 @@ self.addEventListener('push',event=>{
       windows.forEach(client=>client.postMessage({type:'timer-push',data:payload.data||{}}));
       return;
     }
-    await self.registration.showNotification(payload.title||'POKEDORO',{
+    const options={
       body:payload.body||'',
       icon:payload.icon||'./assets/app-icon.png',
       badge:payload.badge||'./assets/app-icon.png',
@@ -23,7 +23,9 @@ self.addEventListener('push',event=>{
       renotify:true,
       requireInteraction:true,
       silent:Boolean(payload.silent)
-    });
+    };
+    if(!payload.silent)options.vibrate=[300,120,300,120,600];
+    await self.registration.showNotification(payload.title||'POKEDORO',options);
   })());
 });
 
