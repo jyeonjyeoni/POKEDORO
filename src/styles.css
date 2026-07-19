@@ -120,6 +120,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .side-menu nav { display: grid; gap: 5px; }
 .side-menu nav button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 46px; padding: 10px 13px; color: #566058; text-align: left; background: transparent; border-color: transparent; }
 .side-menu nav button > span { display: grid; place-items: center; width: 20px; color: #8b948d; font-size: 16px; }
+.side-menu nav button > span svg { width: 17px; height: 17px; fill: currentColor; }
 .side-menu nav button.active { color: #fff; background: #232a25; }
 .side-menu nav button.active > span { color: #fff; }
 .side-menu > small { display: block; padding: 18px 9px 2px; letter-spacing: .04em; }
@@ -131,6 +132,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .workspace > header small { color: #9aa19b; font-size: 10px; font-weight: 700; letter-spacing: .14em; }
 .workspace > header h1 { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -.035em; }
 .panel-symbol { display: grid; place-items: center; width: 48px; height: 48px; color: #fff; font-size: 18px; background: var(--accent-strong); border-radius: 15px; }
+.panel-symbol svg { width: 20px; height: 20px; fill: currentColor; }
 .tab-body { min-height: calc(100dvh - 208px); padding: 28px; }
 
 /* Pokémon room */
