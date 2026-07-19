@@ -26,6 +26,8 @@ const LOCAL_ORIGINS = new Set(["http://localhost:5173", "http://127.0.0.1:5173"]
 const MAX_BODY_BYTES = 16_384;
 const MAX_REMINDER_DELAY = 24 * 60 * 60 * 1000;
 const DEVICE_ID = /^[A-Za-z0-9_-]{20,80}$/;
+const ALERT_REPEAT_COUNT = 3;
+const ALERT_REPEAT_INTERVAL_MS = 3_000;
 
 const messages: Record<Language, Record<TimerMode, { title: string; body: string }>> = {
 	ko: {
@@ -126,19 +128,23 @@ export class Reminder extends DurableObject<WorkerEnv> {
 	async schedule(reminder: ReminderDetails): Promise<void> {
 		const subscription = await this.ctx.storage.get<PushSubscription>("subscription");
 		if (!subscription) throw new Error("Push subscription not found");
-		await this.ctx.storage.put("reminder", reminder);
+		await this.ctx.storage.put({
+			reminder,
+			repeatRemaining: ALERT_REPEAT_COUNT - 1,
+		});
 		await this.ctx.storage.setAlarm(reminder.finishAt);
 	}
 
 	async cancel(): Promise<void> {
-		await this.ctx.storage.delete("reminder");
+		await this.ctx.storage.delete(["reminder", "repeatRemaining"]);
 		await this.ctx.storage.deleteAlarm();
 	}
 
 	async alarm(): Promise<void> {
-		const [subscription, reminder] = await Promise.all([
+		const [subscription, reminder, repeatRemaining = 0] = await Promise.all([
 			this.ctx.storage.get<PushSubscription>("subscription"),
 			this.ctx.storage.get<ReminderDetails>("reminder"),
+			this.ctx.storage.get<number>("repeatRemaining"),
 		]);
 		if (!subscription || !reminder) {
 			await this.cancel();
@@ -167,9 +173,18 @@ export class Reminder extends DurableObject<WorkerEnv> {
 			throw error;
 		}
 
+		if (repeatRemaining > 0) {
+			await this.ctx.storage.put("repeatRemaining", repeatRemaining - 1);
+			await this.ctx.storage.setAlarm(Date.now() + ALERT_REPEAT_INTERVAL_MS);
+			return;
+		}
+
 		if (reminder.autoStart) {
 			const next = nextReminder(reminder, Date.now());
-			await this.ctx.storage.put("reminder", next);
+			await this.ctx.storage.put({
+				reminder: next,
+				repeatRemaining: ALERT_REPEAT_COUNT - 1,
+			});
 			await this.ctx.storage.setAlarm(next.finishAt);
 		} else {
 			await this.cancel();

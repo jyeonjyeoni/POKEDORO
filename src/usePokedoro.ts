@@ -67,7 +67,7 @@ export function usePokedoro() {
       if(result.completed){
         const visibleSince=visibleSinceRef.current;
         const stayedVisibleUntilCompletion=visibleSince!==null&&visibleSince<=expectedAt;
-        const playLocally=!previous.settings.backgroundNotifications||(document.visibilityState==='visible'&&completedOnTime&&stayedVisibleUntilCompletion);
+        const playLocally=document.visibilityState!=='visible'||!previous.settings.backgroundNotifications||(completedOnTime&&stayedVisibleUntilCompletion);
         if(playLocally){const audio=alarmRef.current;if(audio){audio.pause();audio.currentTime=0;audio.volume=previous.settings.muted?0:previous.settings.cryVolume/100;audio.play().catch(()=>{});}}
         if(!previous.settings.backgroundNotifications&&typeof Notification!=='undefined'&&Notification.permission==='granted'){
           try{new Notification('POKEDORO',{body:previous.settings.language==='en'?'The timer is complete.':previous.settings.language==='ja'?'タイマーが終了しました。':'타이머가 완료되었습니다.',icon:'./assets/app-icon.png'})}catch{/* iOS browsers may expose Notification but reject direct construction. */}
