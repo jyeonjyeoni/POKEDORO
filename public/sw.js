@@ -1,4 +1,4 @@
-const CACHE='pokedoro-web-v13';
+const CACHE='pokedoro-web-v14';
 const CORE=['./manifest.webmanifest','./assets/meadow.jpg','./assets/exploration-background.jpg','./assets/timer-finished.mp3','./assets/national-pokedex.json','./assets/pokemon-species-names.csv'];
 
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
