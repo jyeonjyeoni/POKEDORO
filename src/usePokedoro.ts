@@ -2,15 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import type { AppData } from './types';
 import { advanceData } from './game';
 import { syncTimerNotification } from './pushNotifications';
-import { createDailyBackup, loadData, saveData } from './store';
+import { createDailyBackup, loadData, runStoredAutoPetIfDue, saveData } from './store';
 
 export function usePokedoro() {
   const [data,setData]=useState<AppData|null>(null);
   const [toast,setToast]=useState('');
   const alarmRef=useRef<HTMLAudioElement|null>(null);
+  const syncChannelRef=useRef<BroadcastChannel|null>(null);
   const visibleSinceRef=useRef<number|null>(document.visibilityState==='visible'?Date.now():null);
   useEffect(()=>{
     loadData().then(setData);
+    if(typeof BroadcastChannel!=='undefined'){
+      const channel=new BroadcastChannel('pokedoro-state-sync');
+      channel.onmessage=event=>{if(event.data?.type==='auto-pet'&&event.data.data)setData(event.data.data as AppData)};
+      syncChannelRef.current=channel;
+    }
     const alarm=new Audio('./assets/timer-finished.mp3');
     alarm.preload='auto';
     alarmRef.current=alarm;
@@ -36,6 +42,8 @@ export function usePokedoro() {
     return()=>{
       document.removeEventListener('pointerdown',unlockAudio);
       document.removeEventListener('visibilitychange',handleVisibilityChange);
+      syncChannelRef.current?.close();
+      syncChannelRef.current=null;
     };
   },[]);
   useEffect(()=>{ if(!data)return; const id=setTimeout(()=>{saveData(data);createDailyBackup(data);},250); return()=>clearTimeout(id); },[data]);
@@ -77,5 +85,23 @@ export function usePokedoro() {
     }),500);
     return()=>clearInterval(id);
   },[]);
+  useEffect(()=>{
+    if(!data)return;
+    let cancelled=false;
+    const run=async()=>{
+      const result=await runStoredAutoPetIfDue(Date.now());
+      if(cancelled)return;
+      setData(result.data);
+      if(result.ran){
+        const language=result.data.settings.language;
+        setToast(language==='en'?'The Auto-Petting Machine cared for every friend.':language==='ja'?'自動なでなでマシンが全員をお世話しました。':'자동 쓰다듬기 기계가 모든 친구를 돌봤어요.');
+        setTimeout(()=>setToast(''),2600);
+        syncChannelRef.current?.postMessage({type:'auto-pet',data:result.data});
+      }
+    };
+    void run();
+    const id=window.setInterval(()=>void run(),60*1000);
+    return()=>{cancelled=true;clearInterval(id)};
+  },[data!==null]);
   return {data,setData,toast,setToast};
 }

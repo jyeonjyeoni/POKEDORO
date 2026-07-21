@@ -1,4 +1,5 @@
 import type { AppData, EncounterState, Friend, Language } from './types';
+import { evolutionOptionsFor } from './evolution';
 import { PythonRandom } from './pythonRandom';
 import { sha256 } from './sha256';
 
@@ -33,6 +34,79 @@ export function petOutcome(friend:Pick<Friend,'intimacy'|'lastPetAt'>,now=new Da
   const firstToday=!last||last.toDateString()!==now.toDateString();
   const gain=firstToday?3:1;
   return {allowed:true,gain,intimacy:Math.min(100,friend.intimacy+gain)};
+}
+
+export interface PetFriendResult { friend:Friend; allowed:boolean; gain:number; evolved:boolean; previousSpeciesId:number; }
+export function petFriend(friend:Friend,now=new Date(),random=Math.random):PetFriendResult {
+  const outcome=petOutcome(friend,now);
+  if(!outcome.allowed)return {friend,allowed:false,gain:0,evolved:false,previousSpeciesId:friend.speciesId};
+  let next:Friend={...friend,intimacy:outcome.intimacy,lastPetAt:now.toISOString()};
+  let evolved=false;
+  if(next.intimacy>=100&&!next.heldEverstone){
+    const options=evolutionOptionsFor(next.speciesId);
+    if(options.length){
+      const index=Math.min(options.length-1,Math.floor(Math.max(0,random())*options.length));
+      next={...next,speciesId:options[index],intimacy:1};
+      evolved=true;
+    }
+  }
+  return {friend:next,allowed:true,gain:outcome.gain,evolved,previousSpeciesId:friend.speciesId};
+}
+
+export function rollEverstone(random=Math.random):boolean {
+  return Math.floor(random()*100)===0;
+}
+
+export function giveEverstone(data:AppData,friendId:string):AppData {
+  const friend=data.friends.find(item=>item.id===friendId);
+  if(!friend||friend.heldEverstone||data.items.everstone<1)return data;
+  return {...data,items:{...data.items,everstone:data.items.everstone-1},friends:data.friends.map(item=>item.id===friendId?{...item,heldEverstone:true}:item)};
+}
+
+export function takeEverstone(data:AppData,friendId:string):AppData {
+  const friend=data.friends.find(item=>item.id===friendId);
+  if(!friend?.heldEverstone)return data;
+  return {...data,items:{...data.items,everstone:data.items.everstone+1},friends:data.friends.map(item=>item.id===friendId?{...item,heldEverstone:false}:item)};
+}
+
+export function releaseFriend(data:AppData,friendId:string):AppData {
+  const friend=data.friends.find(item=>item.id===friendId);
+  if(!friend)return data;
+  return {...data,items:{...data.items,everstone:data.items.everstone+Number(Boolean(friend.heldEverstone))},friends:data.friends.filter(item=>item.id!==friendId)};
+}
+
+export function payAutoPetTickets(data:AppData,now=Date.now()):AppData {
+  const machine=data.autoPetMachine;
+  if(machine.unlocked)return data;
+  const payment=Math.min(data.tickets,30-machine.ticketsPaid);
+  if(payment<=0)return data;
+  const ticketsPaid=machine.ticketsPaid+payment;
+  const unlocked=ticketsPaid>=30;
+  return {...data,tickets:data.tickets-payment,autoPetMachine:{ticketsPaid,unlocked,enabled:unlocked,lastRunAt:unlocked?now:machine.lastRunAt}};
+}
+
+export function setAutoPetEnabled(data:AppData,enabled:boolean,now=Date.now()):AppData {
+  const machine=data.autoPetMachine;
+  if(!machine.unlocked)return data;
+  return {...data,autoPetMachine:{...machine,enabled,lastRunAt:enabled&&!machine.enabled?now:machine.lastRunAt}};
+}
+
+export function runAutoPetIfDue(data:AppData,now=Date.now(),random=Math.random):{data:AppData;ran:boolean} {
+  const machine=data.autoPetMachine;
+  if(!machine.unlocked||!machine.enabled)return {data,ran:false};
+  if(!machine.lastRunAt)return {data:{...data,autoPetMachine:{...machine,lastRunAt:now}},ran:false};
+  if(now-machine.lastRunAt<30*60*1000)return {data,ran:false};
+  const date=new Date(now);
+  let dex=data.dex;
+  const friends=data.friends.map(friend=>{
+    const result=petFriend(friend,date,random),next=result.friend;
+    if(result.evolved){const old=dex[next.speciesId];dex={...dex,[next.speciesId]:old?{...old,shinySeen:old.shinySeen||next.shiny,shinyFriend:old.shinyFriend||next.shiny}:{speciesId:next.speciesId,firstSeenAt:date.toISOString(),befriendedCount:1,shinySeen:next.shiny,shinyFriend:next.shiny}}}
+    return next;
+  });
+  return {
+    data:{...data,autoPetMachine:{...machine,lastRunAt:now},friends,dex},
+    ran:true
+  };
 }
 
 export const PLACE_SEED_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

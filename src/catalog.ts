@@ -67,18 +67,3 @@ export function playCry(id:number, volume:number):void {
   audio.onended = cleanup;
   attempt(0);
 }
-
-interface ChainNode { species:{url:string}; evolves_to:ChainNode[] }
-function idFromUrl(url:string):number { return Number(url.match(/\/(\d+)\/?$/)?.[1] ?? 0); }
-function findChildren(node:ChainNode, id:number):number[] | null {
-  if (idFromUrl(node.species.url) === id) return node.evolves_to.map(x => idFromUrl(x.species.url));
-  for (const child of node.evolves_to) { const found = findChildren(child,id); if (found) return found; }
-  return null;
-}
-export async function evolutionOptions(id:number):Promise<number[]> {
-  try {
-    const species = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`).then(r => r.json());
-    const chain = await fetch(species.evolution_chain.url).then(r => r.json());
-    return findChildren(chain.chain,id) ?? [];
-  } catch { return []; }
-}

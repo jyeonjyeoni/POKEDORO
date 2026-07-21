@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { toBlob } from 'html-to-image';
 import packageInfo from '../package.json';
 import type { AppData, Category, Friend, Language, PanelName } from './types';
 import { t, type TranslationKey } from './i18n';
-import { evolutionOptions, loadCatalog, playCry, spriteUrl, type CatalogEntry } from './catalog';
-import { ACTIONS, encounterFromSeed, formatTime, hintFor, performAction, personalityName, petOutcome, type Action } from './game';
+import { loadCatalog, playCry, spriteUrl, type CatalogEntry } from './catalog';
+import { canEvolve } from './evolution';
+import { ACTIONS, encounterFromSeed, formatTime, giveEverstone, hintFor, payAutoPetTickets, performAction, personalityName, petFriend, releaseFriend, rollEverstone, setAutoPetEnabled, takeEverstone, type Action } from './game';
 import { exportBackup, importBackup } from './store';
 import { disableBackgroundNotifications, enableBackgroundNotifications, supportsBackgroundNotifications } from './pushNotifications';
 import { usePokedoro } from './usePokedoro';
@@ -31,6 +32,12 @@ const uiLabel=(l:Language,key:'selectMultiple'|'finishSelection'|'categoryAdd'|'
 }[l][key]);
 const panelLabel=(l:Language,panel:PanelName|'room')=>panel==='focus'?(l==='ko'?'타이머':l==='ja'?'タイマー':'Timer'):t(l,panel);
 const withKoreanSubject=(name:string)=>{const code=name.charCodeAt(name.length-1);return `${name}${code>=0xac00&&code<=0xd7a3&&(code-0xac00)%28!==0?'이':'가'}`};
+type V70Label='sort'|'sortDefault'|'sortName'|'sortIntimacyDesc'|'sortIntimacyAsc'|'sortRecent'|'sortOldest'|'evolvable'|'finalEvolution'|'everstone'|'stoneHeld'|'stoneNone'|'giveStone'|'takeStone'|'inventory'|'foundStone'|'machine'|'submitTickets'|'machineOn'|'machineOff'|'machineUnlocked';
+const v70Label=(l:Language,key:V70Label)=>(
+ {ko:{sort:'정렬',sortDefault:'기본 순서',sortName:'이름 오름차순',sortIntimacyDesc:'친밀도 높은 순',sortIntimacyAsc:'친밀도 낮은 순',sortRecent:'최근 친구순',sortOldest:'오래된 친구순',evolvable:'진화 가능',finalEvolution:'최종 진화',everstone:'변함없는돌',stoneHeld:'변함없는돌 소지',stoneNone:'돌 미소지',giveStone:'돌 주기',takeStone:'돌 회수',inventory:'보관함',foundStone:'변함없는돌을 발견했어요!',machine:'자동 쓰다듬기 기계',submitTickets:'탐험권 제출',machineOn:'작동 ON',machineOff:'작동 OFF',machineUnlocked:'해금 완료'},
+  en:{sort:'Sort',sortDefault:'Default',sortName:'Name A–Z',sortIntimacyDesc:'Friendship high–low',sortIntimacyAsc:'Friendship low–high',sortRecent:'Newest friends',sortOldest:'Oldest friends',evolvable:'Can evolve',finalEvolution:'Final evolution',everstone:'Everstone',stoneHeld:'Holding Everstone',stoneNone:'No Everstone',giveStone:'Give stone',takeStone:'Take stone',inventory:'Storage',foundStone:'You found an Everstone!',machine:'Auto-Petting Machine',submitTickets:'Submit tickets',machineOn:'Machine ON',machineOff:'Machine OFF',machineUnlocked:'Unlocked'},
+  ja:{sort:'並び替え',sortDefault:'基本順',sortName:'名前順',sortIntimacyDesc:'親密度が高い順',sortIntimacyAsc:'親密度が低い順',sortRecent:'新しい仲間順',sortOldest:'古い仲間順',evolvable:'進化可能',finalEvolution:'最終進化',everstone:'かわらずのいし',stoneHeld:'かわらずのいし所持',stoneNone:'いし未所持',giveStone:'いしを持たせる',takeStone:'いしを回収',inventory:'保管庫',foundStone:'かわらずのいしを見つけました！',machine:'自動なでなでマシン',submitTickets:'チケットを投入',machineOn:'作動 ON',machineOff:'作動 OFF',machineUnlocked:'解放済み'}}[l][key]
+);
 
 function PokemonImage({id,shiny=false,style='pixel',className='',onClick}:{id:number;shiny?:boolean;style?:AppData['settings']['spriteStyle'];className?:string;onClick?:()=>void}){
  const [failed,setFailed]=useState(false); useEffect(()=>setFailed(false),[id,shiny,style]);
@@ -106,7 +113,20 @@ function ExploreTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;
   }catch(error){onToast(error instanceof Error&&error.message==='INVALID_PLACE_SEED'?uiLabel(l,'invalidSeed'):uiLabel(l,'explorationFailed'))}
   finally{setExploring(false)}
  }
- function action(a:Action){if(!enc)return;const next=performAction(enc,a);setData(d=>{let friends=d.friends;if(next.finished&&!enc.finished){const room=friends.filter(x=>x.inRoom);if(room.length){const chosen=room[Math.floor(Math.random()*room.length)];friends=friends.map(x=>x.id===chosen.id?{...x,intimacy:Math.min(99,x.intimacy+1),mood:'excited'}:x)}}if(!next.befriended||enc.befriended)return {...d,encounter:next,friends};const now=new Date().toISOString(),f:Friend={id:uid(),speciesId:enc.speciesId,personality:enc.personality,intimacy:1,mood:'happy',shiny:enc.shiny,metAt:now,befriendedAt:now,togetherSeconds:0,inRoom:friends.filter(x=>x.inRoom).length<5};const old=d.dex[enc.speciesId];return {...d,encounter:next,friends:[...friends,f],dex:{...d.dex,[enc.speciesId]:{...old,befriendedCount:(old?.befriendedCount??0)+1,shinySeen:(old?.shinySeen??false)||enc.shiny,shinyFriend:(old?.shinyFriend??false)||enc.shiny}}}});setTimeout(()=>setData(d=>d.encounter?.speciesId===next.speciesId?{...d,encounter:{...d.encounter,reaction:undefined}}:d),700)}
+ function action(a:Action){
+  if(!enc)return;
+  const next=performAction(enc,a),newFriend=next.befriended&&!enc.befriended,foundEverstone=newFriend&&rollEverstone();
+  setData(d=>{
+   let friends=d.friends;
+   if(next.finished&&!enc.finished){const room=friends.filter(x=>x.inRoom);if(room.length){const chosen=room[Math.floor(Math.random()*room.length)];friends=friends.map(x=>x.id===chosen.id?{...x,intimacy:Math.min(99,x.intimacy+1),mood:'excited'}:x)}}
+   if(!newFriend)return {...d,encounter:next,friends};
+   const now=new Date().toISOString(),f:Friend={id:uid(),speciesId:enc.speciesId,personality:enc.personality,intimacy:1,mood:'happy',shiny:enc.shiny,metAt:now,befriendedAt:now,togetherSeconds:0,inRoom:friends.filter(x=>x.inRoom).length<5,heldEverstone:false};
+   const old=d.dex[enc.speciesId];
+   return {...d,encounter:next,friends:[...friends,f],items:{...d.items,everstone:d.items.everstone+Number(foundEverstone)},dex:{...d.dex,[enc.speciesId]:{...old,befriendedCount:(old?.befriendedCount??0)+1,shinySeen:(old?.shinySeen??false)||enc.shiny,shinyFriend:(old?.shinyFriend??false)||enc.shiny}}};
+  });
+  if(foundEverstone)onToast(v70Label(l,'foundStone'));
+  setTimeout(()=>setData(d=>d.encounter?.speciesId===next.speciesId?{...d,encounter:{...d.encounter,reaction:undefined}}:d),700);
+ }
  async function share(){if(!enc)return;const name=info?.names[l]??`No.${enc.speciesId}`;const copied=await copyPlainText(encounterShareText(enc.seed,name,l));onToast(copied?t(l,'copied'):uiLabel(l,'copyFailed'))}
  if(!enc)return <div className="explore-landing"><div className="forest" style={{backgroundImage:"url('./assets/exploration-background.jpg')"}}><div className="forest-message"><strong>{t(l,'forestWaiting')}</strong><span>{t(l,'forestSub')}</span></div></div><div className="seed-row"><input value={seed} onChange={e=>setSeed(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')void begin(seed.trim()?seed:'')}} placeholder={uiLabel(l,'seedInput')}/><button onClick={()=>void begin(seed)} disabled={!data.tickets||exploring||!seed.trim()}>{t(l,'seedExplore')}</button><button className="random-explore" onClick={()=>void begin('')} disabled={!data.tickets||exploring}>{l==='ko'?'무작위 탐험':t(l,'randomExplore')}</button></div></div>;
  const encounterName=info?.names[l]??`No.${enc.speciesId}`;
@@ -114,10 +134,50 @@ function ExploreTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;
 }
 
 function FriendsTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;catalog:CatalogEntry[];onToast:(x:string)=>void}){
- const l=data.settings.language,[query,setQuery]=useState(''),[chosen,setChosen]=useState<Friend|null>(null),petLocks=useRef(new Set<string>());const filtered=data.friends.filter(f=>(catalog.find(x=>x.id===f.speciesId)?.names[l]??'').toLowerCase().includes(query.toLowerCase())).sort((a,b)=>Number(b.inRoom)-Number(a.inRoom));
- async function pet(friend:Friend){if(petLocks.current.has(friend.id))return;const now=new Date(),outcome=petOutcome(friend,now);if(!outcome.allowed){onToast(uiLabel(l,'petCooldown'));return}petLocks.current.add(friend.id);try{let intimacy=outcome.intimacy,speciesId=friend.speciesId,evolved=false;if(intimacy>=100){const options=await evolutionOptions(speciesId);if(options.length){speciesId=options[Math.floor(Math.random()*options.length)];intimacy=1;evolved=true;onToast(t(l,'evolved'));}}setData(d=>{const dex=d.dex[speciesId]??{speciesId,firstSeenAt:now.toISOString(),befriendedCount:1,shinySeen:friend.shiny,shinyFriend:friend.shiny};return {...d,friends:d.friends.map(x=>x.id===friend.id?{...x,intimacy,speciesId,lastPetAt:now.toISOString()}:x),dex:{...d.dex,[speciesId]:dex}}});if(!evolved)onToast(`${t(l,'pet')} +${outcome.gain}`)}finally{setTimeout(()=>petLocks.current.delete(friend.id),300)}}
- function toggleRoom(friend:Friend){if(!friend.inRoom&&data.friends.filter(x=>x.inRoom).length>=5){onToast(t(l,'roomFull'));return}setData(d=>({...d,friends:d.friends.map(x=>x.id===friend.id?{...x,inRoom:!x.inRoom}:x)}))}
- return <div className="tab-body"><input className="search" placeholder={t(l,'search')} value={query} onChange={e=>setQuery(e.target.value)}/><div className="friend-grid">{filtered.map(f=>{const name=catalog.find(x=>x.id===f.speciesId)?.names[l]??`No.${f.speciesId}`;return <article className="friend-card" key={f.id}><PokemonImage id={f.speciesId} shiny={f.shiny} style={data.settings.spriteStyle}/><div><strong>{f.shiny&&'✨ '}{name}</strong><span>{personalityName(f.personality,l)} · ♥ {f.intimacy}</span></div><button onClick={()=>toggleRoom(f)}>{f.inRoom?t(l,'remove'):t(l,'place')}</button><button onClick={()=>pet(f)}>{t(l,'pet')}</button><button onClick={()=>{if(!data.settings.muted)playCry(f.speciesId,data.settings.cryVolume/100)}}>{t(l,'cry')}</button><button onClick={()=>setChosen(f)}>{t(l,'status')}</button></article>})}</div>{chosen&&<div className="modal" onClick={()=>setChosen(null)}><article onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setChosen(null)}>×</button><PokemonImage id={chosen.speciesId} shiny={chosen.shiny} style={data.settings.spriteStyle}/><h3>{catalog.find(x=>x.id===chosen.speciesId)?.names[l]}</h3><p>{t(l,'personality')}: {personalityName(chosen.personality,l)}</p><p>{t(l,'intimacy')}: {chosen.intimacy}/100</p><p>{t(l,'met')}: {dateText(chosen.befriendedAt,l)}</p><p>{t(l,'together')}: {formatTime(chosen.togetherSeconds)}</p><button className="danger" onClick={()=>{if(confirm(t(l,'confirmRelease'))){setData(d=>({...d,friends:d.friends.filter(x=>x.id!==chosen.id)}));setChosen(null)}}}>{t(l,'release')}</button></article></div>}</div>;
+ type SortKey='default'|'name'|'intimacy-desc'|'intimacy-asc'|'recent'|'oldest';
+ const l=data.settings.language,[query,setQuery]=useState(''),[sort,setSort]=useState<SortKey>('default'),[selectedFriendId,setSelectedFriendId]=useState<string|null>(null),petLocks=useRef(new Set<string>()),restoreScrollRef=useRef<number|null>(null);
+ const nameOf=(friend:Friend)=>catalog.find(entry=>entry.id===friend.speciesId)?.names[l]??`No.${friend.speciesId}`;
+ const timestamp=(friend:Friend)=>new Date(friend.befriendedAt).getTime()||0;
+ const filtered=data.friends.filter(friend=>nameOf(friend).toLocaleLowerCase().includes(query.toLocaleLowerCase())).slice().sort((a,b)=>{
+  if(sort==='name')return nameOf(a).localeCompare(nameOf(b),l==='ko'?'ko-KR':l==='ja'?'ja-JP':'en-US',{sensitivity:'base'});
+  if(sort==='intimacy-desc')return b.intimacy-a.intimacy;
+  if(sort==='intimacy-asc')return a.intimacy-b.intimacy;
+  if(sort==='recent')return timestamp(b)-timestamp(a)||b.id.localeCompare(a.id);
+  if(sort==='oldest')return timestamp(a)-timestamp(b)||a.id.localeCompare(b.id);
+  return Number(b.inRoom)-Number(a.inRoom)||timestamp(b)-timestamp(a)||b.id.localeCompare(a.id);
+ });
+ const chosen=data.friends.find(friend=>friend.id===selectedFriendId)??null;
+ useLayoutEffect(()=>{const top=restoreScrollRef.current;if(top===null)return;restoreScrollRef.current=null;requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top,behavior:'auto'})))},[data.friends,data.items.everstone,data.autoPetMachine]);
+ function preserve(update:(current:AppData)=>AppData){restoreScrollRef.current=window.scrollY;setData(update)}
+ function pet(friend:Friend){
+  if(petLocks.current.has(friend.id))return;
+  const now=new Date(),roll=Math.random(),preview=petFriend(friend,now,()=>roll);
+  if(!preview.allowed){onToast(uiLabel(l,'petCooldown'));return}
+  petLocks.current.add(friend.id);
+  preserve(current=>{
+   const live=current.friends.find(item=>item.id===friend.id);if(!live)return current;
+   const result=petFriend(live,now,()=>roll),next=result.friend;
+   if(!result.allowed)return current;
+   const dex=current.dex[next.speciesId]??{speciesId:next.speciesId,firstSeenAt:now.toISOString(),befriendedCount:1,shinySeen:next.shiny,shinyFriend:next.shiny};
+   return {...current,friends:current.friends.map(item=>item.id===friend.id?next:item),dex:{...current.dex,[next.speciesId]:dex}};
+  });
+  onToast(preview.evolved?t(l,'evolved'):`${t(l,'pet')} +${preview.gain}`);
+  setTimeout(()=>petLocks.current.delete(friend.id),300);
+ }
+ function toggleRoom(friend:Friend){if(!friend.inRoom&&data.friends.filter(item=>item.inRoom).length>=5){onToast(t(l,'roomFull'));return}preserve(current=>({...current,friends:current.friends.map(item=>item.id===friend.id?{...item,inRoom:!item.inRoom}:item)}))}
+ function toggleStone(friend:Friend){preserve(current=>friend.heldEverstone?takeEverstone(current,friend.id):giveEverstone(current,friend.id))}
+ function pay(){preserve(current=>payAutoPetTickets(current,Date.now()))}
+ function toggleMachine(enabled:boolean){preserve(current=>setAutoPetEnabled(current,enabled,Date.now()))}
+ function release(friend:Friend){if(!confirm(t(l,'confirmRelease')))return;preserve(current=>releaseFriend(current,friend.id));setSelectedFriendId(null)}
+ return <div className="tab-body friends-tab">
+  <section className="friend-system">
+   <div><strong>{v70Label(l,'inventory')}</strong><span>{v70Label(l,'everstone')} × {data.items.everstone}</span></div>
+   <div className="friend-machine"><strong>{v70Label(l,'machine')}</strong><span>{data.autoPetMachine.unlocked?v70Label(l,'machineUnlocked'):`${data.autoPetMachine.ticketsPaid}/30`}</span>{!data.autoPetMachine.unlocked?<button onClick={pay} disabled={!data.tickets}>{v70Label(l,'submitTickets')} ({data.tickets})</button>:<label className="toggle"><input type="checkbox" checked={data.autoPetMachine.enabled} onChange={event=>toggleMachine(event.target.checked)}/>{data.autoPetMachine.enabled?v70Label(l,'machineOn'):v70Label(l,'machineOff')}</label>}</div>
+  </section>
+  <div className="friend-controls"><input className="search" placeholder={t(l,'search')} value={query} onChange={event=>setQuery(event.target.value)}/><select aria-label={v70Label(l,'sort')} value={sort} onChange={event=>setSort(event.target.value as SortKey)}><option value="default">{v70Label(l,'sortDefault')}</option><option value="name">{v70Label(l,'sortName')}</option><option value="intimacy-desc">{v70Label(l,'sortIntimacyDesc')}</option><option value="intimacy-asc">{v70Label(l,'sortIntimacyAsc')}</option><option value="recent">{v70Label(l,'sortRecent')}</option><option value="oldest">{v70Label(l,'sortOldest')}</option></select></div>
+  <div className="friend-grid">{filtered.map(friend=>{const name=nameOf(friend);return <article className="friend-card" key={friend.id}><PokemonImage id={friend.speciesId} shiny={friend.shiny} style={data.settings.spriteStyle}/><div><strong>{friend.shiny&&'✨ '}{name}</strong><span>{canEvolve(friend.speciesId)?v70Label(l,'evolvable'):v70Label(l,'finalEvolution')} | {friend.heldEverstone?v70Label(l,'stoneHeld'):v70Label(l,'stoneNone')} | {personalityName(friend.personality,l)} | ♥ {friend.intimacy}</span></div><button onClick={()=>toggleRoom(friend)}>{friend.inRoom?t(l,'remove'):t(l,'place')}</button><button onClick={()=>pet(friend)}>{t(l,'pet')}</button><button onClick={()=>toggleStone(friend)} disabled={!friend.heldEverstone&&data.items.everstone<1}>{friend.heldEverstone?v70Label(l,'takeStone'):v70Label(l,'giveStone')}</button><button onClick={()=>{if(!data.settings.muted)playCry(friend.speciesId,data.settings.cryVolume/100)}}>{t(l,'cry')}</button><button onClick={()=>setSelectedFriendId(friend.id)}>{t(l,'status')}</button></article>})}</div>
+  {chosen&&<div className="modal" onClick={()=>setSelectedFriendId(null)}><article onClick={event=>event.stopPropagation()}><button className="modal-close" onClick={()=>setSelectedFriendId(null)}>×</button><PokemonImage id={chosen.speciesId} shiny={chosen.shiny} style={data.settings.spriteStyle}/><h3>{nameOf(chosen)}</h3><p>{canEvolve(chosen.speciesId)?v70Label(l,'evolvable'):v70Label(l,'finalEvolution')}</p><p>{chosen.heldEverstone?v70Label(l,'stoneHeld'):v70Label(l,'stoneNone')}</p><p>{t(l,'personality')}: {personalityName(chosen.personality,l)}</p><p>{t(l,'intimacy')}: {chosen.intimacy}/100</p><p>{t(l,'met')}: {dateText(chosen.befriendedAt,l)}</p><p>{t(l,'together')}: {formatTime(chosen.togetherSeconds)}</p><button className="danger" onClick={()=>release(chosen)}>{t(l,'release')}</button></article></div>}
+ </div>;
 }
 
 function DexTab({data,catalog}:{data:AppData;catalog:CatalogEntry[]}){const l=data.settings.language,[query,setQuery]=useState('');const list=catalog.filter(x=>x.names[l].toLowerCase().includes(query.toLowerCase())||String(x.id).includes(query));return <div className="tab-body dex-tab"><div className="dex-head"><input placeholder={t(l,'search')} value={query} onChange={e=>setQuery(e.target.value)}/><span>{t(l,'discovered')} {Object.keys(data.dex).length}/{catalog.length} · {t(l,'befriended')} {new Set(data.friends.map(x=>x.speciesId)).size}</span></div><div className="dex-list">{list.map(x=>{const seen=!!data.dex[x.id];return <div key={x.id} className={!seen?'unknown':''}><span>No.{String(x.id).padStart(4,'0')}</span><PokemonImage id={x.id} style="pixel"/><strong>{seen?x.names[l]:'???'}</strong>{data.dex[x.id]?.shinySeen&&<i>✨</i>}</div>})}</div></div>}

@@ -1,6 +1,6 @@
 import { describe,expect,it } from 'vitest';
-import { ACTIONS, advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, normalizePlaceSeed, performAction, petOutcome, PLACE_WEIGHT_TOTAL, reactionFor, resolvePlaceSeed } from './game';
-import type { EncounterState } from './types';
+import { ACTIONS, advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, giveEverstone, normalizePlaceSeed, payAutoPetTickets, performAction, petFriend, petOutcome, PLACE_WEIGHT_TOTAL, reactionFor, releaseFriend, resolvePlaceSeed, rollEverstone, runAutoPetIfDue, setAutoPetEnabled, takeEverstone } from './game';
+import type { EncounterState, Friend } from './types';
 import { defaultData } from './store';
 
 describe('exploration seed',()=>{
@@ -51,4 +51,62 @@ describe('focus rewards',()=>{
 });
 describe('pet friendship',()=>{
  it('matches the desktop cooldown and daily bonus rules',()=>{const morning=new Date(2026,6,20,9,0,0);expect(petOutcome({intimacy:10},morning)).toEqual({allowed:true,gain:3,intimacy:13});const recent={intimacy:13,lastPetAt:morning.toISOString()};expect(petOutcome(recent,new Date(2026,6,20,9,5,0)).allowed).toBe(false);expect(petOutcome(recent,new Date(2026,6,20,9,11,0))).toEqual({allowed:true,gain:1,intimacy:14});expect(petOutcome(recent,new Date(2026,6,21,9,0,0))).toEqual({allowed:true,gain:3,intimacy:16})});
+});
+
+describe('v70 evolution and Everstone rules',()=>{
+ const friend=(overrides:Partial<Friend>={}):Friend=>({id:'friend',speciesId:133,personality:'curious',intimacy:99,mood:'happy',shiny:true,metAt:'2026-01-01T00:00:00.000Z',befriendedAt:'2026-01-02T00:00:00.000Z',togetherSeconds:42,inRoom:false,...overrides});
+ it('chooses Eevee branches uniformly from the static desktop table',()=>{
+  const first=petFriend(friend(),new Date('2026-07-22T00:00:00.000Z'),()=>0);
+  const last=petFriend(friend({id:'last'}),new Date('2026-07-22T00:00:00.000Z'),()=>0.999999);
+  expect(first.friend.speciesId).toBe(134);expect(last.friend.speciesId).toBe(700);
+  expect(first.friend).toMatchObject({intimacy:1,personality:'curious',shiny:true,metAt:'2026-01-01T00:00:00.000Z',togetherSeconds:42});
+ });
+ it('does not evolve final species',()=>expect(petFriend(friend({speciesId:678}),new Date('2026-07-22T00:00:00.000Z')).friend).toMatchObject({speciesId:678,intimacy:100}));
+ it('blocks at 100 while held and evolves on the next valid pet after recovery',()=>{
+  const blocked=petFriend(friend({heldEverstone:true}),new Date('2026-07-22T00:00:00.000Z'),()=>0);
+  expect(blocked.friend).toMatchObject({speciesId:133,intimacy:100,heldEverstone:true});
+  const data=defaultData();data.items.everstone=0;data.friends=[blocked.friend];
+  const recovered=takeEverstone(data,'friend');
+  const evolved=petFriend(recovered.friends[0],new Date('2026-07-22T00:11:00.000Z'),()=>0);
+  expect(recovered.items.everstone).toBe(1);expect(evolved.friend).toMatchObject({speciesId:134,intimacy:1,heldEverstone:false});
+ });
+ it('rolls Everstones independently at exactly one percent',()=>{expect(rollEverstone(()=>0)).toBe(true);expect(rollEverstone(()=>0.009999)).toBe(true);expect(rollEverstone(()=>0.01)).toBe(false)});
+ it('moves one stone atomically and returns it when releasing a friend',()=>{
+  const data=defaultData();data.items.everstone=1;data.friends=[friend({intimacy:1,heldEverstone:false})];
+  const given=giveEverstone(data,'friend');expect(given.items.everstone).toBe(0);expect(given.friends[0].heldEverstone).toBe(true);
+  const taken=takeEverstone(given,'friend');expect(taken.items.everstone).toBe(1);expect(taken.friends[0].heldEverstone).toBe(false);
+  const regiven=giveEverstone(taken,'friend'),released=releaseFriend(regiven,'friend');expect(released.friends).toHaveLength(0);expect(released.items.everstone).toBe(1);
+ });
+});
+
+describe('v70 Auto-Petting Machine',()=>{
+ const friend=(id:string,inRoom:boolean,intimacy=10,lastPetAt?:string):Friend=>({id,speciesId:1,personality:'calm',intimacy,mood:'happy',shiny:false,metAt:'',befriendedAt:'',togetherSeconds:0,inRoom,lastPetAt});
+ it('accepts partial payments and unlocks on the transaction reaching 30',()=>{
+  const data=defaultData();data.tickets=20;
+  const first=payAutoPetTickets(data,1000);expect(first).toMatchObject({tickets:0,autoPetMachine:{ticketsPaid:20,unlocked:false,enabled:false,lastRunAt:0}});
+  first.tickets=12;const second=payAutoPetTickets(first,2000);expect(second).toMatchObject({tickets:2,autoPetMachine:{ticketsPaid:30,unlocked:true,enabled:true,lastRunAt:2000}});
+ });
+ it('starts a fresh cycle only when switched from OFF to ON',()=>{
+  const data=defaultData();data.autoPetMachine={ticketsPaid:30,unlocked:true,enabled:false,lastRunAt:100};
+  const on=setAutoPetEnabled(data,true,200);expect(on.autoPetMachine.lastRunAt).toBe(200);
+  expect(setAutoPetEnabled(on,true,300).autoPetMachine.lastRunAt).toBe(200);
+  expect(setAutoPetEnabled(on,false,400).autoPetMachine.lastRunAt).toBe(200);
+ });
+ it('runs once after 30 minutes for every friend regardless of room placement',()=>{
+  const now=Date.parse('2026-07-22T01:00:00.000Z'),data=defaultData();
+  data.autoPetMachine={ticketsPaid:30,unlocked:true,enabled:true,lastRunAt:now-30*60*1000};
+  data.friends=[friend('room',true,99),friend('storage',false,10),friend('cooldown',false,10,new Date(now-5*60*1000).toISOString())];
+  const result=runAutoPetIfDue(data,now,()=>0);
+  expect(result.ran).toBe(true);expect(result.data.autoPetMachine.lastRunAt).toBe(now);
+  expect(result.data.friends[0]).toMatchObject({speciesId:2,intimacy:1});
+  expect(result.data.dex[2]).toMatchObject({speciesId:2,befriendedCount:1});
+  expect(result.data.friends[1].intimacy).toBe(13);expect(result.data.friends[2].intimacy).toBe(10);
+  expect(runAutoPetIfDue(result.data,now+1000,()=>0).ran).toBe(false);
+ });
+ it('does not catch up multiple missed runs and initializes a missing clock without reward',()=>{
+  const data=defaultData();data.autoPetMachine={ticketsPaid:30,unlocked:true,enabled:true,lastRunAt:0};data.friends=[friend('f',false)];
+  const initialized=runAutoPetIfDue(data,10_000);expect(initialized.ran).toBe(false);expect(initialized.data.friends[0].intimacy).toBe(10);
+  const overdue={...initialized.data,autoPetMachine:{...initialized.data.autoPetMachine,lastRunAt:1}};
+  const once=runAutoPetIfDue(overdue,10_000_000);expect(once.ran).toBe(true);expect(once.data.friends[0].intimacy).toBe(13);
+ });
 });

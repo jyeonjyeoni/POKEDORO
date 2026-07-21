@@ -232,9 +232,15 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 
 /* Friends */
 .search { width: 100%; margin-bottom: 14px; }
+.friend-system { display: grid; grid-template-columns: minmax(180px,.65fr) minmax(280px,1.35fr); gap: 10px; margin-bottom: 12px; }
+.friend-system > div { display: flex; align-items: center; justify-content: space-between; min-height: 58px; gap: 10px; padding: 11px 14px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 14px; }
+.friend-system strong { font-size: 12px; }.friend-system span { color: var(--muted); font-size: 11px; }
+.friend-machine { flex-wrap: wrap; }.friend-machine button { min-height: 34px; padding: 6px 10px; font-size: 11px; }.friend-machine .toggle { margin-left: auto; }
+.friend-controls { display: grid; grid-template-columns: minmax(0,1fr) minmax(170px,auto); gap: 10px; margin-bottom: 14px; }
+.friend-controls .search { margin: 0; }.friend-controls select { width: 100%; }
 .friend-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
 .friend-card { display: grid; grid-template-columns: 92px minmax(0,1fr) auto; align-items: center; gap: 7px; padding: 12px; background: #fff; border: 1px solid var(--line); border-radius: 15px; }
-.friend-card > img, .pokemon-fallback { grid-row: span 4; width: 92px; height: 92px; object-fit: contain; }
+.friend-card > img, .friend-card > .pokemon-fallback { grid-row: span 5; width: 92px; height: 92px; object-fit: contain; }
 .friend-card > div { display: grid; gap: 4px; min-width: 0; }
 .friend-card strong { overflow: hidden; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
 .friend-card span { color: var(--muted); font-size: 11px; }
@@ -317,7 +323,8 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
   .todo-row > .todo-actual { display: none; }
   .todo-edit,.todo-delete{width:34px;min-height:34px}
   .forest, .encounter-stage { height: min(54vh,440px); min-height: 330px; }.forest-message { right: 12px; bottom: 12px; left: 12px; }.seed-row { grid-template-columns: minmax(0,1fr) auto; }.seed-row button{max-width:46vw;padding-inline:10px;overflow:hidden;text-overflow:ellipsis}.action-grid { grid-template-columns: repeat(2,1fr); }
-  .friend-grid { grid-template-columns: 1fr; }.friend-card { grid-template-columns: 86px minmax(0,1fr) auto; }.friend-card > img,.pokemon-fallback { width: 86px; height: 86px; }
+  .friend-system { grid-template-columns: 1fr; }.friend-controls { grid-template-columns: minmax(0,1fr) minmax(145px,auto); }
+  .friend-grid { grid-template-columns: 1fr; }.friend-card { grid-template-columns: 86px minmax(0,1fr) auto; }.friend-card > img,.friend-card > .pokemon-fallback { width: 86px; height: 86px; }
   .dex-head { align-items: stretch; flex-direction: column; }.dex-head span { white-space: normal; }.dex-list { height: calc(100dvh - 250px); }.dex-list > div { grid-template-columns: 72px 58px 1fr 24px; padding-inline: 9px; }
   .settings-grid { grid-template-columns: 1fr; gap: 9px; }.settings-grid > label,.settings-grid fieldset { min-height: 64px; padding: 11px 13px; }.settings-grid > label select { min-width: 135px; }.settings-grid > label input[type="range"] { width: min(42vw,180px); }
 }
@@ -326,4 +333,5 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
   .brand span { display: none; }
   .ticket { max-width: 88px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .energy-card { width: 154px; }
+  .friend-controls { grid-template-columns: 1fr; }
 }
