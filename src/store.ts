@@ -20,7 +20,7 @@ export function portableBackupData(data:AppData):AppData {
   return {
     ...normalized,
     friends:normalized.friends.map(friend=>({...friend,personality:desktopPersonality(friend.personality)})),
-    encounter:normalized.encounter?{...normalized.encounter,personality:desktopPersonality(normalized.encounter.personality)}:null
+    encounter:normalized.encounter?{...normalized.encounter,personality:desktopPersonality(normalized.encounter.personality),turnsLeft:Math.max(0,5-normalized.encounter.turns)}:null
   };
 }
 
@@ -32,10 +32,20 @@ const boundedInteger = (value:unknown, minimum:number, maximum:number) => {
 export function normalizeBackupData(data:AppData):AppData {
   const ticketsPaid=boundedInteger(data.autoPetMachine?.ticketsPaid,0,30);
   const unlocked=Boolean(data.autoPetMachine?.unlocked)||ticketsPaid>=30;
+  const dex=Object.fromEntries(Object.entries(data.dex??{}).map(([rawSpeciesId,entry])=>{
+    const speciesId=boundedInteger(entry.speciesId??rawSpeciesId,1,Number.MAX_SAFE_INTEGER);
+    const fallback={formKey:'',firstSeenAt:String(entry.firstSeenAt??''),befriendedCount:boundedInteger(entry.befriendedCount,0,Number.MAX_SAFE_INTEGER),shinySeen:Boolean(entry.shinySeen),shinyFriend:Boolean(entry.shinyFriend)};
+    const sourceForms=Array.isArray(entry.forms)&&entry.forms.length?entry.forms:[fallback];
+    const forms=sourceForms.map(form=>({formKey:String(form.formKey??''),firstSeenAt:String(form.firstSeenAt??entry.firstSeenAt??''),befriendedCount:boundedInteger(form.befriendedCount,0,Number.MAX_SAFE_INTEGER),shinySeen:Boolean(form.shinySeen),shinyFriend:Boolean(form.shinyFriend)}));
+    return [speciesId,{...entry,speciesId,firstSeenAt:String(entry.firstSeenAt??''),befriendedCount:boundedInteger(entry.befriendedCount,0,Number.MAX_SAFE_INTEGER),shinySeen:Boolean(entry.shinySeen),shinyFriend:Boolean(entry.shinyFriend),forms}];
+  }));
+  const rawEncounter=data.encounter;
+  const encounter=rawEncounter?(()=>{const distance=boundedInteger(rawEncounter.distance,0,100),turns=Number.isFinite(Number(rawEncounter.turns))?boundedInteger(rawEncounter.turns,0,5):5-boundedInteger(rawEncounter.turnsLeft,0,5);return {...rawEncounter,personality:normalizePersonality(rawEncounter.personality),formKey:String(rawEncounter.formKey??''),distance,turns,finished:Boolean(rawEncounter.finished)||distance>=100||turns>=5,befriended:Boolean(rawEncounter.befriended)||distance>=100}})():null;
   return {
     ...data,
-    friends:(data.friends??[]).map(friend=>({...friend,personality:normalizePersonality(friend.personality),heldEverstone:Boolean(friend.heldEverstone)})),
-    encounter:data.encounter?{...data.encounter,personality:normalizePersonality(data.encounter.personality)}:null,
+    friends:(data.friends??[]).map(friend=>({...friend,personality:normalizePersonality(friend.personality),heldEverstone:Boolean(friend.heldEverstone),formKey:String(friend.formKey??'')})),
+    encounter,
+    dex,
     items:{everstone:boundedInteger(data.items?.everstone,0,Number.MAX_SAFE_INTEGER)},
     autoPetMachine:{
       ticketsPaid:unlocked?30:ticketsPaid,

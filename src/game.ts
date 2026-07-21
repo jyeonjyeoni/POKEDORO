@@ -1,5 +1,6 @@
-import type { AppData, EncounterState, Friend, Language } from './types';
+import type { AppData, DexEntry, DexFormEntry, EncounterState, Friend, Language } from './types';
 import { evolutionOptionsFor } from './evolution';
+import { chooseForm, inheritedFormKey } from './forms';
 import { PythonRandom } from './pythonRandom';
 import { sha256 } from './sha256';
 
@@ -46,7 +47,8 @@ export function petFriend(friend:Friend,now=new Date(),random=Math.random):PetFr
     const options=evolutionOptionsFor(next.speciesId);
     if(options.length){
       const index=Math.min(options.length-1,Math.floor(Math.max(0,random())*options.length));
-      next={...next,speciesId:options[index],intimacy:1};
+      const speciesId=options[index];
+      next={...next,speciesId,formKey:inheritedFormKey(next.formKey,speciesId),intimacy:1};
       evolved=true;
     }
   }
@@ -75,6 +77,33 @@ export function releaseFriend(data:AppData,friendId:string):AppData {
   return {...data,items:{...data.items,everstone:data.items.everstone+Number(Boolean(friend.heldEverstone))},friends:data.friends.filter(item=>item.id!==friendId)};
 }
 
+function dexForms(entry:DexEntry|undefined):DexFormEntry[]{
+  if(!entry)return [];
+  if(entry.forms?.length)return entry.forms;
+  return [{formKey:'',firstSeenAt:entry.firstSeenAt,befriendedCount:entry.befriendedCount,shinySeen:entry.shinySeen,shinyFriend:entry.shinyFriend}];
+}
+
+function recordDexForm(dex:AppData['dex'],speciesId:number,formKey:string,shiny:boolean,firstSeenAt:string,befriended:boolean):AppData['dex']{
+  const old=dex[speciesId],forms=dexForms(old),current=forms.find(form=>form.formKey===formKey);
+  const nextForm:DexFormEntry=current?{
+    ...current,
+    befriendedCount:current.befriendedCount+Number(befriended),
+    shinySeen:current.shinySeen||shiny,
+    shinyFriend:current.shinyFriend||(befriended&&shiny)
+  }:{formKey,firstSeenAt,befriendedCount:Number(befriended),shinySeen:shiny,shinyFriend:befriended&&shiny};
+  const nextForms=current?forms.map(form=>form.formKey===formKey?nextForm:form):[...forms,nextForm];
+  return {...dex,[speciesId]:old?{
+    ...old,
+    befriendedCount:old.befriendedCount+Number(befriended),
+    shinySeen:old.shinySeen||shiny,
+    shinyFriend:old.shinyFriend||(befriended&&shiny),
+    forms:nextForms
+  }:{speciesId,firstSeenAt,befriendedCount:Number(befriended),shinySeen:shiny,shinyFriend:befriended&&shiny,forms:nextForms}};
+}
+
+export const recordDexEncounter=(dex:AppData['dex'],speciesId:number,formKey:string,shiny:boolean,firstSeenAt:string)=>recordDexForm(dex,speciesId,formKey,shiny,firstSeenAt,false);
+export const recordDexFriend=(dex:AppData['dex'],speciesId:number,formKey:string,shiny:boolean,firstSeenAt:string)=>recordDexForm(dex,speciesId,formKey,shiny,firstSeenAt,true);
+
 export function payAutoPetTickets(data:AppData,now=Date.now()):AppData {
   const machine=data.autoPetMachine;
   if(machine.unlocked)return data;
@@ -100,7 +129,7 @@ export function runAutoPetIfDue(data:AppData,now=Date.now(),random=Math.random):
   let dex=data.dex;
   const friends=data.friends.map(friend=>{
     const result=petFriend(friend,date,random),next=result.friend;
-    if(result.evolved){const old=dex[next.speciesId];dex={...dex,[next.speciesId]:old?{...old,shinySeen:old.shinySeen||next.shiny,shinyFriend:old.shinyFriend||next.shiny}:{speciesId:next.speciesId,firstSeenAt:date.toISOString(),befriendedCount:1,shinySeen:next.shiny,shinyFriend:next.shiny}}}
+    if(result.evolved)dex=recordDexFriend(dex,next.speciesId,next.formKey??'',next.shiny,date.toISOString());
     return next;
   });
   return {
@@ -161,9 +190,10 @@ export async function resolvePlaceSeed(value:string):Promise<{seed:string;roll:n
   return {seed,roll,speciesId,personalityIndex,personality:PERSONALITIES[personalityIndex]};
 }
 
-export async function encounterFromSeed(seed:string,random=Math.random):Promise<EncounterState> {
+export async function encounterFromSeed(seed:string,shinyRandom=Math.random,formRandom=Math.random):Promise<EncounterState> {
   const place=await resolvePlaceSeed(seed.trim()?seed:generatePlaceSeed());
-  return {...place,shiny:random()<1/2048,distance:0,turns:0,finished:false,befriended:false};
+  const form=chooseForm(place.speciesId,formRandom);
+  return {...place,formKey:form.key,shiny:shinyRandom()<1/2048,distance:0,turns:0,turnsLeft:5,finished:false,befriended:false};
 }
 export function reactionFor(personality:string,action:Action):EncounterReaction {
   const preference=PREFERENCES[personality as Personality];
@@ -177,7 +207,7 @@ export function performAction(encounter:EncounterState,action:Action,random=Math
   const points=Math.floor(random()*(maximum-minimum+1))+minimum;
   const distance=Math.max(0,Math.min(100,encounter.distance+points));
   const turns=encounter.turns+1;
-  return {...encounter,distance,turns,finished:distance>=100||turns>=5,befriended:distance>=100,reaction:judgement==='liked'?'jump':judgement==='disliked'?'shake':undefined};
+  return {...encounter,distance,turns,turnsLeft:Math.max(0,5-turns),finished:distance>=100||turns>=5,befriended:distance>=100,reaction:judgement==='liked'?'jump':judgement==='disliked'?'shake':undefined};
 }
 export function hintFor(personality:string,language:Language):string {
   const hints:Record<Language,Record<string,string>>={

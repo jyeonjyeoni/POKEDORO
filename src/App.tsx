@@ -5,7 +5,8 @@ import type { AppData, Category, Friend, Language, PanelName } from './types';
 import { t, type TranslationKey } from './i18n';
 import { loadCatalog, playCry, spriteUrl, type CatalogEntry } from './catalog';
 import { canEvolve } from './evolution';
-import { ACTIONS, encounterFromSeed, formatTime, giveEverstone, hintFor, payAutoPetTickets, performAction, personalityName, petFriend, releaseFriend, rollEverstone, setAutoPetEnabled, takeEverstone, type Action } from './game';
+import { collectibleFormTotal, formDisplayName, formForSpecies, formLabel, formsForSpecies } from './forms';
+import { ACTIONS, encounterFromSeed, formatTime, giveEverstone, hintFor, payAutoPetTickets, performAction, personalityName, petFriend, recordDexEncounter, recordDexFriend, releaseFriend, rollEverstone, setAutoPetEnabled, takeEverstone, type Action } from './game';
 import { exportBackup, importBackup } from './store';
 import { disableBackgroundNotifications, enableBackgroundNotifications, supportsBackgroundNotifications } from './pushNotifications';
 import { usePokedoro } from './usePokedoro';
@@ -38,10 +39,26 @@ const v70Label=(l:Language,key:V70Label)=>(
   en:{sort:'Sort',sortDefault:'Default',sortName:'Name A–Z',sortIntimacyDesc:'Friendship high–low',sortIntimacyAsc:'Friendship low–high',sortRecent:'Newest friends',sortOldest:'Oldest friends',evolvable:'Can evolve',finalEvolution:'Final evolution',everstone:'Everstone',stoneHeld:'Holding Everstone',stoneNone:'No Everstone',giveStone:'Give stone',takeStone:'Take stone',inventory:'Storage',foundStone:'You found an Everstone!',machine:'Auto-Petting Machine',submitTickets:'Submit tickets',machineOn:'Machine ON',machineOff:'Machine OFF',machineUnlocked:'Unlocked'},
   ja:{sort:'並び替え',sortDefault:'基本順',sortName:'名前順',sortIntimacyDesc:'親密度が高い順',sortIntimacyAsc:'親密度が低い順',sortRecent:'新しい仲間順',sortOldest:'古い仲間順',evolvable:'進化可能',finalEvolution:'最終進化',everstone:'かわらずのいし',stoneHeld:'かわらずのいし所持',stoneNone:'いし未所持',giveStone:'いしを持たせる',takeStone:'いしを回収',inventory:'保管庫',foundStone:'かわらずのいしを見つけました！',machine:'自動なでなでマシン',submitTickets:'チケットを投入',machineOn:'作動 ON',machineOff:'作動 OFF',machineUnlocked:'解放済み'}}[l][key]
 );
+type V71Label='forms'|'formDex'|'formsFound';
+const v71Label=(l:Language,key:V71Label)=>({
+ ko:{forms:'모습',formDex:'모습 도감',formsFound:'모습 발견'},
+ en:{forms:'Forms',formDex:'Form Dex',formsFound:'Forms found'},
+ ja:{forms:'すがた',formDex:'すがた図鑑',formsFound:'すがた発見'}
+}[l][key]);
 
-function PokemonImage({id,shiny=false,style='pixel',className='',onClick}:{id:number;shiny?:boolean;style?:AppData['settings']['spriteStyle'];className?:string;onClick?:()=>void}){
- const [failed,setFailed]=useState(false); useEffect(()=>setFailed(false),[id,shiny,style]);
- return failed?<span className={`pokemon-fallback ${className}`}>?</span>:<img className={className} src={spriteUrl(id,shiny,style)} onError={()=>setFailed(true)} onClick={onClick} draggable={false}/>;
+function pokemonDisplayName(catalog:CatalogEntry[],speciesId:number,formKey:string|undefined,l:Language):string{
+ const entry=catalog.find(item=>item.id===speciesId),baseName=entry?.names[l]??`No.${speciesId}`;
+ return formDisplayName(baseName,entry?.slug??'',speciesId,formKey,l);
+}
+
+function PokemonImage({id,formKey='',shiny=false,style='pixel',className='',onClick}:{id:number;formKey?:string;shiny?:boolean;style?:AppData['settings']['spriteStyle'];className?:string;onClick?:()=>void}){
+ const form=formForSpecies(id,formKey),sources:string[]=[];
+ const add=(ref:number|string,isShiny:boolean,spriteStyle:AppData['settings']['spriteStyle'])=>{const url=spriteUrl(ref,isShiny,spriteStyle);if(!sources.includes(url))sources.push(url)};
+ add(form.spriteRef,shiny,style);if(style!=='pixel')add(form.spriteRef,shiny,'pixel');
+ if(shiny){add(form.spriteRef,false,style);if(style!=='pixel')add(form.spriteRef,false,'pixel')}
+ if(form.key){add(id,shiny,style);if(style!=='pixel')add(id,shiny,'pixel');if(shiny){add(id,false,style);if(style!=='pixel')add(id,false,'pixel')}}
+ const sourceKey=`${id}|${formKey}|${Number(shiny)}|${style}`,[sourceState,setSourceState]=useState({key:sourceKey,index:0}),sourceIndex=sourceState.key===sourceKey?sourceState.index:0;
+ return sourceIndex>=sources.length?<span className={`pokemon-fallback ${className}`}>?</span>:<img className={className} src={sources[sourceIndex]} onError={()=>setSourceState(current=>({key:sourceKey,index:current.key===sourceKey?current.index+1:1}))} onClick={onClick} draggable={false}/>;
 }
 
 function MainWidget({data,setData,catalog,open,onToast}:{data:AppData;setData:Setter;catalog:CatalogEntry[];open:(x:PanelName)=>void;onToast:(x:string)=>void}){
@@ -60,7 +77,7 @@ function MainWidget({data,setData,catalog,open,onToast}:{data:AppData;setData:Se
    <div className="top-actions"><button className="icon-button" aria-label="capture" onClick={capture}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="3"/><path d="M4 7.5h3l1.4-2h7.2l1.4 2h3v11H4z"/></svg></button><span className="ticket">{t(l,'ticket')} {data.tickets}/3</span></div>
    <div className="room">
     {room.map((friend,index)=><div key={friend.id} className={`room-pokemon p${index} ${data.settings.staticMode?'still':'walk'}`} onClick={()=>sound(friend)} onContextMenu={e=>{e.preventDefault();open('friends')}}>
-      <PokemonImage id={friend.speciesId} shiny={friend.shiny} style={data.settings.spriteStyle}/>
+      <PokemonImage id={friend.speciesId} formKey={friend.formKey} shiny={friend.shiny} style={data.settings.spriteStyle}/>
     </div>)}
     {!data.settings.staticMode&&room.length>1&&<img className="speech" src="./assets/speech_bubbles/하트.png"/>}
    </div>
@@ -101,14 +118,15 @@ function TodosTab({data,setData}:{data:AppData;setData:Setter}){
 }
 
 function ExploreTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;catalog:CatalogEntry[];onToast:(x:string)=>void}){
- const l=data.settings.language,[seed,setSeed]=useState(''),[exploring,setExploring]=useState(false),enc=data.encounter,info=enc?catalog.find(x=>x.id===enc.speciesId):null;
+ const l=data.settings.language,[seed,setSeed]=useState(''),[exploring,setExploring]=useState(false),enc=data.encounter;
  async function begin(requestedSeed=seed){
   if(data.tickets<1||exploring)return;
   setExploring(true);
   try{
    const next=await encounterFromSeed(requestedSeed);
    setSeed('');
-   setData(d=>({...d,tickets:d.tickets-1,encounter:next,dex:{...d.dex,[next.speciesId]:d.dex[next.speciesId]??{speciesId:next.speciesId,firstSeenAt:new Date().toISOString(),befriendedCount:0,shinySeen:next.shiny,shinyFriend:false}}}));
+   const now=new Date().toISOString();
+   setData(d=>({...d,tickets:d.tickets-1,encounter:next,dex:recordDexEncounter(d.dex,next.speciesId,next.formKey??'',next.shiny,now)}));
    if(!data.settings.muted)playCry(next.speciesId,data.settings.cryVolume/100);
   }catch(error){onToast(error instanceof Error&&error.message==='INVALID_PLACE_SEED'?uiLabel(l,'invalidSeed'):uiLabel(l,'explorationFailed'))}
   finally{setExploring(false)}
@@ -120,23 +138,22 @@ function ExploreTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;
    let friends=d.friends;
    if(next.finished&&!enc.finished){const room=friends.filter(x=>x.inRoom);if(room.length){const chosen=room[Math.floor(Math.random()*room.length)];friends=friends.map(x=>x.id===chosen.id?{...x,intimacy:Math.min(99,x.intimacy+1),mood:'excited'}:x)}}
    if(!newFriend)return {...d,encounter:next,friends};
-   const now=new Date().toISOString(),f:Friend={id:uid(),speciesId:enc.speciesId,personality:enc.personality,intimacy:1,mood:'happy',shiny:enc.shiny,metAt:now,befriendedAt:now,togetherSeconds:0,inRoom:friends.filter(x=>x.inRoom).length<5,heldEverstone:false};
-   const old=d.dex[enc.speciesId];
-   return {...d,encounter:next,friends:[...friends,f],items:{...d.items,everstone:d.items.everstone+Number(foundEverstone)},dex:{...d.dex,[enc.speciesId]:{...old,befriendedCount:(old?.befriendedCount??0)+1,shinySeen:(old?.shinySeen??false)||enc.shiny,shinyFriend:(old?.shinyFriend??false)||enc.shiny}}};
+   const now=new Date().toISOString(),formKey=enc.formKey??'',f:Friend={id:uid(),speciesId:enc.speciesId,formKey,personality:enc.personality,intimacy:1,mood:'happy',shiny:enc.shiny,metAt:now,befriendedAt:now,togetherSeconds:0,inRoom:friends.filter(x=>x.inRoom).length<5,heldEverstone:false};
+   return {...d,encounter:next,friends:[...friends,f],items:{...d.items,everstone:d.items.everstone+Number(foundEverstone)},dex:recordDexFriend(d.dex,enc.speciesId,formKey,enc.shiny,now)};
   });
   if(foundEverstone)onToast(v70Label(l,'foundStone'));
   setTimeout(()=>setData(d=>d.encounter?.speciesId===next.speciesId?{...d,encounter:{...d.encounter,reaction:undefined}}:d),700);
  }
- async function share(){if(!enc)return;const name=info?.names[l]??`No.${enc.speciesId}`;const copied=await copyPlainText(encounterShareText(enc.seed,name,l));onToast(copied?t(l,'copied'):uiLabel(l,'copyFailed'))}
+ async function share(){if(!enc)return;const name=pokemonDisplayName(catalog,enc.speciesId,enc.formKey,l);const copied=await copyPlainText(encounterShareText(enc.seed,name,l));onToast(copied?t(l,'copied'):uiLabel(l,'copyFailed'))}
  if(!enc)return <div className="explore-landing"><div className="forest" style={{backgroundImage:"url('./assets/exploration-background.jpg')"}}><div className="forest-message"><strong>{t(l,'forestWaiting')}</strong><span>{t(l,'forestSub')}</span></div></div><div className="seed-row"><input value={seed} onChange={e=>setSeed(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')void begin(seed.trim()?seed:'')}} placeholder={uiLabel(l,'seedInput')}/><button onClick={()=>void begin(seed)} disabled={!data.tickets||exploring||!seed.trim()}>{t(l,'seedExplore')}</button><button className="random-explore" onClick={()=>void begin('')} disabled={!data.tickets||exploring}>{l==='ko'?'무작위 탐험':t(l,'randomExplore')}</button></div></div>;
- const encounterName=info?.names[l]??`No.${enc.speciesId}`;
- return <div className="tab-body encounter"><div className="encounter-stage" style={{backgroundImage:"url('./assets/exploration-background.jpg')"}}><PokemonImage className={`wild ${enc.reaction??''}`} id={enc.speciesId} shiny={enc.shiny} style={data.settings.spriteStyle}/>{enc.shiny&&<b className="sparkle">✨ {t(l,'shiny')}!</b>}<div className="forest-message"><strong>{encounterName}</strong><span>{t(l,'encounterIntro')} {hintFor(enc.personality,l)}</span></div></div><label>{t(l,'distance')}<progress max="100" value={enc.distance}/>{enc.distance}%</label>{!enc.finished?<div className="action-grid">{ACTIONS.map(a=><button key={a} onClick={()=>action(a)}>{t(l,a as TranslationKey)}</button>)}</div>:<div className="result"><strong>{enc.befriended?`${l==='ko'?withKoreanSubject(encounterName):encounterName} ${t(l,'befriendedMsg')}`:t(l,'fled')}</strong><button onClick={share}>{t(l,'copyShare')}</button><button onClick={()=>setData(d=>({...d,encounter:null}))}>{t(l,'again')}</button></div>}</div>;
+ const encounterName=pokemonDisplayName(catalog,enc.speciesId,enc.formKey,l);
+ return <div className="tab-body encounter"><div className="encounter-stage" style={{backgroundImage:"url('./assets/exploration-background.jpg')"}}><PokemonImage className={`wild ${enc.reaction??''}`} id={enc.speciesId} formKey={enc.formKey} shiny={enc.shiny} style={data.settings.spriteStyle}/>{enc.shiny&&<b className="sparkle">✨ {t(l,'shiny')}!</b>}<div className="forest-message"><strong>{encounterName}</strong><span>{t(l,'encounterIntro')} {hintFor(enc.personality,l)}</span></div></div><label>{t(l,'distance')}<progress max="100" value={enc.distance}/>{enc.distance}%</label>{!enc.finished?<div className="action-grid">{ACTIONS.map(a=><button key={a} onClick={()=>action(a)}>{t(l,a as TranslationKey)}</button>)}</div>:<div className="result"><strong>{enc.befriended?`${l==='ko'?withKoreanSubject(encounterName):encounterName} ${t(l,'befriendedMsg')}`:t(l,'fled')}</strong><button onClick={share}>{t(l,'copyShare')}</button><button onClick={()=>setData(d=>({...d,encounter:null}))}>{t(l,'again')}</button></div>}</div>;
 }
 
 function FriendsTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;catalog:CatalogEntry[];onToast:(x:string)=>void}){
  type SortKey='default'|'name'|'intimacy-desc'|'intimacy-asc'|'recent'|'oldest';
  const l=data.settings.language,[query,setQuery]=useState(''),[sort,setSort]=useState<SortKey>('default'),[selectedFriendId,setSelectedFriendId]=useState<string|null>(null),petLocks=useRef(new Set<string>()),restoreScrollRef=useRef<number|null>(null);
- const nameOf=(friend:Friend)=>catalog.find(entry=>entry.id===friend.speciesId)?.names[l]??`No.${friend.speciesId}`;
+ const nameOf=(friend:Friend)=>pokemonDisplayName(catalog,friend.speciesId,friend.formKey,l);
  const timestamp=(friend:Friend)=>new Date(friend.befriendedAt).getTime()||0;
  const filtered=data.friends.filter(friend=>nameOf(friend).toLocaleLowerCase().includes(query.toLocaleLowerCase())).slice().sort((a,b)=>{
   if(sort==='name')return nameOf(a).localeCompare(nameOf(b),l==='ko'?'ko-KR':l==='ja'?'ja-JP':'en-US',{sensitivity:'base'});
@@ -158,8 +175,8 @@ function FriendsTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;
    const live=current.friends.find(item=>item.id===friend.id);if(!live)return current;
    const result=petFriend(live,now,()=>roll),next=result.friend;
    if(!result.allowed)return current;
-   const dex=current.dex[next.speciesId]??{speciesId:next.speciesId,firstSeenAt:now.toISOString(),befriendedCount:1,shinySeen:next.shiny,shinyFriend:next.shiny};
-   return {...current,friends:current.friends.map(item=>item.id===friend.id?next:item),dex:{...current.dex,[next.speciesId]:dex}};
+   const dex=result.evolved?recordDexFriend(current.dex,next.speciesId,next.formKey??'',next.shiny,now.toISOString()):current.dex;
+   return {...current,friends:current.friends.map(item=>item.id===friend.id?next:item),dex};
   });
   onToast(preview.evolved?t(l,'evolved'):`${t(l,'pet')} +${preview.gain}`);
   setTimeout(()=>petLocks.current.delete(friend.id),300);
@@ -175,12 +192,18 @@ function FriendsTab({data,setData,catalog,onToast}:{data:AppData;setData:Setter;
    <div className="friend-machine"><strong>{v70Label(l,'machine')}</strong><span>{data.autoPetMachine.unlocked?v70Label(l,'machineUnlocked'):`${data.autoPetMachine.ticketsPaid}/30`}</span>{!data.autoPetMachine.unlocked?<button onClick={pay} disabled={!data.tickets}>{v70Label(l,'submitTickets')} ({data.tickets})</button>:<label className="toggle"><input type="checkbox" checked={data.autoPetMachine.enabled} onChange={event=>toggleMachine(event.target.checked)}/>{data.autoPetMachine.enabled?v70Label(l,'machineOn'):v70Label(l,'machineOff')}</label>}</div>
   </section>
   <div className="friend-controls"><input className="search" placeholder={t(l,'search')} value={query} onChange={event=>setQuery(event.target.value)}/><select aria-label={v70Label(l,'sort')} value={sort} onChange={event=>setSort(event.target.value as SortKey)}><option value="default">{v70Label(l,'sortDefault')}</option><option value="name">{v70Label(l,'sortName')}</option><option value="intimacy-desc">{v70Label(l,'sortIntimacyDesc')}</option><option value="intimacy-asc">{v70Label(l,'sortIntimacyAsc')}</option><option value="recent">{v70Label(l,'sortRecent')}</option><option value="oldest">{v70Label(l,'sortOldest')}</option></select></div>
-  <div className="friend-grid">{filtered.map(friend=>{const name=nameOf(friend);return <article className="friend-card" key={friend.id}><PokemonImage id={friend.speciesId} shiny={friend.shiny} style={data.settings.spriteStyle}/><div><strong>{friend.shiny&&'✨ '}{name}</strong><span>{canEvolve(friend.speciesId)?v70Label(l,'evolvable'):v70Label(l,'finalEvolution')} | {friend.heldEverstone?v70Label(l,'stoneHeld'):v70Label(l,'stoneNone')} | {personalityName(friend.personality,l)} | ♥ {friend.intimacy}</span></div><button onClick={()=>toggleRoom(friend)}>{friend.inRoom?t(l,'remove'):t(l,'place')}</button><button onClick={()=>pet(friend)}>{t(l,'pet')}</button><button onClick={()=>toggleStone(friend)} disabled={!friend.heldEverstone&&data.items.everstone<1}>{friend.heldEverstone?v70Label(l,'takeStone'):v70Label(l,'giveStone')}</button><button onClick={()=>{if(!data.settings.muted)playCry(friend.speciesId,data.settings.cryVolume/100)}}>{t(l,'cry')}</button><button onClick={()=>setSelectedFriendId(friend.id)}>{t(l,'status')}</button></article>})}</div>
-  {chosen&&<div className="modal" onClick={()=>setSelectedFriendId(null)}><article onClick={event=>event.stopPropagation()}><button className="modal-close" onClick={()=>setSelectedFriendId(null)}>×</button><PokemonImage id={chosen.speciesId} shiny={chosen.shiny} style={data.settings.spriteStyle}/><h3>{nameOf(chosen)}</h3><p>{canEvolve(chosen.speciesId)?v70Label(l,'evolvable'):v70Label(l,'finalEvolution')}</p><p>{chosen.heldEverstone?v70Label(l,'stoneHeld'):v70Label(l,'stoneNone')}</p><p>{t(l,'personality')}: {personalityName(chosen.personality,l)}</p><p>{t(l,'intimacy')}: {chosen.intimacy}/100</p><p>{t(l,'met')}: {dateText(chosen.befriendedAt,l)}</p><p>{t(l,'together')}: {formatTime(chosen.togetherSeconds)}</p><button className="danger" onClick={()=>release(chosen)}>{t(l,'release')}</button></article></div>}
+  <div className="friend-grid">{filtered.map(friend=>{const name=nameOf(friend);return <article className="friend-card" key={friend.id}><PokemonImage id={friend.speciesId} formKey={friend.formKey} shiny={friend.shiny} style={data.settings.spriteStyle}/><div><strong>{friend.shiny&&'✨ '}{name}</strong><span>{canEvolve(friend.speciesId)?v70Label(l,'evolvable'):v70Label(l,'finalEvolution')} | {friend.heldEverstone?v70Label(l,'stoneHeld'):v70Label(l,'stoneNone')} | {personalityName(friend.personality,l)} | ♥ {friend.intimacy}</span></div><button onClick={()=>toggleRoom(friend)}>{friend.inRoom?t(l,'remove'):t(l,'place')}</button><button onClick={()=>pet(friend)}>{t(l,'pet')}</button><button onClick={()=>toggleStone(friend)} disabled={!friend.heldEverstone&&data.items.everstone<1}>{friend.heldEverstone?v70Label(l,'takeStone'):v70Label(l,'giveStone')}</button><button onClick={()=>{if(!data.settings.muted)playCry(friend.speciesId,data.settings.cryVolume/100)}}>{t(l,'cry')}</button><button onClick={()=>setSelectedFriendId(friend.id)}>{t(l,'status')}</button></article>})}</div>
+  {chosen&&<div className="modal" onClick={()=>setSelectedFriendId(null)}><article onClick={event=>event.stopPropagation()}><button className="modal-close" onClick={()=>setSelectedFriendId(null)}>×</button><PokemonImage id={chosen.speciesId} formKey={chosen.formKey} shiny={chosen.shiny} style={data.settings.spriteStyle}/><h3>{nameOf(chosen)}</h3><p>{canEvolve(chosen.speciesId)?v70Label(l,'evolvable'):v70Label(l,'finalEvolution')}</p><p>{chosen.heldEverstone?v70Label(l,'stoneHeld'):v70Label(l,'stoneNone')}</p><p>{t(l,'personality')}: {personalityName(chosen.personality,l)}</p><p>{t(l,'intimacy')}: {chosen.intimacy}/100</p><p>{t(l,'met')}: {dateText(chosen.befriendedAt,l)}</p><p>{t(l,'together')}: {formatTime(chosen.togetherSeconds)}</p><button className="danger" onClick={()=>release(chosen)}>{t(l,'release')}</button></article></div>}
  </div>;
 }
 
-function DexTab({data,catalog}:{data:AppData;catalog:CatalogEntry[]}){const l=data.settings.language,[query,setQuery]=useState('');const list=catalog.filter(x=>x.names[l].toLowerCase().includes(query.toLowerCase())||String(x.id).includes(query));return <div className="tab-body dex-tab"><div className="dex-head"><input placeholder={t(l,'search')} value={query} onChange={e=>setQuery(e.target.value)}/><span>{t(l,'discovered')} {Object.keys(data.dex).length}/{catalog.length} · {t(l,'befriended')} {new Set(data.friends.map(x=>x.speciesId)).size}</span></div><div className="dex-list">{list.map(x=>{const seen=!!data.dex[x.id];return <div key={x.id} className={!seen?'unknown':''}><span>No.{String(x.id).padStart(4,'0')}</span><PokemonImage id={x.id} style="pixel"/><strong>{seen?x.names[l]:'???'}</strong>{data.dex[x.id]?.shinySeen&&<i>✨</i>}</div>})}</div></div>}
+function DexTab({data,catalog}:{data:AppData;catalog:CatalogEntry[]}){
+ const l=data.settings.language,[query,setQuery]=useState(''),[selectedSpeciesId,setSelectedSpeciesId]=useState<number|null>(null),list=catalog.filter(entry=>entry.names[l].toLocaleLowerCase().includes(query.toLocaleLowerCase())||String(entry.id).includes(query));
+ const foundForms=Object.values(data.dex).reduce((total,entry)=>total+(entry.forms?.length??1),0),totalForms=catalog.length?collectibleFormTotal(catalog.length):0,selectedInfo=catalog.find(entry=>entry.id===selectedSpeciesId);
+ return <div className="tab-body dex-tab"><div className="dex-head"><input placeholder={t(l,'search')} value={query} onChange={event=>setQuery(event.target.value)}/><span>{t(l,'discovered')} {Object.keys(data.dex).length}/{catalog.length} · {t(l,'befriended')} {new Set(data.friends.map(friend=>friend.speciesId)).size} · {v71Label(l,'formsFound')} {foundForms}/{totalForms}</span></div><div className="dex-list">{list.map(entry=>{const dex=data.dex[entry.id],seen=!!dex,forms=formsForSpecies(entry.id),found=new Set(dex?.forms?.map(form=>form.formKey)??(seen?['']:[])),multiple=forms.length>1;return <div key={entry.id} className={`${seen?'':'unknown'} ${multiple?'has-forms':''}`} onClick={()=>{if(multiple)setSelectedSpeciesId(entry.id)}} onKeyDown={event=>{if(multiple&&(event.key==='Enter'||event.key===' '))setSelectedSpeciesId(entry.id)}} role={multiple?'button':undefined} tabIndex={multiple?0:undefined}><span>No.{String(entry.id).padStart(4,'0')}</span><PokemonImage id={entry.id} style="pixel"/><strong><span>{seen?entry.names[l]:'???'}</span>{multiple&&<small>▣ {found.size}/{forms.length}</small>}</strong>{dex?.shinySeen&&<i>✨</i>}</div>})}</div>
+  {selectedInfo&&<div className="modal form-dex-modal" onClick={()=>setSelectedSpeciesId(null)}><article onClick={event=>event.stopPropagation()}><button className="modal-close" onClick={()=>setSelectedSpeciesId(null)}>×</button><small>POKEDORO</small><h3>{data.dex[selectedInfo.id]?selectedInfo.names[l]:'???'} · {v71Label(l,'formDex')}</h3><div className="form-dex-grid">{formsForSpecies(selectedInfo.id).map(form=>{const record=data.dex[selectedInfo.id]?.forms?.find(item=>item.formKey===form.key),found=!!record;return <div key={form.key||'default'} className={found?'':'unknown'}><PokemonImage id={selectedInfo.id} formKey={form.key} style="pixel"/><strong>{found?formLabel(form,l,selectedInfo.slug):'???'}</strong>{record?.shinySeen&&<i>✨</i>}</div>})}</div></article></div>}
+ </div>;
+}
 
 function SettingsTab({data,setData,onToast}:{data:AppData;setData:Setter;onToast:(x:string)=>void}){
   const l=data.settings.language;

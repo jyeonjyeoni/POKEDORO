@@ -1,5 +1,5 @@
 import { describe,expect,it } from 'vitest';
-import { ACTIONS, advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, giveEverstone, normalizePlaceSeed, payAutoPetTickets, performAction, petFriend, petOutcome, PLACE_WEIGHT_TOTAL, reactionFor, releaseFriend, resolvePlaceSeed, rollEverstone, runAutoPetIfDue, setAutoPetEnabled, takeEverstone } from './game';
+import { ACTIONS, advanceData, awardFocus, encounterFromSeed, generatePlaceSeed, giveEverstone, normalizePlaceSeed, payAutoPetTickets, performAction, petFriend, petOutcome, PLACE_WEIGHT_TOTAL, reactionFor, recordDexEncounter, recordDexFriend, releaseFriend, resolvePlaceSeed, rollEverstone, runAutoPetIfDue, setAutoPetEnabled, takeEverstone } from './game';
 import type { EncounterState, Friend } from './types';
 import { defaultData } from './store';
 
@@ -21,6 +21,7 @@ describe('exploration seed',()=>{
  it('generates canonical seeds from the desktop alphabet',()=>{for(let i=0;i<20;i++)expect(generatePlaceSeed()).toMatch(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/)});
  it('starts a random exploration when the seed field is empty',async()=>{const encounter=await encounterFromSeed('',()=>1);expect(encounter.seed).toMatch(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/);expect(encounter.speciesId).toBeGreaterThanOrEqual(1);expect(encounter.speciesId).toBeLessThanOrEqual(1025)});
  it('keeps shiny independent from place species and personality',async()=>{const a=await encounterFromSeed('POKE-DORO',()=>0);const b=await encounterFromSeed('POKE-DORO',()=>1);expect(a.speciesId).toBe(b.speciesId);expect(a.personality).toBe(b.personality);expect(a.shiny).toBe(true);expect(b.shiny).toBe(false)});
+ it('keeps form rolls independent from existing seed and shiny results',async()=>{const a=await encounterFromSeed('POKE-DORO',()=>1,()=>0);const b=await encounterFromSeed('POKE-DORO',()=>1,()=>.6);expect(a.speciesId).toBe(b.speciesId);expect(a.personality).toBe(b.personality);expect(a.shiny).toBe(b.shiny);expect(a.formKey).toBe('');expect(b.formKey).toBe('voltorb-hisui')});
  it('freezes the PLACE-V1 total weight',()=>expect(PLACE_WEIGHT_TOTAL).toBe(123508));
 });
 describe('encounter friendship difficulty',()=>{
@@ -61,6 +62,7 @@ describe('v70 evolution and Everstone rules',()=>{
   expect(first.friend.speciesId).toBe(134);expect(last.friend.speciesId).toBe(700);
   expect(first.friend).toMatchObject({intimacy:1,personality:'curious',shiny:true,metAt:'2026-01-01T00:00:00.000Z',togetherSeconds:42});
  });
+ it('inherits a regional form when the evolved species supports it',()=>expect(petFriend(friend({speciesId:19,formKey:'rattata-alola'}),new Date('2026-07-22T00:00:00.000Z'),()=>0).friend).toMatchObject({speciesId:20,formKey:'raticate-alola',intimacy:1}));
  it('does not evolve final species',()=>expect(petFriend(friend({speciesId:678}),new Date('2026-07-22T00:00:00.000Z')).friend).toMatchObject({speciesId:678,intimacy:100}));
  it('blocks at 100 while held and evolves on the next valid pet after recovery',()=>{
   const blocked=petFriend(friend({heldEverstone:true}),new Date('2026-07-22T00:00:00.000Z'),()=>0);
@@ -76,6 +78,17 @@ describe('v70 evolution and Everstone rules',()=>{
   const given=giveEverstone(data,'friend');expect(given.items.everstone).toBe(0);expect(given.friends[0].heldEverstone).toBe(true);
   const taken=takeEverstone(given,'friend');expect(taken.items.everstone).toBe(1);expect(taken.friends[0].heldEverstone).toBe(false);
   const regiven=giveEverstone(taken,'friend'),released=releaseFriend(regiven,'friend');expect(released.friends).toHaveLength(0);expect(released.items.everstone).toBe(1);
+ });
+});
+
+describe('v71 form Pokédex records',()=>{
+ it('records species and forms independently while preserving legacy totals',()=>{
+  const met='2026-07-22T12:00:00.000Z';let dex=recordDexEncounter({},479,'rotom-wash',false,met);
+  expect(dex[479]).toMatchObject({befriendedCount:0,shinySeen:false,forms:[{formKey:'rotom-wash',befriendedCount:0,shinySeen:false}]});
+  dex=recordDexEncounter(dex,479,'rotom-heat',true,met);
+  dex=recordDexFriend(dex,479,'rotom-wash',true,met);
+  expect(dex[479]).toMatchObject({befriendedCount:1,shinySeen:true,shinyFriend:true});
+  expect(dex[479].forms).toEqual(expect.arrayContaining([expect.objectContaining({formKey:'rotom-wash',befriendedCount:1,shinyFriend:true}),expect.objectContaining({formKey:'rotom-heat',befriendedCount:0,shinySeen:true})]));
  });
 });
 

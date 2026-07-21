@@ -1,0 +1,4408 @@
+{
+  "version": 1,
+  "source": "PokeAPI/pokeapi data/v2/csv",
+  "probabilities": {
+    "default": 55,
+    "common": 35,
+    "rare": 10
+  },
+  "species": {
+    "19": [
+      {
+        "key": "",
+        "sprite_ref": "19",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "rattata-alola",
+        "sprite_ref": "10091",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Rattata"
+        }
+      }
+    ],
+    "20": [
+      {
+        "key": "",
+        "sprite_ref": "20",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "raticate-alola",
+        "sprite_ref": "10092",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Raticate"
+        }
+      }
+    ],
+    "25": [
+      {
+        "key": "",
+        "sprite_ref": "25",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "pikachu-rock-star",
+        "sprite_ref": "10080",
+        "category": "rare",
+        "names": {
+          "ja": "ハードロック・ピカチュウ",
+          "en": "Pikachu Rock Star"
+        }
+      },
+      {
+        "key": "pikachu-belle",
+        "sprite_ref": "10081",
+        "category": "rare",
+        "names": {
+          "ja": "マダム・ピカチュウ",
+          "en": "Pikachu Belle"
+        }
+      },
+      {
+        "key": "pikachu-pop-star",
+        "sprite_ref": "10082",
+        "category": "rare",
+        "names": {
+          "ja": "アイドル・ピカチュウ",
+          "en": "Pikachu Pop Star"
+        }
+      },
+      {
+        "key": "pikachu-phd",
+        "sprite_ref": "10083",
+        "category": "rare",
+        "names": {
+          "ja": "ドクター・ピカチュウ",
+          "en": "Pikachu Ph.D."
+        }
+      },
+      {
+        "key": "pikachu-libre",
+        "sprite_ref": "10084",
+        "category": "rare",
+        "names": {
+          "ja": "マスクド・ピカチュウ",
+          "en": "Pikachu Libre"
+        }
+      },
+      {
+        "key": "pikachu-cosplay",
+        "sprite_ref": "10085",
+        "category": "rare",
+        "names": {
+          "ja": "おきがえピカチュウ",
+          "en": "Cosplay Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-original-cap",
+        "sprite_ref": "10094",
+        "category": "rare",
+        "names": {
+          "ja": "オリジナルキャップ",
+          "ko": "오리지널캡",
+          "en": "Original Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-hoenn-cap",
+        "sprite_ref": "10095",
+        "category": "rare",
+        "names": {
+          "ja": "ホウエンキャップ",
+          "ko": "호연캡",
+          "en": "Hoenn Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-sinnoh-cap",
+        "sprite_ref": "10096",
+        "category": "rare",
+        "names": {
+          "ja": "シンオウキャップ",
+          "ko": "신오캡",
+          "en": "Sinnoh Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-unova-cap",
+        "sprite_ref": "10097",
+        "category": "rare",
+        "names": {
+          "ja": "イッシュキャップ",
+          "ko": "하나캡",
+          "en": "Unova Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-kalos-cap",
+        "sprite_ref": "10098",
+        "category": "rare",
+        "names": {
+          "ja": "カロスキャップ",
+          "ko": "칼로스캡",
+          "en": "Kalos Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-alola-cap",
+        "sprite_ref": "10099",
+        "category": "rare",
+        "names": {
+          "ja": "アローラキャップ",
+          "ko": "알로라캡",
+          "en": "Alola Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-partner-cap",
+        "sprite_ref": "10148",
+        "category": "rare",
+        "names": {
+          "ja": "キミにきめたキャップ",
+          "ko": "너로정했다캡",
+          "en": "Partner Cap Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-starter",
+        "sprite_ref": "10158",
+        "category": "common",
+        "names": {
+          "en": "Partner Pikachu"
+        }
+      },
+      {
+        "key": "pikachu-world-cap",
+        "sprite_ref": "10160",
+        "category": "rare",
+        "names": {
+          "ja": "ワールドキャップ",
+          "ko": "월드캡",
+          "en": "World Cap Pikachu"
+        }
+      }
+    ],
+    "26": [
+      {
+        "key": "",
+        "sprite_ref": "26",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "raichu-alola",
+        "sprite_ref": "10100",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Raichu"
+        }
+      }
+    ],
+    "27": [
+      {
+        "key": "",
+        "sprite_ref": "27",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sandshrew-alola",
+        "sprite_ref": "10101",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Sandshrew"
+        }
+      }
+    ],
+    "28": [
+      {
+        "key": "",
+        "sprite_ref": "28",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sandslash-alola",
+        "sprite_ref": "10102",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Sandslash"
+        }
+      }
+    ],
+    "37": [
+      {
+        "key": "",
+        "sprite_ref": "37",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "vulpix-alola",
+        "sprite_ref": "10103",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Vulpix"
+        }
+      }
+    ],
+    "38": [
+      {
+        "key": "",
+        "sprite_ref": "38",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "ninetales-alola",
+        "sprite_ref": "10104",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Ninetales"
+        }
+      }
+    ],
+    "50": [
+      {
+        "key": "",
+        "sprite_ref": "50",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "diglett-alola",
+        "sprite_ref": "10105",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Diglett"
+        }
+      }
+    ],
+    "51": [
+      {
+        "key": "",
+        "sprite_ref": "51",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "dugtrio-alola",
+        "sprite_ref": "10106",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Dugtrio"
+        }
+      }
+    ],
+    "52": [
+      {
+        "key": "",
+        "sprite_ref": "52",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "meowth-alola",
+        "sprite_ref": "10107",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Meowth"
+        }
+      },
+      {
+        "key": "meowth-galar",
+        "sprite_ref": "10161",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Meowth"
+        }
+      }
+    ],
+    "53": [
+      {
+        "key": "",
+        "sprite_ref": "53",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "persian-alola",
+        "sprite_ref": "10108",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Persian"
+        }
+      }
+    ],
+    "58": [
+      {
+        "key": "",
+        "sprite_ref": "58",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "growlithe-hisui",
+        "sprite_ref": "10229",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Growlithe"
+        }
+      }
+    ],
+    "59": [
+      {
+        "key": "",
+        "sprite_ref": "59",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "arcanine-hisui",
+        "sprite_ref": "10230",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Arcanine"
+        }
+      }
+    ],
+    "74": [
+      {
+        "key": "",
+        "sprite_ref": "74",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "geodude-alola",
+        "sprite_ref": "10109",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Geodude"
+        }
+      }
+    ],
+    "75": [
+      {
+        "key": "",
+        "sprite_ref": "75",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "graveler-alola",
+        "sprite_ref": "10110",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Graveler"
+        }
+      }
+    ],
+    "76": [
+      {
+        "key": "",
+        "sprite_ref": "76",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "golem-alola",
+        "sprite_ref": "10111",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Golem"
+        }
+      }
+    ],
+    "77": [
+      {
+        "key": "",
+        "sprite_ref": "77",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "ponyta-galar",
+        "sprite_ref": "10162",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Ponyta"
+        }
+      }
+    ],
+    "78": [
+      {
+        "key": "",
+        "sprite_ref": "78",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "rapidash-galar",
+        "sprite_ref": "10163",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Rapidash"
+        }
+      }
+    ],
+    "79": [
+      {
+        "key": "",
+        "sprite_ref": "79",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "slowpoke-galar",
+        "sprite_ref": "10164",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Slowpoke"
+        }
+      }
+    ],
+    "80": [
+      {
+        "key": "",
+        "sprite_ref": "80",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "slowbro-galar",
+        "sprite_ref": "10165",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Slowbro"
+        }
+      }
+    ],
+    "83": [
+      {
+        "key": "",
+        "sprite_ref": "83",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "farfetchd-galar",
+        "sprite_ref": "10166",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Farfetch’d"
+        }
+      }
+    ],
+    "88": [
+      {
+        "key": "",
+        "sprite_ref": "88",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "grimer-alola",
+        "sprite_ref": "10112",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Grimer"
+        }
+      }
+    ],
+    "89": [
+      {
+        "key": "",
+        "sprite_ref": "89",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "muk-alola",
+        "sprite_ref": "10113",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Muk"
+        }
+      }
+    ],
+    "100": [
+      {
+        "key": "",
+        "sprite_ref": "100",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "voltorb-hisui",
+        "sprite_ref": "10231",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Voltorb"
+        }
+      }
+    ],
+    "101": [
+      {
+        "key": "",
+        "sprite_ref": "101",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "electrode-hisui",
+        "sprite_ref": "10232",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Electrode"
+        }
+      }
+    ],
+    "103": [
+      {
+        "key": "",
+        "sprite_ref": "103",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "exeggutor-alola",
+        "sprite_ref": "10114",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Exeggutor"
+        }
+      }
+    ],
+    "105": [
+      {
+        "key": "",
+        "sprite_ref": "105",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "marowak-alola",
+        "sprite_ref": "10115",
+        "category": "common",
+        "names": {
+          "ja": "アローラのすがた",
+          "ko": "알로라의 모습",
+          "en": "Alolan Marowak"
+        }
+      }
+    ],
+    "110": [
+      {
+        "key": "",
+        "sprite_ref": "110",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "weezing-galar",
+        "sprite_ref": "10167",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Weezing"
+        }
+      }
+    ],
+    "122": [
+      {
+        "key": "",
+        "sprite_ref": "122",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "mr-mime-galar",
+        "sprite_ref": "10168",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Mr. Mime"
+        }
+      }
+    ],
+    "128": [
+      {
+        "key": "",
+        "sprite_ref": "128",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "tauros-paldea-combat-breed",
+        "sprite_ref": "10250",
+        "category": "common",
+        "names": {
+          "ja": "パルデアのすがた",
+          "en": "Paldean Tauros (Combat Breed)"
+        }
+      },
+      {
+        "key": "tauros-paldea-blaze-breed",
+        "sprite_ref": "10251",
+        "category": "common",
+        "names": {
+          "ja": "パルデアのすがた",
+          "en": "Paldean Tauros (Blaze Breed)"
+        }
+      },
+      {
+        "key": "tauros-paldea-aqua-breed",
+        "sprite_ref": "10252",
+        "category": "common",
+        "names": {
+          "ja": "パルデアのすがた",
+          "en": "Paldean Tauros (Aqua Breed)"
+        }
+      }
+    ],
+    "133": [
+      {
+        "key": "",
+        "sprite_ref": "133",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "eevee-starter",
+        "sprite_ref": "10159",
+        "category": "common",
+        "names": {
+          "en": "Partner Eevee"
+        }
+      }
+    ],
+    "144": [
+      {
+        "key": "",
+        "sprite_ref": "144",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "articuno-galar",
+        "sprite_ref": "10169",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Articuno"
+        }
+      }
+    ],
+    "145": [
+      {
+        "key": "",
+        "sprite_ref": "145",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "zapdos-galar",
+        "sprite_ref": "10170",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Zapdos"
+        }
+      }
+    ],
+    "146": [
+      {
+        "key": "",
+        "sprite_ref": "146",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "moltres-galar",
+        "sprite_ref": "10171",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Moltres"
+        }
+      }
+    ],
+    "157": [
+      {
+        "key": "",
+        "sprite_ref": "157",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "typhlosion-hisui",
+        "sprite_ref": "10233",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Typhlosion"
+        }
+      }
+    ],
+    "172": [
+      {
+        "key": "",
+        "sprite_ref": "172",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "pichu-spiky-eared",
+        "sprite_ref": "172-spiky-eared",
+        "category": "common",
+        "names": {
+          "en": "Spiky-eared Pichu"
+        }
+      }
+    ],
+    "194": [
+      {
+        "key": "",
+        "sprite_ref": "194",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "wooper-paldea",
+        "sprite_ref": "10253",
+        "category": "common",
+        "names": {
+          "ja": "パルデアのすがた",
+          "en": "Paldean Wooper"
+        }
+      }
+    ],
+    "199": [
+      {
+        "key": "",
+        "sprite_ref": "199",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "slowking-galar",
+        "sprite_ref": "10172",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Slowking"
+        }
+      }
+    ],
+    "201": [
+      {
+        "key": "",
+        "sprite_ref": "201",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "unown-b",
+        "sprite_ref": "201-b",
+        "category": "common",
+        "names": {
+          "ja": "Ｂ",
+          "ko": "B",
+          "en": "Unown B"
+        }
+      },
+      {
+        "key": "unown-c",
+        "sprite_ref": "201-c",
+        "category": "common",
+        "names": {
+          "ja": "Ｃ",
+          "ko": "C",
+          "en": "Unown C"
+        }
+      },
+      {
+        "key": "unown-d",
+        "sprite_ref": "201-d",
+        "category": "common",
+        "names": {
+          "ja": "Ｄ",
+          "ko": "D",
+          "en": "Unown D"
+        }
+      },
+      {
+        "key": "unown-e",
+        "sprite_ref": "201-e",
+        "category": "common",
+        "names": {
+          "ja": "Ｅ",
+          "ko": "E",
+          "en": "Unown E"
+        }
+      },
+      {
+        "key": "unown-f",
+        "sprite_ref": "201-f",
+        "category": "common",
+        "names": {
+          "ja": "Ｆ",
+          "ko": "F",
+          "en": "Unown F"
+        }
+      },
+      {
+        "key": "unown-g",
+        "sprite_ref": "201-g",
+        "category": "common",
+        "names": {
+          "ja": "Ｇ",
+          "ko": "G",
+          "en": "Unown G"
+        }
+      },
+      {
+        "key": "unown-h",
+        "sprite_ref": "201-h",
+        "category": "common",
+        "names": {
+          "ja": "Ｈ",
+          "ko": "H",
+          "en": "Unown H"
+        }
+      },
+      {
+        "key": "unown-i",
+        "sprite_ref": "201-i",
+        "category": "common",
+        "names": {
+          "ja": "Ｉ",
+          "ko": "I",
+          "en": "Unown I"
+        }
+      },
+      {
+        "key": "unown-j",
+        "sprite_ref": "201-j",
+        "category": "common",
+        "names": {
+          "ja": "Ｊ",
+          "ko": "J",
+          "en": "Unown J"
+        }
+      },
+      {
+        "key": "unown-k",
+        "sprite_ref": "201-k",
+        "category": "common",
+        "names": {
+          "ja": "Ｋ",
+          "ko": "K",
+          "en": "Unown K"
+        }
+      },
+      {
+        "key": "unown-l",
+        "sprite_ref": "201-l",
+        "category": "common",
+        "names": {
+          "ja": "Ｌ",
+          "ko": "L",
+          "en": "Unown L"
+        }
+      },
+      {
+        "key": "unown-m",
+        "sprite_ref": "201-m",
+        "category": "common",
+        "names": {
+          "ja": "Ｍ",
+          "ko": "M",
+          "en": "Unown M"
+        }
+      },
+      {
+        "key": "unown-n",
+        "sprite_ref": "201-n",
+        "category": "common",
+        "names": {
+          "ja": "Ｎ",
+          "ko": "N",
+          "en": "Unown N"
+        }
+      },
+      {
+        "key": "unown-o",
+        "sprite_ref": "201-o",
+        "category": "common",
+        "names": {
+          "ja": "Ｏ",
+          "ko": "O",
+          "en": "Unown O"
+        }
+      },
+      {
+        "key": "unown-p",
+        "sprite_ref": "201-p",
+        "category": "common",
+        "names": {
+          "ja": "Ｐ",
+          "ko": "P",
+          "en": "Unown P"
+        }
+      },
+      {
+        "key": "unown-q",
+        "sprite_ref": "201-q",
+        "category": "common",
+        "names": {
+          "ja": "Ｑ",
+          "ko": "Q",
+          "en": "Unown Q"
+        }
+      },
+      {
+        "key": "unown-r",
+        "sprite_ref": "201-r",
+        "category": "common",
+        "names": {
+          "ja": "Ｒ",
+          "ko": "R",
+          "en": "Unown R"
+        }
+      },
+      {
+        "key": "unown-s",
+        "sprite_ref": "201-s",
+        "category": "common",
+        "names": {
+          "ja": "Ｓ",
+          "ko": "S",
+          "en": "Unown S"
+        }
+      },
+      {
+        "key": "unown-t",
+        "sprite_ref": "201-t",
+        "category": "common",
+        "names": {
+          "ja": "Ｔ",
+          "ko": "T",
+          "en": "Unown T"
+        }
+      },
+      {
+        "key": "unown-u",
+        "sprite_ref": "201-u",
+        "category": "common",
+        "names": {
+          "ja": "Ｕ",
+          "ko": "U",
+          "en": "Unown U"
+        }
+      },
+      {
+        "key": "unown-v",
+        "sprite_ref": "201-v",
+        "category": "common",
+        "names": {
+          "ja": "Ｖ",
+          "ko": "V",
+          "en": "Unown V"
+        }
+      },
+      {
+        "key": "unown-w",
+        "sprite_ref": "201-w",
+        "category": "common",
+        "names": {
+          "ja": "Ｗ",
+          "ko": "W",
+          "en": "Unown W"
+        }
+      },
+      {
+        "key": "unown-x",
+        "sprite_ref": "201-x",
+        "category": "common",
+        "names": {
+          "ja": "Ｘ",
+          "ko": "X",
+          "en": "Unown X"
+        }
+      },
+      {
+        "key": "unown-y",
+        "sprite_ref": "201-y",
+        "category": "common",
+        "names": {
+          "ja": "Ｙ",
+          "ko": "Y",
+          "en": "Unown Y"
+        }
+      },
+      {
+        "key": "unown-z",
+        "sprite_ref": "201-z",
+        "category": "common",
+        "names": {
+          "ja": "Ｚ",
+          "ko": "Z",
+          "en": "Unown Z"
+        }
+      },
+      {
+        "key": "unown-exclamation",
+        "sprite_ref": "201-exclamation",
+        "category": "common",
+        "names": {
+          "ja": "!",
+          "ko": "!",
+          "en": "Unown !"
+        }
+      },
+      {
+        "key": "unown-question",
+        "sprite_ref": "201-question",
+        "category": "common",
+        "names": {
+          "ja": "?",
+          "ko": "?",
+          "en": "Unown ?"
+        }
+      }
+    ],
+    "211": [
+      {
+        "key": "",
+        "sprite_ref": "211",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "qwilfish-hisui",
+        "sprite_ref": "10234",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Qwilfish"
+        }
+      }
+    ],
+    "215": [
+      {
+        "key": "",
+        "sprite_ref": "215",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sneasel-hisui",
+        "sprite_ref": "10235",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Sneasel"
+        }
+      }
+    ],
+    "222": [
+      {
+        "key": "",
+        "sprite_ref": "222",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "corsola-galar",
+        "sprite_ref": "10173",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Corsola"
+        }
+      }
+    ],
+    "263": [
+      {
+        "key": "",
+        "sprite_ref": "263",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "zigzagoon-galar",
+        "sprite_ref": "10174",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Zigzagoon"
+        }
+      }
+    ],
+    "264": [
+      {
+        "key": "",
+        "sprite_ref": "264",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "linoone-galar",
+        "sprite_ref": "10175",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Linoone"
+        }
+      }
+    ],
+    "386": [
+      {
+        "key": "",
+        "sprite_ref": "386",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "deoxys-attack",
+        "sprite_ref": "10001",
+        "category": "common",
+        "names": {
+          "ja": "アタックフォルム",
+          "ko": "어택폼",
+          "en": "Attack Deoxys"
+        }
+      },
+      {
+        "key": "deoxys-defense",
+        "sprite_ref": "10002",
+        "category": "common",
+        "names": {
+          "ja": "ディフェンスフォルム",
+          "ko": "디펜스폼",
+          "en": "Defense Deoxys"
+        }
+      },
+      {
+        "key": "deoxys-speed",
+        "sprite_ref": "10003",
+        "category": "common",
+        "names": {
+          "ja": "スピードフォルム",
+          "ko": "스피드폼",
+          "en": "Speed Deoxys"
+        }
+      }
+    ],
+    "412": [
+      {
+        "key": "",
+        "sprite_ref": "412",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "burmy-sandy",
+        "sprite_ref": "412-sandy",
+        "category": "common",
+        "names": {
+          "ja": "すなちのミノ",
+          "ko": "모래땅도롱",
+          "en": "Sandy Burmy"
+        }
+      },
+      {
+        "key": "burmy-trash",
+        "sprite_ref": "412-trash",
+        "category": "common",
+        "names": {
+          "ja": "ゴミのミノ",
+          "ko": "슈레도롱",
+          "en": "Trash Burmy"
+        }
+      }
+    ],
+    "413": [
+      {
+        "key": "",
+        "sprite_ref": "413",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "wormadam-sandy",
+        "sprite_ref": "10004",
+        "category": "common",
+        "names": {
+          "ja": "すなちのミノ",
+          "ko": "모래땅도롱",
+          "en": "Sandy Wormadam"
+        }
+      },
+      {
+        "key": "wormadam-trash",
+        "sprite_ref": "10005",
+        "category": "common",
+        "names": {
+          "ja": "ゴミのミノ",
+          "ko": "슈레도롱",
+          "en": "Trash Wormadam"
+        }
+      }
+    ],
+    "414": [
+      {
+        "key": "",
+        "sprite_ref": "414",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "mothim-sandy",
+        "sprite_ref": "414-sandy",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "mothim-trash",
+        "sprite_ref": "414-trash",
+        "category": "common",
+        "names": {}
+      }
+    ],
+    "422": [
+      {
+        "key": "",
+        "sprite_ref": "422",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "shellos-east",
+        "sprite_ref": "422-east",
+        "category": "common",
+        "names": {
+          "ja": "ひがしのうみ",
+          "ko": "동쪽바다",
+          "en": "East Shellos"
+        }
+      }
+    ],
+    "423": [
+      {
+        "key": "",
+        "sprite_ref": "423",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "gastrodon-east",
+        "sprite_ref": "423-east",
+        "category": "common",
+        "names": {
+          "ja": "ひがしのうみ",
+          "ko": "동쪽바다",
+          "en": "East Gastrodon"
+        }
+      }
+    ],
+    "479": [
+      {
+        "key": "",
+        "sprite_ref": "479",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "rotom-heat",
+        "sprite_ref": "10008",
+        "category": "common",
+        "names": {
+          "ja": "ヒートロトム",
+          "ko": "히트로토무",
+          "en": "Heat Rotom"
+        }
+      },
+      {
+        "key": "rotom-wash",
+        "sprite_ref": "10009",
+        "category": "common",
+        "names": {
+          "ja": "ウォッシュロトム",
+          "ko": "워시로토무",
+          "en": "Wash Rotom"
+        }
+      },
+      {
+        "key": "rotom-frost",
+        "sprite_ref": "10010",
+        "category": "common",
+        "names": {
+          "ja": "フロストロトム",
+          "ko": "프로스트로토무",
+          "en": "Frost Rotom"
+        }
+      },
+      {
+        "key": "rotom-fan",
+        "sprite_ref": "10011",
+        "category": "common",
+        "names": {
+          "ja": "スピンロトム",
+          "ko": "스핀로토무",
+          "en": "Fan Rotom"
+        }
+      },
+      {
+        "key": "rotom-mow",
+        "sprite_ref": "10012",
+        "category": "common",
+        "names": {
+          "ja": "カットロトム",
+          "ko": "커트로토무",
+          "en": "Mow Rotom"
+        }
+      }
+    ],
+    "483": [
+      {
+        "key": "",
+        "sprite_ref": "483",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "dialga-origin",
+        "sprite_ref": "10245",
+        "category": "common",
+        "names": {
+          "ja": "オリジンフォルム",
+          "en": "Origin Dialga"
+        }
+      }
+    ],
+    "484": [
+      {
+        "key": "",
+        "sprite_ref": "484",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "palkia-origin",
+        "sprite_ref": "10246",
+        "category": "common",
+        "names": {
+          "ja": "オリジンフォルム",
+          "en": "Origin Palkia"
+        }
+      }
+    ],
+    "487": [
+      {
+        "key": "",
+        "sprite_ref": "487",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "giratina-origin",
+        "sprite_ref": "10007",
+        "category": "common",
+        "names": {
+          "ja": "オリジンフォルム",
+          "ko": "오리진폼",
+          "en": "Origin Giratina"
+        }
+      }
+    ],
+    "492": [
+      {
+        "key": "",
+        "sprite_ref": "492",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "shaymin-sky",
+        "sprite_ref": "10006",
+        "category": "common",
+        "names": {
+          "ja": "スカイフォルム",
+          "ko": "스카이폼",
+          "en": "Sky Shaymin"
+        }
+      }
+    ],
+    "493": [
+      {
+        "key": "",
+        "sprite_ref": "493",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "arceus-fighting",
+        "sprite_ref": "493-fighting",
+        "category": "common",
+        "names": {
+          "ja": "かくとうタイプ",
+          "en": "Fighting Arceus"
+        }
+      },
+      {
+        "key": "arceus-flying",
+        "sprite_ref": "493-flying",
+        "category": "common",
+        "names": {
+          "ja": "ひこうタイプ",
+          "en": "Flying Arceus"
+        }
+      },
+      {
+        "key": "arceus-poison",
+        "sprite_ref": "493-poison",
+        "category": "common",
+        "names": {
+          "ja": "どくタイプ",
+          "en": "Poison Arceus"
+        }
+      },
+      {
+        "key": "arceus-ground",
+        "sprite_ref": "493-ground",
+        "category": "common",
+        "names": {
+          "ja": "じめんタイプ",
+          "en": "Ground Arceus"
+        }
+      },
+      {
+        "key": "arceus-rock",
+        "sprite_ref": "493-rock",
+        "category": "common",
+        "names": {
+          "ja": "いわタイプ",
+          "en": "Rock Arceus"
+        }
+      },
+      {
+        "key": "arceus-bug",
+        "sprite_ref": "493-bug",
+        "category": "common",
+        "names": {
+          "ja": "むしタイプ",
+          "en": "Bug Arceus"
+        }
+      },
+      {
+        "key": "arceus-ghost",
+        "sprite_ref": "493-ghost",
+        "category": "common",
+        "names": {
+          "ja": "ゴーストタイプ",
+          "en": "Ghost Arceus"
+        }
+      },
+      {
+        "key": "arceus-steel",
+        "sprite_ref": "493-steel",
+        "category": "common",
+        "names": {
+          "ja": "はがねタイプ",
+          "en": "Steel Arceus"
+        }
+      },
+      {
+        "key": "arceus-fire",
+        "sprite_ref": "493-fire",
+        "category": "common",
+        "names": {
+          "ja": "ほのおタイプ",
+          "en": "Fire Arceus"
+        }
+      },
+      {
+        "key": "arceus-water",
+        "sprite_ref": "493-water",
+        "category": "common",
+        "names": {
+          "ja": "みずタイプ",
+          "en": "Water Arceus"
+        }
+      },
+      {
+        "key": "arceus-grass",
+        "sprite_ref": "493-grass",
+        "category": "common",
+        "names": {
+          "ja": "くさタイプ",
+          "en": "Grass Arceus"
+        }
+      },
+      {
+        "key": "arceus-electric",
+        "sprite_ref": "493-electric",
+        "category": "common",
+        "names": {
+          "ja": "でんきタイプ",
+          "en": "Electric Arceus"
+        }
+      },
+      {
+        "key": "arceus-psychic",
+        "sprite_ref": "493-psychic",
+        "category": "common",
+        "names": {
+          "ja": "エスパータイプ",
+          "en": "Psychic Arceus"
+        }
+      },
+      {
+        "key": "arceus-ice",
+        "sprite_ref": "493-ice",
+        "category": "common",
+        "names": {
+          "ja": "こおりタイプ",
+          "en": "Ice Arceus"
+        }
+      },
+      {
+        "key": "arceus-dragon",
+        "sprite_ref": "493-dragon",
+        "category": "common",
+        "names": {
+          "ja": "ドラゴンタイプ",
+          "en": "Dragon Arceus"
+        }
+      },
+      {
+        "key": "arceus-dark",
+        "sprite_ref": "493-dark",
+        "category": "common",
+        "names": {
+          "ja": "あくタイプ",
+          "en": "Dark Arceus"
+        }
+      },
+      {
+        "key": "arceus-fairy",
+        "sprite_ref": "493-fairy",
+        "category": "common",
+        "names": {
+          "ja": "フェアリータイプ",
+          "en": "Fairy Arceus"
+        }
+      },
+      {
+        "key": "arceus-unknown",
+        "sprite_ref": "493-unknown",
+        "category": "common",
+        "names": {
+          "ja": "？？？タイプ",
+          "en": "??? Arceus"
+        }
+      }
+    ],
+    "503": [
+      {
+        "key": "",
+        "sprite_ref": "503",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "samurott-hisui",
+        "sprite_ref": "10236",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Samurott"
+        }
+      }
+    ],
+    "549": [
+      {
+        "key": "",
+        "sprite_ref": "549",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "lilligant-hisui",
+        "sprite_ref": "10237",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Lilligant"
+        }
+      }
+    ],
+    "550": [
+      {
+        "key": "",
+        "sprite_ref": "550",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "basculin-blue-striped",
+        "sprite_ref": "10016",
+        "category": "common",
+        "names": {
+          "ja": "あおすじのすがた",
+          "ko": "청색근의 모습",
+          "en": "Blue-Striped Basculin"
+        }
+      },
+      {
+        "key": "basculin-white-striped",
+        "sprite_ref": "10247",
+        "category": "common",
+        "names": {
+          "ja": "しろすじのすがた",
+          "en": "White-Striped Basculin"
+        }
+      }
+    ],
+    "554": [
+      {
+        "key": "",
+        "sprite_ref": "554",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "darumaka-galar",
+        "sprite_ref": "10176",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Darumaka"
+        }
+      }
+    ],
+    "555": [
+      {
+        "key": "",
+        "sprite_ref": "555",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "darmanitan-galar-standard",
+        "sprite_ref": "10177",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Standard Galarian Darmanitan"
+        }
+      }
+    ],
+    "562": [
+      {
+        "key": "",
+        "sprite_ref": "562",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "yamask-galar",
+        "sprite_ref": "10179",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Yamask"
+        }
+      }
+    ],
+    "570": [
+      {
+        "key": "",
+        "sprite_ref": "570",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "zorua-hisui",
+        "sprite_ref": "10238",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Zorua"
+        }
+      }
+    ],
+    "571": [
+      {
+        "key": "",
+        "sprite_ref": "571",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "zoroark-hisui",
+        "sprite_ref": "10239",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Zoroark"
+        }
+      }
+    ],
+    "585": [
+      {
+        "key": "",
+        "sprite_ref": "585",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "deerling-summer",
+        "sprite_ref": "585-summer",
+        "category": "common",
+        "names": {
+          "ja": "なつのすがた",
+          "ko": "여름의 모습",
+          "en": "Summer Deerling"
+        }
+      },
+      {
+        "key": "deerling-autumn",
+        "sprite_ref": "585-autumn",
+        "category": "common",
+        "names": {
+          "ja": "あきのすがた",
+          "ko": "가을의 모습",
+          "en": "Autumn Deerling"
+        }
+      },
+      {
+        "key": "deerling-winter",
+        "sprite_ref": "585-winter",
+        "category": "common",
+        "names": {
+          "ja": "ふゆのすがた",
+          "ko": "겨울의 모습",
+          "en": "Winter Deerling"
+        }
+      }
+    ],
+    "586": [
+      {
+        "key": "",
+        "sprite_ref": "586",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sawsbuck-summer",
+        "sprite_ref": "586-summer",
+        "category": "common",
+        "names": {
+          "ja": "なつのすがた",
+          "ko": "여름의 모습",
+          "en": "Summer Sawsbuck"
+        }
+      },
+      {
+        "key": "sawsbuck-autumn",
+        "sprite_ref": "586-autumn",
+        "category": "common",
+        "names": {
+          "ja": "あきのすがた",
+          "ko": "가을의 모습",
+          "en": "Autumn Sawsbuck"
+        }
+      },
+      {
+        "key": "sawsbuck-winter",
+        "sprite_ref": "586-winter",
+        "category": "common",
+        "names": {
+          "ja": "ふゆのすがた",
+          "ko": "겨울의 모습",
+          "en": "Winter Sawsbuck"
+        }
+      }
+    ],
+    "592": [
+      {
+        "key": "",
+        "sprite_ref": "592",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "frillish-female",
+        "sprite_ref": "592-female",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "ko": "암컷의 모습",
+          "en": "Female Frillish"
+        }
+      }
+    ],
+    "593": [
+      {
+        "key": "",
+        "sprite_ref": "593",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "jellicent-female",
+        "sprite_ref": "593-female",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "ko": "암컷의 모습",
+          "en": "Female Jellicent"
+        }
+      }
+    ],
+    "618": [
+      {
+        "key": "",
+        "sprite_ref": "618",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "stunfisk-galar",
+        "sprite_ref": "10180",
+        "category": "common",
+        "names": {
+          "ja": "ガラルのすがた",
+          "ko": "가라르의 모습",
+          "en": "Galarian Stunfisk"
+        }
+      }
+    ],
+    "628": [
+      {
+        "key": "",
+        "sprite_ref": "628",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "braviary-hisui",
+        "sprite_ref": "10240",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Braviary"
+        }
+      }
+    ],
+    "641": [
+      {
+        "key": "",
+        "sprite_ref": "641",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "tornadus-therian",
+        "sprite_ref": "10019",
+        "category": "common",
+        "names": {
+          "ja": "れいじゅうフォルム",
+          "ko": "영물폼",
+          "en": "Therian Tornadus"
+        }
+      }
+    ],
+    "642": [
+      {
+        "key": "",
+        "sprite_ref": "642",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "thundurus-therian",
+        "sprite_ref": "10020",
+        "category": "common",
+        "names": {
+          "ja": "れいじゅうフォルム",
+          "ko": "영물폼",
+          "en": "Therian Thundurus"
+        }
+      }
+    ],
+    "645": [
+      {
+        "key": "",
+        "sprite_ref": "645",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "landorus-therian",
+        "sprite_ref": "10021",
+        "category": "common",
+        "names": {
+          "ja": "れいじゅうフォルム",
+          "ko": "영물폼",
+          "en": "Therian Landorus"
+        }
+      }
+    ],
+    "646": [
+      {
+        "key": "",
+        "sprite_ref": "646",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "kyurem-black",
+        "sprite_ref": "10022",
+        "category": "common",
+        "names": {
+          "ja": "ブラックキュレム",
+          "ko": "블랙큐레무",
+          "en": "Black Kyurem"
+        }
+      },
+      {
+        "key": "kyurem-white",
+        "sprite_ref": "10023",
+        "category": "common",
+        "names": {
+          "ja": "ホワイトキュレム",
+          "ko": "화이트큐레무",
+          "en": "White Kyurem"
+        }
+      }
+    ],
+    "647": [
+      {
+        "key": "",
+        "sprite_ref": "647",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "keldeo-resolute",
+        "sprite_ref": "10024",
+        "category": "common",
+        "names": {
+          "ja": "かくごのすがた",
+          "ko": "각오의 모습",
+          "en": "Resolute Keldeo"
+        }
+      }
+    ],
+    "649": [
+      {
+        "key": "",
+        "sprite_ref": "649",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "genesect-douse",
+        "sprite_ref": "649-douse",
+        "category": "common",
+        "names": {
+          "ja": "アクアカセット",
+          "ko": "아쿠아카세트",
+          "en": "Douse Genesect"
+        }
+      },
+      {
+        "key": "genesect-shock",
+        "sprite_ref": "649-shock",
+        "category": "common",
+        "names": {
+          "ja": "イナズマカセット",
+          "ko": "번개카세트",
+          "en": "Shock Genesect"
+        }
+      },
+      {
+        "key": "genesect-burn",
+        "sprite_ref": "649-burn",
+        "category": "common",
+        "names": {
+          "ja": "ブレイズカセット",
+          "ko": "블레이즈카세트",
+          "en": "Burn Genesect"
+        }
+      },
+      {
+        "key": "genesect-chill",
+        "sprite_ref": "649-chill",
+        "category": "common",
+        "names": {
+          "ja": "フリーズカセット",
+          "ko": "프리즈카세트",
+          "en": "Chill Genesect"
+        }
+      }
+    ],
+    "664": [
+      {
+        "key": "",
+        "sprite_ref": "664",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-polar",
+        "sprite_ref": "664-polar",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-tundra",
+        "sprite_ref": "664-tundra",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-continental",
+        "sprite_ref": "664-continental",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-garden",
+        "sprite_ref": "664-garden",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-elegant",
+        "sprite_ref": "664-elegant",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-meadow",
+        "sprite_ref": "664-meadow",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-modern",
+        "sprite_ref": "664-modern",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-marine",
+        "sprite_ref": "664-marine",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-archipelago",
+        "sprite_ref": "664-archipelago",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-high-plains",
+        "sprite_ref": "664-high-plains",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-sandstorm",
+        "sprite_ref": "664-sandstorm",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-river",
+        "sprite_ref": "664-river",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-monsoon",
+        "sprite_ref": "664-monsoon",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-savanna",
+        "sprite_ref": "664-savanna",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-sun",
+        "sprite_ref": "664-sun",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-ocean",
+        "sprite_ref": "664-ocean",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-jungle",
+        "sprite_ref": "664-jungle",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-fancy",
+        "sprite_ref": "664-fancy",
+        "category": "rare",
+        "names": {}
+      },
+      {
+        "key": "scatterbug-poke-ball",
+        "sprite_ref": "664-poke-ball",
+        "category": "rare",
+        "names": {}
+      }
+    ],
+    "665": [
+      {
+        "key": "",
+        "sprite_ref": "665",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "spewpa-polar",
+        "sprite_ref": "665-polar",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-tundra",
+        "sprite_ref": "665-tundra",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-continental",
+        "sprite_ref": "665-continental",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-garden",
+        "sprite_ref": "665-garden",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-elegant",
+        "sprite_ref": "665-elegant",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-meadow",
+        "sprite_ref": "665-meadow",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-modern",
+        "sprite_ref": "665-modern",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-marine",
+        "sprite_ref": "665-marine",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-archipelago",
+        "sprite_ref": "665-archipelago",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-high-plains",
+        "sprite_ref": "665-high-plains",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-sandstorm",
+        "sprite_ref": "665-sandstorm",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-river",
+        "sprite_ref": "665-river",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-monsoon",
+        "sprite_ref": "665-monsoon",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-savanna",
+        "sprite_ref": "665-savanna",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-sun",
+        "sprite_ref": "665-sun",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-ocean",
+        "sprite_ref": "665-ocean",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-jungle",
+        "sprite_ref": "665-jungle",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "spewpa-fancy",
+        "sprite_ref": "665-fancy",
+        "category": "rare",
+        "names": {}
+      },
+      {
+        "key": "spewpa-poke-ball",
+        "sprite_ref": "665-poke-ball",
+        "category": "rare",
+        "names": {}
+      }
+    ],
+    "666": [
+      {
+        "key": "",
+        "sprite_ref": "666",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "vivillon-icy-snow",
+        "sprite_ref": "666-icy-snow",
+        "category": "common",
+        "names": {
+          "ja": "ひょうせつのもよう",
+          "ko": "빙설의 모양",
+          "en": "Icy Snow Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-polar",
+        "sprite_ref": "666-polar",
+        "category": "common",
+        "names": {
+          "ja": "ゆきぐにのもよう",
+          "ko": "설국의 모양",
+          "en": "Polar Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-tundra",
+        "sprite_ref": "666-tundra",
+        "category": "common",
+        "names": {
+          "ja": "せつげんのもよう",
+          "ko": "설원의 모양",
+          "en": "Tundra Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-continental",
+        "sprite_ref": "666-continental",
+        "category": "common",
+        "names": {
+          "ja": "たいりくのもよう",
+          "ko": "대륙의 모양",
+          "en": "Continental Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-garden",
+        "sprite_ref": "666-garden",
+        "category": "common",
+        "names": {
+          "ja": "ていえんのもよう",
+          "ko": "정원의 모양",
+          "en": "Garden Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-elegant",
+        "sprite_ref": "666-elegant",
+        "category": "common",
+        "names": {
+          "ja": "みやびなもよう",
+          "ko": "우아한 모양",
+          "en": "Elegant Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-modern",
+        "sprite_ref": "666-modern",
+        "category": "common",
+        "names": {
+          "ja": "モダンなもよう",
+          "ko": "모던한 모양",
+          "en": "Modern Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-marine",
+        "sprite_ref": "666-marine",
+        "category": "common",
+        "names": {
+          "ja": "マリンのもよう",
+          "ko": "마린의 모양",
+          "en": "Marine Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-archipelago",
+        "sprite_ref": "666-archipelago",
+        "category": "common",
+        "names": {
+          "ja": "ぐんとうのもよう",
+          "ko": "군도의 모양",
+          "en": "Archipelago Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-high-plains",
+        "sprite_ref": "666-high-plains",
+        "category": "common",
+        "names": {
+          "ja": "こうやのもよう",
+          "ko": "황야의 모양",
+          "en": "High Plains Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-sandstorm",
+        "sprite_ref": "666-sandstorm",
+        "category": "common",
+        "names": {
+          "ja": "さじんのもよう",
+          "ko": "사진의 모양",
+          "en": "Sandstorm Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-river",
+        "sprite_ref": "666-river",
+        "category": "common",
+        "names": {
+          "ja": "たいがのもよう",
+          "ko": "대하의 모양",
+          "en": "River Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-monsoon",
+        "sprite_ref": "666-monsoon",
+        "category": "common",
+        "names": {
+          "ja": "スコールのもよう",
+          "ko": "스콜의 모양",
+          "en": "Monsoon Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-savanna",
+        "sprite_ref": "666-savanna",
+        "category": "common",
+        "names": {
+          "ja": "サバンナのもよう",
+          "ko": "사바나의 모양",
+          "en": "Savanna Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-sun",
+        "sprite_ref": "666-sun",
+        "category": "common",
+        "names": {
+          "ja": "たいようのもよう",
+          "ko": "태양의 모양",
+          "en": "Sun Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-ocean",
+        "sprite_ref": "666-ocean",
+        "category": "common",
+        "names": {
+          "ja": "オーシャンのもよう",
+          "ko": "오션의 모양",
+          "en": "Ocean Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-jungle",
+        "sprite_ref": "666-jungle",
+        "category": "common",
+        "names": {
+          "ja": "ジャングルのもよう",
+          "ko": "정글의 모양",
+          "en": "Jungle Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-fancy",
+        "sprite_ref": "666-fancy",
+        "category": "rare",
+        "names": {
+          "ja": "ファンシーなもよう",
+          "ko": "팬시한 모양",
+          "en": "Fancy Vivillon"
+        }
+      },
+      {
+        "key": "vivillon-poke-ball",
+        "sprite_ref": "666-poke-ball",
+        "category": "rare",
+        "names": {
+          "ja": "ボールのもよう",
+          "ko": "볼의 모양",
+          "en": "Poké Ball Vivillon"
+        }
+      }
+    ],
+    "668": [
+      {
+        "key": "",
+        "sprite_ref": "668",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "pyroar-female",
+        "sprite_ref": "668-female",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "ko": "암컷의 모습",
+          "en": "Female Pyroar"
+        }
+      }
+    ],
+    "669": [
+      {
+        "key": "",
+        "sprite_ref": "669",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "flabebe-yellow",
+        "sprite_ref": "669-yellow",
+        "category": "common",
+        "names": {
+          "ja": "きいろのはな",
+          "ko": "노란 꽃",
+          "en": "Yellow Flabébé"
+        }
+      },
+      {
+        "key": "flabebe-orange",
+        "sprite_ref": "669-orange",
+        "category": "common",
+        "names": {
+          "ja": "オレンジいろのはな",
+          "ko": "오렌지색 꽃",
+          "en": "Orange Flabébé"
+        }
+      },
+      {
+        "key": "flabebe-blue",
+        "sprite_ref": "669-blue",
+        "category": "common",
+        "names": {
+          "ja": "あおいはな",
+          "ko": "파란 꽃",
+          "en": "Blue Flabébé"
+        }
+      },
+      {
+        "key": "flabebe-white",
+        "sprite_ref": "669-white",
+        "category": "common",
+        "names": {
+          "ja": "しろいはな",
+          "ko": "하얀 꽃",
+          "en": "White Flabébé"
+        }
+      }
+    ],
+    "670": [
+      {
+        "key": "",
+        "sprite_ref": "670",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "floette-yellow",
+        "sprite_ref": "670-yellow",
+        "category": "common",
+        "names": {
+          "ja": "きいろのはな",
+          "ko": "노란 꽃",
+          "en": "Yellow Floette"
+        }
+      },
+      {
+        "key": "floette-orange",
+        "sprite_ref": "670-orange",
+        "category": "common",
+        "names": {
+          "ja": "オレンジいろのはな",
+          "ko": "오렌지색 꽃",
+          "en": "Orange Floette"
+        }
+      },
+      {
+        "key": "floette-blue",
+        "sprite_ref": "670-blue",
+        "category": "common",
+        "names": {
+          "ja": "あおいはな",
+          "ko": "파란 꽃",
+          "en": "Blue Floette"
+        }
+      },
+      {
+        "key": "floette-white",
+        "sprite_ref": "670-white",
+        "category": "common",
+        "names": {
+          "ja": "しろいはな",
+          "ko": "하얀 꽃",
+          "en": "White Floette"
+        }
+      }
+    ],
+    "671": [
+      {
+        "key": "",
+        "sprite_ref": "671",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "florges-yellow",
+        "sprite_ref": "671-yellow",
+        "category": "common",
+        "names": {
+          "ja": "きいろのはな",
+          "ko": "노란 꽃",
+          "en": "Yellow Florges"
+        }
+      },
+      {
+        "key": "florges-orange",
+        "sprite_ref": "671-orange",
+        "category": "common",
+        "names": {
+          "ja": "オレンジいろのはな",
+          "ko": "오렌지색 꽃",
+          "en": "Orange Florges"
+        }
+      },
+      {
+        "key": "florges-blue",
+        "sprite_ref": "671-blue",
+        "category": "common",
+        "names": {
+          "ja": "あおいはな",
+          "ko": "파란 꽃",
+          "en": "Blue Florges"
+        }
+      },
+      {
+        "key": "florges-white",
+        "sprite_ref": "671-white",
+        "category": "common",
+        "names": {
+          "ja": "しろいはな",
+          "ko": "하얀 꽃",
+          "en": "White Florges"
+        }
+      }
+    ],
+    "676": [
+      {
+        "key": "",
+        "sprite_ref": "676",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "furfrou-heart",
+        "sprite_ref": "676-heart",
+        "category": "common",
+        "names": {
+          "ja": "ハートカット",
+          "ko": "하트컷",
+          "en": "Heart Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-star",
+        "sprite_ref": "676-star",
+        "category": "common",
+        "names": {
+          "ja": "スターカット",
+          "ko": "스타컷",
+          "en": "Star Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-diamond",
+        "sprite_ref": "676-diamond",
+        "category": "common",
+        "names": {
+          "ja": "ダイヤカット",
+          "ko": "다이아컷",
+          "en": "Diamond Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-debutante",
+        "sprite_ref": "676-debutante",
+        "category": "common",
+        "names": {
+          "ja": "レディカット",
+          "ko": "레이디컷",
+          "en": "Debutante Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-matron",
+        "sprite_ref": "676-matron",
+        "category": "common",
+        "names": {
+          "ja": "マダムカット",
+          "ko": "마담컷",
+          "en": "Matron Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-dandy",
+        "sprite_ref": "676-dandy",
+        "category": "common",
+        "names": {
+          "ja": "ジェントルカット",
+          "ko": "젠틀컷",
+          "en": "Dandy Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-la-reine",
+        "sprite_ref": "676-la-reine",
+        "category": "common",
+        "names": {
+          "ja": "クイーンカット",
+          "ko": "퀸컷",
+          "en": "La Reine Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-kabuki",
+        "sprite_ref": "676-kabuki",
+        "category": "common",
+        "names": {
+          "ja": "カブキカット",
+          "ko": "가부키컷",
+          "en": "Kabuki Furfrou"
+        }
+      },
+      {
+        "key": "furfrou-pharaoh",
+        "sprite_ref": "676-pharaoh",
+        "category": "common",
+        "names": {
+          "ja": "キングダムカット",
+          "ko": "킹덤컷",
+          "en": "Pharaoh Furfrou"
+        }
+      }
+    ],
+    "678": [
+      {
+        "key": "",
+        "sprite_ref": "678",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "meowstic-female",
+        "sprite_ref": "10025",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "ko": "암컷의 모습",
+          "en": "Female Meowstic"
+        }
+      }
+    ],
+    "705": [
+      {
+        "key": "",
+        "sprite_ref": "705",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sliggoo-hisui",
+        "sprite_ref": "10241",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Sliggoo"
+        }
+      }
+    ],
+    "706": [
+      {
+        "key": "",
+        "sprite_ref": "706",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "goodra-hisui",
+        "sprite_ref": "10242",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Goodra"
+        }
+      }
+    ],
+    "710": [
+      {
+        "key": "",
+        "sprite_ref": "710",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "pumpkaboo-small",
+        "sprite_ref": "10027",
+        "category": "common",
+        "names": {
+          "ja": "ちいさいサイズ",
+          "ko": "작은 사이즈",
+          "en": "Small Pumpkaboo"
+        }
+      },
+      {
+        "key": "pumpkaboo-large",
+        "sprite_ref": "10028",
+        "category": "common",
+        "names": {
+          "ja": "おおきいサイズ",
+          "ko": "큰 사이즈",
+          "en": "Large Pumpkaboo"
+        }
+      },
+      {
+        "key": "pumpkaboo-super",
+        "sprite_ref": "10029",
+        "category": "common",
+        "names": {
+          "ja": "とくだいサイズ",
+          "ko": "특대 사이즈",
+          "en": "Super Pumpkaboo"
+        }
+      }
+    ],
+    "711": [
+      {
+        "key": "",
+        "sprite_ref": "711",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "gourgeist-small",
+        "sprite_ref": "10030",
+        "category": "common",
+        "names": {
+          "ja": "ちいさいサイズ",
+          "ko": "작은 사이즈",
+          "en": "Small Gourgeist"
+        }
+      },
+      {
+        "key": "gourgeist-large",
+        "sprite_ref": "10031",
+        "category": "common",
+        "names": {
+          "ja": "おおきいサイズ",
+          "ko": "큰 사이즈",
+          "en": "Large Gourgeist"
+        }
+      },
+      {
+        "key": "gourgeist-super",
+        "sprite_ref": "10032",
+        "category": "common",
+        "names": {
+          "ja": "とくだいサイズ",
+          "ko": "특대 사이즈",
+          "en": "Super Gourgeist"
+        }
+      }
+    ],
+    "713": [
+      {
+        "key": "",
+        "sprite_ref": "713",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "avalugg-hisui",
+        "sprite_ref": "10243",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Avalugg"
+        }
+      }
+    ],
+    "718": [
+      {
+        "key": "",
+        "sprite_ref": "718",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "zygarde-10-power-construct",
+        "sprite_ref": "10118",
+        "category": "common",
+        "names": {
+          "ja": "１０％フォルム",
+          "ko": "10%폼",
+          "en": "10% Zygarde"
+        }
+      },
+      {
+        "key": "zygarde-50-power-construct",
+        "sprite_ref": "10119",
+        "category": "common",
+        "names": {
+          "ja": "５０％フォルム",
+          "ko": "50%폼",
+          "en": "50% Zygarde"
+        }
+      },
+      {
+        "key": "zygarde-10",
+        "sprite_ref": "10181",
+        "category": "common",
+        "names": {
+          "ja": "１０％フォルム",
+          "ko": "10%폼",
+          "en": "10% Zygarde"
+        }
+      }
+    ],
+    "720": [
+      {
+        "key": "",
+        "sprite_ref": "720",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "hoopa-unbound",
+        "sprite_ref": "10086",
+        "category": "common",
+        "names": {
+          "ja": "ときはなたれしフーパ",
+          "ko": "굴레를 벗어난 후파",
+          "en": "Hoopa Unbound"
+        }
+      }
+    ],
+    "724": [
+      {
+        "key": "",
+        "sprite_ref": "724",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "decidueye-hisui",
+        "sprite_ref": "10244",
+        "category": "common",
+        "names": {
+          "ja": "ヒスイのすがた",
+          "en": "Hisuian Decidueye"
+        }
+      }
+    ],
+    "741": [
+      {
+        "key": "",
+        "sprite_ref": "741",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "oricorio-pom-pom",
+        "sprite_ref": "10123",
+        "category": "common",
+        "names": {
+          "ja": "ぱちぱちスタイル",
+          "ko": "파칙파칙스타일",
+          "en": "Pom-pom Oricorio"
+        }
+      },
+      {
+        "key": "oricorio-pau",
+        "sprite_ref": "10124",
+        "category": "common",
+        "names": {
+          "ja": "ふらふらスタイル",
+          "ko": "훌라훌라스타일",
+          "en": "Pa’u Oricorio"
+        }
+      },
+      {
+        "key": "oricorio-sensu",
+        "sprite_ref": "10125",
+        "category": "common",
+        "names": {
+          "ja": "まいまいスタイル",
+          "ko": "하늘하늘스타일",
+          "en": "Sensu Oricorio"
+        }
+      }
+    ],
+    "744": [
+      {
+        "key": "",
+        "sprite_ref": "744",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "rockruff-own-tempo",
+        "sprite_ref": "10151",
+        "category": "rare",
+        "names": {
+          "ja": "イワンコ（マイペース）",
+          "en": "Own Tempo Rockruff"
+        }
+      }
+    ],
+    "745": [
+      {
+        "key": "",
+        "sprite_ref": "745",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "lycanroc-midnight",
+        "sprite_ref": "10126",
+        "category": "common",
+        "names": {
+          "ja": "まよなかのすがた",
+          "ko": "한밤중의 모습",
+          "en": "Midnight Lycanroc"
+        }
+      },
+      {
+        "key": "lycanroc-dusk",
+        "sprite_ref": "10152",
+        "category": "rare",
+        "names": {
+          "ja": "たそがれのすがた",
+          "ko": "황혼의 모습",
+          "en": "Dusk Lycanroc"
+        }
+      }
+    ],
+    "773": [
+      {
+        "key": "",
+        "sprite_ref": "773",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "silvally-fighting",
+        "sprite_ref": "773-fighting",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ファイト",
+          "ko": "타입:파이팅",
+          "en": "Type: Fighting"
+        }
+      },
+      {
+        "key": "silvally-flying",
+        "sprite_ref": "773-flying",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：フライング",
+          "ko": "타입:플라잉",
+          "en": "Type: Flying"
+        }
+      },
+      {
+        "key": "silvally-poison",
+        "sprite_ref": "773-poison",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ポイズン",
+          "ko": "타입:포이즌",
+          "en": "Type: Poison"
+        }
+      },
+      {
+        "key": "silvally-ground",
+        "sprite_ref": "773-ground",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：グラウンド",
+          "ko": "타입:그라운드",
+          "en": "Type: Ground"
+        }
+      },
+      {
+        "key": "silvally-rock",
+        "sprite_ref": "773-rock",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ロック",
+          "ko": "타입:락",
+          "en": "Type: Rock"
+        }
+      },
+      {
+        "key": "silvally-bug",
+        "sprite_ref": "773-bug",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：バグ",
+          "ko": "타입:버그",
+          "en": "Type: Bug"
+        }
+      },
+      {
+        "key": "silvally-ghost",
+        "sprite_ref": "773-ghost",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ゴースト",
+          "ko": "타입:고스트",
+          "en": "Type: Ghost"
+        }
+      },
+      {
+        "key": "silvally-steel",
+        "sprite_ref": "773-steel",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：スチール",
+          "ko": "타입:스틸",
+          "en": "Type: Steel"
+        }
+      },
+      {
+        "key": "silvally-fire",
+        "sprite_ref": "773-fire",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ファイヤー",
+          "ko": "타입:파이어",
+          "en": "Type: Fire"
+        }
+      },
+      {
+        "key": "silvally-water",
+        "sprite_ref": "773-water",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ウオーター",
+          "ko": "타입:워터",
+          "en": "Type: Water"
+        }
+      },
+      {
+        "key": "silvally-grass",
+        "sprite_ref": "773-grass",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：グラス",
+          "ko": "타입:그래스",
+          "en": "Type: Grass"
+        }
+      },
+      {
+        "key": "silvally-electric",
+        "sprite_ref": "773-electric",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：エレクトロ",
+          "ko": "타입:일렉트릭",
+          "en": "Type: Electric"
+        }
+      },
+      {
+        "key": "silvally-psychic",
+        "sprite_ref": "773-psychic",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：サイキック",
+          "ko": "타입:사이킥",
+          "en": "Type: Psychic"
+        }
+      },
+      {
+        "key": "silvally-ice",
+        "sprite_ref": "773-ice",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：アイス",
+          "ko": "타입:아이스",
+          "en": "Type: Ice"
+        }
+      },
+      {
+        "key": "silvally-dragon",
+        "sprite_ref": "773-dragon",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ドラゴン",
+          "ko": "타입:드래곤",
+          "en": "Type: Dragon"
+        }
+      },
+      {
+        "key": "silvally-dark",
+        "sprite_ref": "773-dark",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：ダーク",
+          "ko": "타입:다크",
+          "en": "Type: Dark"
+        }
+      },
+      {
+        "key": "silvally-fairy",
+        "sprite_ref": "773-fairy",
+        "category": "common",
+        "names": {
+          "ja": "タイプ：フェアリー",
+          "ko": "타입:페어리",
+          "en": "Type: Fairy"
+        }
+      }
+    ],
+    "774": [
+      {
+        "key": "",
+        "sprite_ref": "774",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "minior-red",
+        "sprite_ref": "10136",
+        "category": "common",
+        "names": {
+          "ja": "あかいろのコア",
+          "ko": "빨간색 코어",
+          "en": "Red Core Minior"
+        }
+      },
+      {
+        "key": "minior-orange",
+        "sprite_ref": "10137",
+        "category": "common",
+        "names": {
+          "ja": "だいだいいろのコア",
+          "ko": "주황색 코어",
+          "en": "Orange Core Minior"
+        }
+      },
+      {
+        "key": "minior-yellow",
+        "sprite_ref": "10138",
+        "category": "common",
+        "names": {
+          "ja": "きいろのコア",
+          "ko": "노란색 코어",
+          "en": "Yellow Core Minior"
+        }
+      },
+      {
+        "key": "minior-green",
+        "sprite_ref": "10139",
+        "category": "common",
+        "names": {
+          "ja": "みどりいろのコア",
+          "ko": "초록색 코어",
+          "en": "Green Core Minior"
+        }
+      },
+      {
+        "key": "minior-blue",
+        "sprite_ref": "10140",
+        "category": "common",
+        "names": {
+          "ja": "みずいろのコア",
+          "ko": "옥색 코어",
+          "en": "Blue Core Minior"
+        }
+      },
+      {
+        "key": "minior-indigo",
+        "sprite_ref": "10141",
+        "category": "common",
+        "names": {
+          "ja": "あおいろのコア",
+          "ko": "파란색 코어",
+          "en": "Indigo Core Minior"
+        }
+      },
+      {
+        "key": "minior-violet",
+        "sprite_ref": "10142",
+        "category": "common",
+        "names": {
+          "ja": "むらさきいろのコア",
+          "ko": "보라색 코어",
+          "en": "Violet Core Minior"
+        }
+      }
+    ],
+    "800": [
+      {
+        "key": "",
+        "sprite_ref": "800",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "necrozma-dusk",
+        "sprite_ref": "10155",
+        "category": "rare",
+        "names": {
+          "ja": "たそがれのたてがみ",
+          "ko": "황혼의 갈기",
+          "en": "Dusk Necrozma"
+        }
+      },
+      {
+        "key": "necrozma-dawn",
+        "sprite_ref": "10156",
+        "category": "common",
+        "names": {
+          "ja": "あかつきのつばさ",
+          "ko": "새벽의 날개",
+          "en": "Dawn Necrozma"
+        }
+      },
+      {
+        "key": "necrozma-ultra",
+        "sprite_ref": "10157",
+        "category": "common",
+        "names": {
+          "ja": "ウルトラネクロズマ",
+          "ko": "울트라네크로즈마",
+          "en": "Ultra Necrozma"
+        }
+      }
+    ],
+    "801": [
+      {
+        "key": "",
+        "sprite_ref": "801",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "magearna-original",
+        "sprite_ref": "10147",
+        "category": "common",
+        "names": {
+          "ja": "５００ねんまえのいろ",
+          "ko": "500년 전의 색",
+          "en": "Original Magearna"
+        }
+      }
+    ],
+    "849": [
+      {
+        "key": "",
+        "sprite_ref": "849",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "toxtricity-low-key",
+        "sprite_ref": "10184",
+        "category": "common",
+        "names": {
+          "ja": "ローなすがた",
+          "ko": "로우한 모습",
+          "en": "Low Key Toxtricity"
+        }
+      }
+    ],
+    "854": [
+      {
+        "key": "",
+        "sprite_ref": "854",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sinistea-antique",
+        "sprite_ref": "854-antique",
+        "category": "rare",
+        "names": {
+          "ja": "しんさくフォルム",
+          "en": "Antique Sinistea"
+        }
+      }
+    ],
+    "855": [
+      {
+        "key": "",
+        "sprite_ref": "855",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "polteageist-antique",
+        "sprite_ref": "855-antique",
+        "category": "rare",
+        "names": {
+          "ja": "しんさくフォルム",
+          "en": "Antique Polteageist"
+        }
+      }
+    ],
+    "869": [
+      {
+        "key": "",
+        "sprite_ref": "869",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "alcremie-ruby-cream-strawberry-sweet",
+        "sprite_ref": "869-ruby-cream-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "ミルキィルビー",
+          "ko": "밀키루비",
+          "en": "Ruby Cream Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-strawberry-sweet",
+        "sprite_ref": "869-matcha-cream-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "ミルキィまっちゃ",
+          "ko": "밀키말차",
+          "en": "Matcha Cream Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-strawberry-sweet",
+        "sprite_ref": "869-mint-cream-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "ミルキィミント",
+          "ko": "밀키민트",
+          "en": "Mint Cream Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-strawberry-sweet",
+        "sprite_ref": "869-lemon-cream-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "ミルキィレモン",
+          "ko": "밀키레몬",
+          "en": "Lemon Cream Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-strawberry-sweet",
+        "sprite_ref": "869-salted-cream-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "ミルキィソルト",
+          "ko": "밀키솔트",
+          "en": "Salted Cream Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-strawberry-sweet",
+        "sprite_ref": "869-ruby-swirl-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "ルビーミックス",
+          "ko": "루비믹스",
+          "en": "Ruby Swirl Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-strawberry-sweet",
+        "sprite_ref": "869-caramel-swirl-strawberry-sweet",
+        "category": "common",
+        "names": {
+          "ja": "キャラメルミックス",
+          "ko": "캐러멜믹스",
+          "en": "Caramel Swirl Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-strawberry-sweet",
+        "sprite_ref": "869-rainbow-swirl-strawberry-sweet",
+        "category": "rare",
+        "names": {
+          "ja": "トリプルミックス",
+          "ko": "트리플믹스",
+          "en": "Rainbow Swirl Strawberry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-vanilla-cream-berry-sweet",
+        "sprite_ref": "869-vanilla-cream-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Vanilla Cream Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-cream-berry-sweet",
+        "sprite_ref": "869-ruby-cream-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Cream Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-berry-sweet",
+        "sprite_ref": "869-matcha-cream-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Matcha Cream Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-berry-sweet",
+        "sprite_ref": "869-mint-cream-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Mint Cream Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-berry-sweet",
+        "sprite_ref": "869-lemon-cream-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Lemon Cream Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-berry-sweet",
+        "sprite_ref": "869-salted-cream-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Salted Cream Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-berry-sweet",
+        "sprite_ref": "869-ruby-swirl-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Swirl Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-berry-sweet",
+        "sprite_ref": "869-caramel-swirl-berry-sweet",
+        "category": "common",
+        "names": {
+          "en": "Caramel Swirl Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-berry-sweet",
+        "sprite_ref": "869-rainbow-swirl-berry-sweet",
+        "category": "rare",
+        "names": {
+          "en": "Rainbow Swirl Berry Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-vanilla-cream-love-sweet",
+        "sprite_ref": "869-vanilla-cream-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Vanilla Cream Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-cream-love-sweet",
+        "sprite_ref": "869-ruby-cream-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Cream Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-love-sweet",
+        "sprite_ref": "869-matcha-cream-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Matcha Cream Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-love-sweet",
+        "sprite_ref": "869-mint-cream-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Mint Cream Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-love-sweet",
+        "sprite_ref": "869-lemon-cream-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Lemon Cream Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-love-sweet",
+        "sprite_ref": "869-salted-cream-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Salted Cream Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-love-sweet",
+        "sprite_ref": "869-ruby-swirl-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Swirl Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-love-sweet",
+        "sprite_ref": "869-caramel-swirl-love-sweet",
+        "category": "common",
+        "names": {
+          "en": "Caramel Swirl Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-love-sweet",
+        "sprite_ref": "869-rainbow-swirl-love-sweet",
+        "category": "rare",
+        "names": {
+          "en": "Rainbow Swirl Love Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-vanilla-cream-star-sweet",
+        "sprite_ref": "869-vanilla-cream-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Vanilla Cream Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-cream-star-sweet",
+        "sprite_ref": "869-ruby-cream-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Cream Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-star-sweet",
+        "sprite_ref": "869-matcha-cream-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Matcha Cream Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-star-sweet",
+        "sprite_ref": "869-mint-cream-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Mint Cream Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-star-sweet",
+        "sprite_ref": "869-lemon-cream-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Lemon Cream Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-star-sweet",
+        "sprite_ref": "869-salted-cream-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Salted Cream Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-star-sweet",
+        "sprite_ref": "869-ruby-swirl-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Swirl Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-star-sweet",
+        "sprite_ref": "869-caramel-swirl-star-sweet",
+        "category": "common",
+        "names": {
+          "en": "Caramel Swirl Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-star-sweet",
+        "sprite_ref": "869-rainbow-swirl-star-sweet",
+        "category": "rare",
+        "names": {
+          "en": "Rainbow Swirl Star Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-vanilla-cream-clover-sweet",
+        "sprite_ref": "869-vanilla-cream-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Vanilla Cream Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-cream-clover-sweet",
+        "sprite_ref": "869-ruby-cream-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Cream Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-clover-sweet",
+        "sprite_ref": "869-matcha-cream-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Matcha Cream Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-clover-sweet",
+        "sprite_ref": "869-mint-cream-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Mint Cream Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-clover-sweet",
+        "sprite_ref": "869-lemon-cream-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Lemon Cream Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-clover-sweet",
+        "sprite_ref": "869-salted-cream-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Salted Cream Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-clover-sweet",
+        "sprite_ref": "869-ruby-swirl-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Swirl Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-clover-sweet",
+        "sprite_ref": "869-caramel-swirl-clover-sweet",
+        "category": "common",
+        "names": {
+          "en": "Caramel Swirl Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-clover-sweet",
+        "sprite_ref": "869-rainbow-swirl-clover-sweet",
+        "category": "rare",
+        "names": {
+          "en": "Rainbow Swirl Clover Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-vanilla-cream-flower-sweet",
+        "sprite_ref": "869-vanilla-cream-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Vanilla Cream Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-cream-flower-sweet",
+        "sprite_ref": "869-ruby-cream-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Cream Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-flower-sweet",
+        "sprite_ref": "869-matcha-cream-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Matcha Cream Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-flower-sweet",
+        "sprite_ref": "869-mint-cream-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Mint Cream Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-flower-sweet",
+        "sprite_ref": "869-lemon-cream-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Lemon Cream Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-flower-sweet",
+        "sprite_ref": "869-salted-cream-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Salted Cream Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-flower-sweet",
+        "sprite_ref": "869-ruby-swirl-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Swirl Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-flower-sweet",
+        "sprite_ref": "869-caramel-swirl-flower-sweet",
+        "category": "common",
+        "names": {
+          "en": "Caramel Swirl Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-flower-sweet",
+        "sprite_ref": "869-rainbow-swirl-flower-sweet",
+        "category": "rare",
+        "names": {
+          "en": "Rainbow Swirl Flower Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-vanilla-cream-ribbon-sweet",
+        "sprite_ref": "869-vanilla-cream-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Vanilla Cream Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-cream-ribbon-sweet",
+        "sprite_ref": "869-ruby-cream-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Cream Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-matcha-cream-ribbon-sweet",
+        "sprite_ref": "869-matcha-cream-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Matcha Cream Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-mint-cream-ribbon-sweet",
+        "sprite_ref": "869-mint-cream-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Mint Cream Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-lemon-cream-ribbon-sweet",
+        "sprite_ref": "869-lemon-cream-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Lemon Cream Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-salted-cream-ribbon-sweet",
+        "sprite_ref": "869-salted-cream-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Salted Cream Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-ruby-swirl-ribbon-sweet",
+        "sprite_ref": "869-ruby-swirl-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Ruby Swirl Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-caramel-swirl-ribbon-sweet",
+        "sprite_ref": "869-caramel-swirl-ribbon-sweet",
+        "category": "common",
+        "names": {
+          "en": "Caramel Swirl Ribbon Sweet Alcremie"
+        }
+      },
+      {
+        "key": "alcremie-rainbow-swirl-ribbon-sweet",
+        "sprite_ref": "869-rainbow-swirl-ribbon-sweet",
+        "category": "rare",
+        "names": {
+          "en": "Rainbow Swirl Ribbon Sweet Alcremie"
+        }
+      }
+    ],
+    "876": [
+      {
+        "key": "",
+        "sprite_ref": "876",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "indeedee-female",
+        "sprite_ref": "10186",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "ko": "암컷의 모습",
+          "en": "Female Indeedee"
+        }
+      }
+    ],
+    "892": [
+      {
+        "key": "",
+        "sprite_ref": "892",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "urshifu-rapid-strike",
+        "sprite_ref": "10191",
+        "category": "common",
+        "names": {
+          "ja": "れんげきのかた",
+          "ko": "연격의 태세",
+          "en": "Rapid Strike Urshifu"
+        }
+      }
+    ],
+    "893": [
+      {
+        "key": "",
+        "sprite_ref": "893",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "zarude-dada",
+        "sprite_ref": "10192",
+        "category": "rare",
+        "names": {
+          "ja": "とうちゃん",
+          "ko": "아빠",
+          "en": "Dada Zarude"
+        }
+      }
+    ],
+    "898": [
+      {
+        "key": "",
+        "sprite_ref": "898",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "calyrex-ice",
+        "sprite_ref": "10193",
+        "category": "common",
+        "names": {
+          "ja": "はくばじょうのすがた",
+          "ko": "백마 탄 모습",
+          "en": "Ice Calyrex"
+        }
+      },
+      {
+        "key": "calyrex-shadow",
+        "sprite_ref": "10194",
+        "category": "common",
+        "names": {
+          "ja": "こくばじょうのすがた",
+          "ko": "흑마 탄 모습",
+          "en": "Shadow Calyrex"
+        }
+      }
+    ],
+    "901": [
+      {
+        "key": "",
+        "sprite_ref": "901",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "ursaluna-bloodmoon",
+        "sprite_ref": "10272",
+        "category": "rare",
+        "names": {
+          "ja": "アカツキ",
+          "ko": "붉은 달",
+          "en": "Bloodmoon Ursaluna"
+        }
+      }
+    ],
+    "902": [
+      {
+        "key": "",
+        "sprite_ref": "902",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "basculegion-female",
+        "sprite_ref": "10248",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "en": "Female Basculegion"
+        }
+      }
+    ],
+    "905": [
+      {
+        "key": "",
+        "sprite_ref": "905",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "enamorus-therian",
+        "sprite_ref": "10249",
+        "category": "common",
+        "names": {
+          "ja": "れいじゅうフォルム",
+          "en": "Therian Enamorus"
+        }
+      }
+    ],
+    "916": [
+      {
+        "key": "",
+        "sprite_ref": "916",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "oinkologne-female",
+        "sprite_ref": "10254",
+        "category": "common",
+        "names": {
+          "ja": "メスのすがた",
+          "en": "Female Oinkologne"
+        }
+      }
+    ],
+    "925": [
+      {
+        "key": "",
+        "sprite_ref": "925",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "maushold-family-of-three",
+        "sprite_ref": "10257",
+        "category": "rare",
+        "names": {
+          "ja": "３びきかぞく",
+          "en": "Maushold (Family of Three)"
+        }
+      }
+    ],
+    "931": [
+      {
+        "key": "",
+        "sprite_ref": "931",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "squawkabilly-blue-plumage",
+        "sprite_ref": "10260",
+        "category": "common",
+        "names": {
+          "ja": "ブルーフェザー",
+          "en": "Blue Plumage Squawkabilly"
+        }
+      },
+      {
+        "key": "squawkabilly-yellow-plumage",
+        "sprite_ref": "10261",
+        "category": "common",
+        "names": {
+          "ja": "イエローフェザー",
+          "en": "Yellow Plumage Squawkabilly"
+        }
+      },
+      {
+        "key": "squawkabilly-white-plumage",
+        "sprite_ref": "10262",
+        "category": "common",
+        "names": {
+          "ja": "ホワイトフェザー",
+          "en": "White Plumage Squawkabilly"
+        }
+      }
+    ],
+    "978": [
+      {
+        "key": "",
+        "sprite_ref": "978",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "tatsugiri-droopy",
+        "sprite_ref": "10258",
+        "category": "common",
+        "names": {
+          "ja": "たれたすがた",
+          "en": "Droopy Form Tatsugiri"
+        }
+      },
+      {
+        "key": "tatsugiri-stretchy",
+        "sprite_ref": "10259",
+        "category": "common",
+        "names": {
+          "ja": "のびたすがた",
+          "en": "Stretchy Form Tatsugiri"
+        }
+      }
+    ],
+    "982": [
+      {
+        "key": "",
+        "sprite_ref": "982",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "dudunsparce-three-segment",
+        "sprite_ref": "10255",
+        "category": "rare",
+        "names": {
+          "ja": "みつふしフォルム",
+          "en": "Three-Segment Form Dudunsparce"
+        }
+      }
+    ],
+    "999": [
+      {
+        "key": "",
+        "sprite_ref": "999",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "gimmighoul-roaming",
+        "sprite_ref": "10263",
+        "category": "rare",
+        "names": {
+          "ja": "とほフォルム",
+          "en": "Roaming Form Gimmighoul"
+        }
+      }
+    ],
+    "1007": [
+      {
+        "key": "",
+        "sprite_ref": "1007",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "koraidon-limited-build",
+        "sprite_ref": "10264",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "koraidon-sprinting-build",
+        "sprite_ref": "10265",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "koraidon-swimming-build",
+        "sprite_ref": "10266",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "koraidon-gliding-build",
+        "sprite_ref": "10267",
+        "category": "common",
+        "names": {}
+      }
+    ],
+    "1008": [
+      {
+        "key": "",
+        "sprite_ref": "1008",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "miraidon-low-power-mode",
+        "sprite_ref": "10268",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "miraidon-drive-mode",
+        "sprite_ref": "10269",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "miraidon-aquatic-mode",
+        "sprite_ref": "10270",
+        "category": "common",
+        "names": {}
+      },
+      {
+        "key": "miraidon-glide-mode",
+        "sprite_ref": "10271",
+        "category": "common",
+        "names": {}
+      }
+    ],
+    "1012": [
+      {
+        "key": "",
+        "sprite_ref": "1012",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "poltchageist-artisan",
+        "sprite_ref": "1012-artisan",
+        "category": "rare",
+        "names": {
+          "ja": "タカイモノのすがた",
+          "ko": "알짜배기의 모습",
+          "en": "Artisan Form Poltchageist"
+        }
+      }
+    ],
+    "1013": [
+      {
+        "key": "",
+        "sprite_ref": "1013",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "sinistcha-masterpiece",
+        "sprite_ref": "1013-masterpiece",
+        "category": "rare",
+        "names": {
+          "ja": "ケッサクのすがた",
+          "ko": "걸작의 모습",
+          "en": "Masterpiece Form Sinistcha"
+        }
+      }
+    ],
+    "1017": [
+      {
+        "key": "",
+        "sprite_ref": "1017",
+        "category": "default",
+        "names": {}
+      },
+      {
+        "key": "ogerpon-wellspring-mask",
+        "sprite_ref": "10273",
+        "category": "common",
+        "names": {
+          "ja": "いどのめん",
+          "ko": "우물의가면",
+          "en": "Wellspring Mask Ogerpon"
+        }
+      },
+      {
+        "key": "ogerpon-hearthflame-mask",
+        "sprite_ref": "10274",
+        "category": "common",
+        "names": {
+          "ja": "かまどのめん",
+          "ko": "화덕의가면",
+          "en": "Hearthflame Mask Ogerpon"
+        }
+      },
+      {
+        "key": "ogerpon-cornerstone-mask",
+        "sprite_ref": "10275",
+        "category": "common",
+        "names": {
+          "ja": "いしずえのめん",
+          "ko": "주춧돌의가면",
+          "en": "Cornerstone Mask Ogerpon"
+        }
+      }
+    ]
+  }
+}

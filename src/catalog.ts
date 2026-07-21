@@ -30,7 +30,7 @@ export function loadCatalog(): Promise<CatalogEntry[]> {
   return catalogPromise;
 }
 
-export function spriteUrl(id:number, shiny:boolean, style:SpriteStyle):string {
+export function spriteUrl(id:number|string, shiny:boolean, style:SpriteStyle):string {
   const root = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
   if (style === 'home') return `${root}/other/home/${shiny ? 'shiny/' : ''}${id}.png`;
   if (style === 'official') return `${root}/other/official-artwork/${shiny ? 'shiny/' : ''}${id}.png`;
