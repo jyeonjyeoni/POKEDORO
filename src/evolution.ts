@@ -459,11 +459,31 @@ export const EVOLUTION_OPTIONS: Readonly<Record<number,readonly number[]>> = {
   1012: [1013,],
 };
 
+// Regional/form evolutions that cannot be represented by species ID alone.
+// An empty key is the species' default form. Unknown keys fall back to it.
+const FORM_EVOLUTION_OPTIONS:Readonly<Record<number,Readonly<Record<string,readonly number[]>>>>={
+  52:{'':[53],'meowth-alola':[53],'meowth-galar':[863]},
+  83:{'':[],'farfetchd-galar':[865]},
+  122:{'':[],'mr-mime-galar':[866]},
+  194:{'':[195],'wooper-paldea':[980]},
+  211:{'':[],'qwilfish-hisui':[904]},
+  215:{'':[461],'sneasel-hisui':[903]},
+  222:{'':[],'corsola-galar':[864]},
+  264:{'':[],'linoone-galar':[862]},
+  550:{'':[],'basculin-blue-striped':[],'basculin-white-striped':[902]},
+  562:{'':[563],'yamask-galar':[867]}
+};
+
 export function evolutionOptionsFor(speciesId:number):readonly number[] {
   return EVOLUTION_OPTIONS[speciesId] ?? [];
 }
 
-export function canEvolve(speciesId:number):boolean {
-  return evolutionOptionsFor(speciesId).length > 0;
+export function evolutionOptionsForForm(speciesId:number,formKey:string|undefined|null=''):readonly number[] {
+  const overrides=FORM_EVOLUTION_OPTIONS[speciesId];
+  if(!overrides)return evolutionOptionsFor(speciesId);
+  return overrides[String(formKey??'')]??overrides['']??[];
 }
 
+export function canEvolve(speciesId:number,formKey:string|undefined|null=''):boolean {
+  return evolutionOptionsForForm(speciesId,formKey).length > 0;
+}

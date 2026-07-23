@@ -1,5 +1,5 @@
 import type { AppData, DexEntry, DexFormEntry, EncounterState, Friend, Language } from './types';
-import { evolutionOptionsFor } from './evolution';
+import { evolutionOptionsForForm } from './evolution';
 import { chooseForm, inheritedFormKey } from './forms';
 import { PythonRandom } from './pythonRandom';
 import { sha256 } from './sha256';
@@ -44,7 +44,7 @@ export function petFriend(friend:Friend,now=new Date(),random=Math.random):PetFr
   let next:Friend={...friend,intimacy:outcome.intimacy,lastPetAt:now.toISOString()};
   let evolved=false;
   if(next.intimacy>=100&&!next.heldEverstone){
-    const options=evolutionOptionsFor(next.speciesId);
+    const options=evolutionOptionsForForm(next.speciesId,next.formKey);
     if(options.length){
       const index=Math.min(options.length-1,Math.floor(Math.max(0,random())*options.length));
       const speciesId=options[index];

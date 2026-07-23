@@ -63,6 +63,14 @@ describe('v70 evolution and Everstone rules',()=>{
   expect(first.friend).toMatchObject({intimacy:1,personality:'curious',shiny:true,metAt:'2026-01-01T00:00:00.000Z',togetherSeconds:42});
  });
  it('inherits a regional form when the evolved species supports it',()=>expect(petFriend(friend({speciesId:19,formKey:'rattata-alola'}),new Date('2026-07-22T00:00:00.000Z'),()=>0).friend).toMatchObject({speciesId:20,formKey:'raticate-alola',intimacy:1}));
+ it('evolves Alolan Meowth only into Alolan Persian',()=>{
+  const evolved=petFriend(friend({speciesId:52,formKey:'meowth-alola'}),new Date('2026-07-22T00:00:00.000Z'),()=>0.999999);
+  expect(evolved.friend).toMatchObject({speciesId:53,formKey:'persian-alola',intimacy:1});
+ });
+ it('evolves Galarian Meowth only into Perrserker',()=>{
+  const evolved=petFriend(friend({speciesId:52,formKey:'meowth-galar'}),new Date('2026-07-22T00:00:00.000Z'),()=>0);
+  expect(evolved.friend).toMatchObject({speciesId:863,formKey:'',intimacy:1});
+ });
  it('does not evolve final species',()=>expect(petFriend(friend({speciesId:678}),new Date('2026-07-22T00:00:00.000Z')).friend).toMatchObject({speciesId:678,intimacy:100}));
  it('blocks at 100 while held and evolves on the next valid pet after recovery',()=>{
   const blocked=petFriend(friend({heldEverstone:true}),new Date('2026-07-22T00:00:00.000Z'),()=>0);
