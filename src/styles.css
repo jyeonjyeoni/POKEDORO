@@ -196,6 +196,7 @@ input[type="range"] { min-height: 20px; padding: 0; accent-color: var(--accent-s
 .todo-form input[type="number"] { width: 70px; }
 .bulk { display: flex; align-items: center; gap: 8px; min-height: 44px; }
 .bulk > .reorder-hint { color: #9aa19a; font-size: 10px; font-weight: 500; white-space: nowrap; }
+.bulk > .completed-delete { margin-left: auto; white-space: nowrap; }
 .bulk > b { display: grid; place-items: center; min-width: 28px; height: 28px; color: #fff; font-size: 11px; background: var(--accent-strong); border-radius: 99px; }
 .todo-list { overflow: hidden; border: 1px solid var(--line); border-radius: 15px; }
 .todo-row { display: grid; grid-template-columns: 28px 88px minmax(150px,1fr) auto auto 38px 38px; align-items: center; gap: 8px; min-height: 62px; padding: 9px 12px; background: #fff; border-bottom: 1px solid #edf0ed; font-size: 12px; }
