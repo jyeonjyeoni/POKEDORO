@@ -71,6 +71,12 @@ describe('v70 evolution and Everstone rules',()=>{
   const evolved=petFriend(friend({speciesId:52,formKey:'meowth-galar'}),new Date('2026-07-22T00:00:00.000Z'),()=>0);
   expect(evolved.friend).toMatchObject({speciesId:863,formKey:'',intimacy:1});
  });
+ it('evolves Espurr into both Meowstic gender forms',()=>{
+  const female=petFriend(friend({speciesId:677,formKey:''}),new Date('2026-07-22T00:00:00.000Z'),()=>0);
+  const male=petFriend(friend({id:'male',speciesId:677,formKey:''}),new Date('2026-07-22T00:00:00.000Z'),()=>0.999999);
+  expect(female.friend).toMatchObject({speciesId:678,formKey:'meowstic-female',intimacy:1});
+  expect(male.friend).toMatchObject({speciesId:678,formKey:'',intimacy:1});
+ });
  it('does not evolve final species',()=>expect(petFriend(friend({speciesId:678}),new Date('2026-07-22T00:00:00.000Z')).friend).toMatchObject({speciesId:678,intimacy:100}));
  it('blocks at 100 while held and evolves on the next valid pet after recovery',()=>{
   const blocked=petFriend(friend({heldEverstone:true}),new Date('2026-07-22T00:00:00.000Z'),()=>0);

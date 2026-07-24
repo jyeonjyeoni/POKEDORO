@@ -96,9 +96,30 @@ export function inheritedFormKey(formKey:string|undefined|null,evolvedSpeciesId:
   const sourceKey=String(formKey??'');
   if(!sourceKey)return '';
   for(const region of ['alola','galar','hisui','paldea']){
-    if(sourceKey.includes(region))return formsForSpecies(evolvedSpeciesId).find(form=>form.key.includes(region))?.key??'';
+    if(sourceKey.endsWith(`-${region}`))return formsForSpecies(evolvedSpeciesId).find(form=>form.key.includes(`-${region}`))?.key??'';
   }
+  const sourceSuffix=sourceKey.split('-').slice(1).join('-');
+  const matchingForm=formsForSpecies(evolvedSpeciesId).find(form=>form.key.endsWith(`-${sourceSuffix}`));
+  if(matchingForm)return matchingForm.key;
+  if(sourceKey==='rockruff-own-tempo'&&evolvedSpeciesId===745)return 'lycanroc-dusk';
+  if(sourceKey==='poltchageist-artisan'&&evolvedSpeciesId===1013)return 'sinistcha-masterpiece';
   return '';
+}
+
+interface GenderEvolutionForm { evolvedSpeciesId:number; femaleFormKey:string; femaleRate:number; }
+const GENDER_EVOLUTION_FORMS:Readonly<Record<number,GenderEvolutionForm>>={
+  550:{evolvedSpeciesId:902,femaleFormKey:'basculegion-female',femaleRate:.5},
+  667:{evolvedSpeciesId:668,femaleFormKey:'pyroar-female',femaleRate:.875},
+  677:{evolvedSpeciesId:678,femaleFormKey:'meowstic-female',femaleRate:.5},
+  915:{evolvedSpeciesId:916,femaleFormKey:'oinkologne-female',femaleRate:.5}
+};
+
+export function evolvedFormKey(sourceSpeciesId:number,sourceFormKey:string|undefined|null,evolvedSpeciesId:number,random=Math.random):string{
+  const inherited=inheritedFormKey(sourceFormKey,evolvedSpeciesId);
+  if(inherited)return inherited;
+  const rule=GENDER_EVOLUTION_FORMS[sourceSpeciesId];
+  if(!rule||rule.evolvedSpeciesId!==evolvedSpeciesId)return '';
+  return Math.max(0,random())<rule.femaleRate?rule.femaleFormKey:'';
 }
 
 export function collectibleFormTotal(speciesCount=1025):number{

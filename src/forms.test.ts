@@ -1,5 +1,5 @@
 import { describe,expect,it } from 'vitest';
-import { chooseForm,collectibleFormTotal,FORM_PROBABILITIES,formDisplayName,formForSpecies,formLabel,formsForSpecies,inheritedFormKey } from './forms';
+import { chooseForm,collectibleFormTotal,evolvedFormKey,FORM_PROBABILITIES,formDisplayName,formForSpecies,formLabel,formsForSpecies,inheritedFormKey } from './forms';
 
 const sequence=(...values:number[])=>{let index=0;return()=>values[Math.min(index++,values.length-1)]};
 
@@ -20,4 +20,19 @@ describe('desktop v71 collectible form catalog',()=>{
     expect(formLabel(formForSpecies(58,'growlithe-hisui'),'ko','growlithe')).toBe('히스이의 모습');
   });
   it('inherits only supported regional lineages during evolution',()=>{expect(inheritedFormKey('rattata-alola',20)).toBe('raticate-alola');expect(inheritedFormKey('rotom-wash',20)).toBe('')});
+  it('preserves visible gender and appearance lineages',()=>{
+    expect(inheritedFormKey('frillish-female',593)).toBe('jellicent-female');
+    expect(inheritedFormKey('shellos-east',423)).toBe('gastrodon-east');
+    expect(inheritedFormKey('burmy-trash',413)).toBe('wormadam-trash');
+    expect(inheritedFormKey('scatterbug-polar',665)).toBe('spewpa-polar');
+  });
+  it('does not mistake a location costume for a regional form',()=>expect(inheritedFormKey('pikachu-alola-cap',26)).toBe(''));
+  it('rolls hidden-gender evolution forms at canonical rates',()=>{
+    expect(evolvedFormKey(677,'',678,()=>0)).toBe('meowstic-female');
+    expect(evolvedFormKey(677,'',678,()=>.5)).toBe('');
+    expect(evolvedFormKey(667,'',668,()=>.8749)).toBe('pyroar-female');
+    expect(evolvedFormKey(667,'',668,()=>.875)).toBe('');
+    expect(evolvedFormKey(915,'',916,()=>0)).toBe('oinkologne-female');
+    expect(evolvedFormKey(550,'basculin-white-striped',902,()=>0)).toBe('basculegion-female');
+  });
 });

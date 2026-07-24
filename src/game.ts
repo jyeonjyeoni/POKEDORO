@@ -1,6 +1,6 @@
 import type { AppData, DexEntry, DexFormEntry, EncounterState, Friend, Language } from './types';
 import { evolutionOptionsForForm } from './evolution';
-import { chooseForm, inheritedFormKey } from './forms';
+import { chooseForm, evolvedFormKey } from './forms';
 import { PythonRandom } from './pythonRandom';
 import { sha256 } from './sha256';
 
@@ -48,7 +48,7 @@ export function petFriend(friend:Friend,now=new Date(),random=Math.random):PetFr
     if(options.length){
       const index=Math.min(options.length-1,Math.floor(Math.max(0,random())*options.length));
       const speciesId=options[index];
-      next={...next,speciesId,formKey:inheritedFormKey(next.formKey,speciesId),intimacy:1};
+      next={...next,speciesId,formKey:evolvedFormKey(next.speciesId,next.formKey,speciesId,random),intimacy:1};
       evolved=true;
     }
   }
